@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <title>Example Form</title>
+        <style>
+            label {
+                width: 100px;
+            }
+            .required label {
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Example Form</h1>
+        <form action="" method="GET">
+            {form}
+            <input type="submit" />
+        </form>
+    </body>
+</html>
