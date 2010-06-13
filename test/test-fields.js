@@ -34,7 +34,7 @@ var testField = function(field){
         );
         test.equals(
             forms.fields[field]().labelElement('fieldname', {id: 'testid'}),
-            '<label for="testid">fieldname</label>'
+            '<label for="testid">Fieldname</label>'
         );
         test.done();
     };
@@ -112,14 +112,14 @@ exports['string toHTML'] = function(test){
     test.equals(
         f.toHTML('fieldname'),
         '<div class="field">' +
-            '<label for="id_fieldname">fieldname</label>' +
+            '<label for="id_fieldname">Fieldname</label>' +
             '<input type="text" name="fieldname" id="id_fieldname" />' +
         '</div>'
     );
     test.equals(
         f.toHTML('fieldname', {id: 'testid'}),
         '<div class="field">' +
-            '<label for="testid">fieldname</label>' +
+            '<label for="testid">Fieldname</label>' +
             '<input type="text" name="fieldname" id="testid" />' +
         '</div>'
     );
@@ -131,7 +131,7 @@ exports['string required toHTML'] = function(test){
     test.equals(
         f.toHTML('fieldname'),
         '<div class="field required">' +
-            '<label for="id_fieldname">fieldname</label>' +
+            '<label for="id_fieldname">Fieldname</label>' +
             '<input type="text" name="fieldname" id="id_fieldname" />' +
         '</div>'
     );
@@ -145,7 +145,7 @@ exports['string bind toHTML'] = function(test){
         test.equals(
             f.toHTML('name'),
             '<div class="field">' +
-                '<label for="id_name">name</label>' +
+                '<label for="id_name">Name</label>' +
                 '<input type="text" name="name" id="id_name" value="val" />' +
             '</div>'
         );
@@ -162,11 +162,12 @@ exports['string bind error toHTML'] = function(test){
     });
     f.bind('val', function(err, f){
         test.equals(
-            f.toHTML('name'),
+            f.toHTML('field_name'),
             '<div class="field error">' +
                 '<p class="error_msg">validation error</p>' +
-                '<label for="id_name">name</label>' +
-                '<input type="text" name="name" id="id_name" value="val" />' +
+                '<label for="id_field_name">Field name</label>' +
+                '<input type="text" name="field_name" id="id_field_name" ' +
+                'value="val" />' +
             '</div>'
         );
     });
@@ -190,14 +191,14 @@ exports['number toHTML'] = function(test){
     test.equals(
         f.toHTML('fieldname'),
         '<div class="field">' +
-            '<label for="id_fieldname">fieldname</label>' +
+            '<label for="id_fieldname">Fieldname</label>' +
             '<input type="text" name="fieldname" id="id_fieldname" />' +
         '</div>'
     );
     test.equals(
         f.toHTML('fieldname', {id: 'testid'}),
         '<div class="field">' +
-            '<label for="testid">fieldname</label>' +
+            '<label for="testid">Fieldname</label>' +
             '<input type="text" name="fieldname" id="testid" />' +
         '</div>'
     );
@@ -209,7 +210,7 @@ exports['number required toHTML'] = function(test){
     test.equals(
         f.toHTML('fieldname'),
         '<div class="field required">' +
-            '<label for="id_fieldname">fieldname</label>' +
+            '<label for="id_fieldname">Fieldname</label>' +
             '<input type="text" name="fieldname" id="id_fieldname" />' +
         '</div>'
     );
@@ -221,10 +222,11 @@ exports['number bind toHTML'] = function(test){
     var f = forms.fields.number();
     f.bind('val', function(err, f){
         test.equals(
-            f.toHTML('name'),
+            f.toHTML('field_name'),
             '<div class="field">' +
-                '<label for="id_name">name</label>' +
-                '<input type="text" name="name" id="id_name" value="val" />' +
+                '<label for="id_field_name">Field name</label>' +
+                '<input type="text" name="field_name" id="id_field_name" ' +
+                'value="val" />' +
             '</div>'
         );
     });
@@ -243,7 +245,7 @@ exports['number bind error toHTML'] = function(test){
             f.toHTML('name'),
             '<div class="field error">' +
                 '<p class="error_msg">validation error</p>' +
-                '<label for="id_name">name</label>' +
+                '<label for="id_name">Name</label>' +
                 '<input type="text" name="name" id="id_name" value="val" />' +
             '</div>'
         );

@@ -8,11 +8,11 @@ exports['create and toHTML'] = function(test){
     test.equals(
         f.toHTML(),
         '<div class="field">' +
-            '<label for="id_field1">field1</label>' +
+            '<label for="id_field1">Field1</label>' +
             '<input type="text" name="field1" id="id_field1" />' +
         '</div>' +
         '<div class="field">' +
-            '<label for="id_field2">field2</label>' +
+            '<label for="id_field2">Field2</label>' +
             '<input type="text" name="field2" id="id_field2" />' +
         '</div>'
     );
@@ -55,11 +55,11 @@ exports['bind valid data toHTML'] = function(test){
         test.equals(
             f.toHTML(),
             '<div class="field">' +
-                '<label for="id_field1">field1</label>' +
+                '<label for="id_field1">Field1</label>' +
                 '<input type="text" name="field1" id="id_field1" value="1" />' +
             '</div>' +
             '<div class="field">' +
-                '<label for="id_field2">field2</label>' +
+                '<label for="id_field2">Field2</label>' +
                 '<input type="text" name="field2" id="id_field2" value="2" />' +
             '</div>'
         );
@@ -81,12 +81,12 @@ exports['bind invalid data toHTML'] = function(test){
         test.equals(
             f.toHTML(),
             '<div class="field">' +
-                '<label for="id_field1">field1</label>' +
+                '<label for="id_field1">Field1</label>' +
                 '<input type="text" name="field1" id="id_field1" value="1" />' +
             '</div>' +
             '<div class="field error">' +
                 '<p class="error_msg">validation error</p>' +
-                '<label for="id_field2">field2</label>' +
+                '<label for="id_field2">Field2</label>' +
                 '<input type="text" name="field2" id="id_field2" value="2" />' +
             '</div>'
         );
