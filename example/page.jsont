@@ -2,11 +2,37 @@
     <head>
         <title>Example Form</title>
         <style>
+            form {
+                border-top: 1px dashed #ccc;
+                width: 275px;
+            }
             label {
+                position: relative;
                 width: 100px;
+                top: 2px;
             }
             .required label {
                 font-weight: bold;
+            }
+            .field {
+                border-bottom: 1px dashed #ccc;
+                padding: 15px 5px 20px 5px;
+                position: relative;
+            }
+            .field input {
+                position: absolute;
+                left: 75px;
+            }
+            .error {
+                background: #ffcccc;
+            }
+            .error_msg {
+                color: red;
+                margin: -15px 0 0 0;
+                padding: 5px 0;
+            }
+            input[type='submit'] {
+                margin-top: 20px;
             }
         </style>
     </head>
