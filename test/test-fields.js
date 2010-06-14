@@ -27,18 +27,6 @@ var testField = function(field){
         test.done();
     };
 
-    exports[field + ' labelElement'] = function(test){
-        test.equals(
-            forms.fields[field]({label:'test label'}).labelElement('fieldname'),
-            '<label for="id_fieldname">test label</label>'
-        );
-        test.equals(
-            forms.fields[field]().labelElement('fieldname', {id: 'testid'}),
-            '<label for="testid">Fieldname</label>'
-        );
-        test.done();
-    };
-
     exports[field + ' bind'] = function(test){
         test.expect(9);
 
