@@ -1,12 +1,12 @@
 var forms = require('forms');
 
-exports['create and toHTML'] = function(test){
+exports['create'] = function(test){
     var f = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string()
     });
     test.equals(
-        f.toHTML(),
+        forms.render.div(f),
         '<div class="field">' +
             '<label for="id_field1">Field1</label>' +
             '<input type="text" name="field1" id="id_field1" />' +
@@ -45,7 +45,7 @@ exports['bind'] = function(test){
     });
 };
 
-exports['bind valid data toHTML'] = function(test){
+exports['bind valid data'] = function(test){
     var f = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string()
@@ -53,7 +53,7 @@ exports['bind valid data toHTML'] = function(test){
     f.bind({field1: '1', field2: '2'}, function(err, f){
         test.equals(f.isValid(), true);
         test.equals(
-            f.toHTML(),
+            forms.render.div(f),
             '<div class="field">' +
                 '<label for="id_field1">Field1</label>' +
                 '<input type="text" name="field1" id="id_field1" value="1" />' +
@@ -67,7 +67,7 @@ exports['bind valid data toHTML'] = function(test){
     });
 };
 
-exports['bind invalid data toHTML'] = function(test){
+exports['bind invalid data'] = function(test){
     var f = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string({
@@ -79,7 +79,7 @@ exports['bind invalid data toHTML'] = function(test){
     f.bind({field1: '1', field2: '2'}, function(err, f){
         test.equals(f.isValid(), false);
         test.equals(
-            f.toHTML(),
+            forms.render.div(f),
             '<div class="field">' +
                 '<label for="id_field1">Field1</label>' +
                 '<input type="text" name="field1" id="id_field1" value="1" />' +
