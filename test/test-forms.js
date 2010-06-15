@@ -186,9 +186,10 @@ exports['handle error'] = function(test){
     setTimeout(test.done, 50);
 };
 
-exports['handle ServerRequest'] = function(test){
+exports['handle ServerRequest GET'] = function(test){
     var f = forms.create({field1: forms.fields.string()});
     var req = new http.IncomingMessage();
+    req.method = 'GET';
     req.url = '/?field1=test';
     f.handle(req, {
         success: function(form){
@@ -196,4 +197,18 @@ exports['handle ServerRequest'] = function(test){
             test.done();
         }
     });
+};
+
+exports['handle ServerRequest POST'] = function(test){
+    var f = forms.create({field1: forms.fields.string()});
+    var req = new http.IncomingMessage();
+    req.method = 'POST';
+    f.handle(req, {
+        success: function(form){
+            test.equals(form.data.field1, 'test');
+            test.done();
+        }
+    });
+    req.emit('data', 'field1=test');
+    req.emit('end');
 };
