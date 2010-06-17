@@ -104,6 +104,17 @@ exports['string parse'] = function(test){
     test.done();
 };
 
+exports['string toHTML'] = function(test){
+    test.equals(
+        forms.fields.string().toHTML('fieldname'),
+        '<div class="field">' +
+            '<label for="id_fieldname">Fieldname</label>' +
+            '<input type="text" name="fieldname" id="id_fieldname" />' +
+        '</div>'
+    );
+    test.done();
+};
+
 
 testField('number');
 
