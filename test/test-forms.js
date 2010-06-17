@@ -7,7 +7,7 @@ exports['create'] = function(test){
         field2: forms.fields.string()
     });
     test.equals(
-        forms.render.div(f),
+        f.toHTML(),
         '<div class="field">' +
             '<label for="id_field1">Field1</label>' +
             '<input type="text" name="field1" id="id_field1" />' +
