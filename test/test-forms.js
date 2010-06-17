@@ -22,7 +22,7 @@ exports['create'] = function(test){
 };
 
 exports['bind'] = function(test){
-    var f = forms.create({
+    var form = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string({
             validators: [function(data, raw_value, callback){
@@ -32,7 +32,7 @@ exports['bind'] = function(test){
             }]
         })
     });
-    f.bind({field1: 'data one', field2: 'data two'}, function(err, f){
+    form.bind({field1: 'data one', field2: 'data two'}, function(err, f){
         test.equals(f.fields.field1.value, 'data one');
         test.equals(f.fields.field1.data, 'data one');
         test.equals(f.fields.field1.error, null);
@@ -41,6 +41,7 @@ exports['bind'] = function(test){
         test.equals(f.fields.field2.error, 'validation error');
 
         test.same(f.data, {field1: 'data one', field2: 'data two'});
+        test.ok(form != f, 'bind returns new form object');
 
         test.equals(f.isValid(), false);
         test.done();

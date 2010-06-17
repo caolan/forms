@@ -28,7 +28,7 @@ var testField = function(field){
     };
 
     exports[field + ' bind'] = function(test){
-        test.expect(9);
+        test.expect(10);
 
         var f = forms.fields[field]({
             label: 'test label',
@@ -50,11 +50,12 @@ var testField = function(field){
             test.equals(data, 'some data');
             return 'some data parsed';
         };
-        f.bind('some data', function(err, f){
-            test.equals(f.label, 'test label');
-            test.equals(f.value, 'some data');
-            test.equals(f.data, 'some data parsed');
-            test.equals(f.error, 'validation error');
+        f.bind('some data', function(err, bound){
+            test.equals(bound.label, 'test label');
+            test.equals(bound.value, 'some data');
+            test.equals(bound.data, 'some data parsed');
+            test.equals(bound.error, 'validation error');
+            test.ok(bound != f, 'bind returns a new field object');
         });
         setTimeout(test.done, 25);
     };
