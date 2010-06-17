@@ -24,7 +24,7 @@ http.createServer(function(req, res){
     });
 
     form.handle(req, {
-        success: function(data){
+        success: function(form){
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.write('<h1>Success!</h1>');
             res.end('<pre>' + JSON.stringify(form.data) + '</pre>');
@@ -32,7 +32,7 @@ http.createServer(function(req, res){
         // perhaps also have error and empty events
         other: function(form){
             res.writeHead(200, {'Content-Type': 'text/html'});
-            res.end(template.expand({form: forms.render.div(form)}));
+            res.end(template.expand({form: form.toHTML()}));
         }
     });
 
