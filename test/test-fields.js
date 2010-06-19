@@ -212,30 +212,19 @@ exports['boolean toHTML'] = function(test){
 testField('email');
 
 exports['email parse'] = function(test){
-    test.equals(forms.fields.email().parse(), '');
-    test.equals(forms.fields.email().parse(null), '');
-    test.equals(forms.fields.email().parse(0), '0');
-    test.equals(forms.fields.email().parse(''), '');
-    test.equals(forms.fields.email().parse('some string'), 'some string');
+    test.equals(
+        forms.fields.email().parse.toString(),
+        forms.fields.string().parse.toString()
+    );
     test.done();
 };
 
 exports['email toHTML'] = function(test){
-    test.expect(3);
     test.equals(
-        forms.fields.email().toHTML('fieldname'),
-        '<div class="field">' +
-            '<label for="id_fieldname">Fieldname</label>' +
-            '<input type="text" name="fieldname" id="id_fieldname" />' +
-        '</div>'
+        forms.fields.email().toHTML.toString(),
+        forms.fields.string().toHTML.toString()
     );
-    var f = forms.fields.email();
-    f.widget.toHTML = function(name, field){
-        test.equals(name, 'fieldname');
-        test.equals(field, f);
-        test.done();
-    };
-    f.toHTML('fieldname');
+    test.done();
 };
 
 exports['email validators'] = function(test){
@@ -257,28 +246,51 @@ exports['email validators'] = function(test){
 testField('password');
 
 exports['password parse'] = function(test){
-    test.equals(forms.fields.password().parse(), '');
-    test.equals(forms.fields.password().parse(null), '');
-    test.equals(forms.fields.password().parse(0), '0');
-    test.equals(forms.fields.password().parse(''), '');
-    test.equals(forms.fields.password().parse('some string'), 'some string');
+    test.equals(
+        forms.fields.password().parse.toString(),
+        forms.fields.string().parse.toString()
+    );
     test.done();
 };
 
 exports['password toHTML'] = function(test){
-    test.expect(3);
     test.equals(
-        forms.fields.password().toHTML('fieldname'),
-        '<div class="field">' +
-            '<label for="id_fieldname">Fieldname</label>' +
-            '<input type="password" name="fieldname" id="id_fieldname" />' +
-        '</div>'
+        forms.fields.password().toHTML.toString(),
+        forms.fields.string().toHTML.toString()
     );
-    var f = forms.fields.password();
-    f.widget.toHTML = function(name, field){
-        test.equals(name, 'fieldname');
-        test.equals(field, f);
-        test.done();
-    };
-    f.toHTML('fieldname');
+    test.done();
+};
+
+testField('url');
+
+exports['url parse'] = function(test){
+    test.equals(
+        forms.fields.url().parse.toString(),
+        forms.fields.string().parse.toString()
+    );
+    test.done();
+};
+
+exports['url toHTML'] = function(test){
+    test.equals(
+        forms.fields.url().toHTML.toString(),
+        forms.fields.string().toHTML.toString()
+    );
+    test.done();
+};
+
+exports['url validators'] = function(test){
+    test.equals(
+        forms.fields.url().validators[0].toString(),
+        forms.validators.url().toString()
+    );
+    var fn1 = function(){return 'one';};
+    var fn2 = function(){return 'two';};
+    var f = forms.fields.url({validators: [fn1, fn2]});
+    test.equals(
+        f.validators[0].toString(),
+        forms.validators.url().toString()
+    );
+    test.same(f.validators.slice(1), [fn1, fn2]);
+    test.done();
 };

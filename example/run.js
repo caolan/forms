@@ -9,6 +9,9 @@ var http = require('http'),
     jsontemplate = require('./json-template'),
     parse = require('url').parse;
 
+var fields = forms.fields,
+    validators = forms.validators,
+    widgets = forms.widgets;
 
 // template for the example page
 var template = jsontemplate.Template(
@@ -19,29 +22,27 @@ var template = jsontemplate.Template(
 http.createServer(function(req, res){
     // create a new form object
     var form = forms.create({
-        name:  forms.fields.string({required: true}),
-        email: forms.fields.email({required: true, label: 'Email Address'}),
-        website: forms.fields.string({
-            validators: [forms.validators.url()]
-        }),
-        password: forms.fields.password({required: true}),
-        password_confirm: forms.fields.password({
+        name:  fields.string({required: true}),
+        email: fields.email({required: true, label: 'Email Address'}),
+        website: fields.url(),
+        password: fields.password({required: true}),
+        password_confirm: fields.password({
             required: true,
-            validators: [forms.validators.matchField('password')]
+            validators: [validators.matchField('password')]
         }),
-        options: forms.fields.string({
+        options: fields.string({
             choices: {
                 one: 'option one',
                 two: 'option two',
                 three: 'option three'
             },
-            widget: forms.widgets.select(),
+            widget: widgets.select(),
             validators: [function(form, field, callback){
                 if(field.data === 'two') callback('two?! are you crazy?!');
                 else callback();
             }]
         }),
-        spam_me: forms.fields.boolean()
+        spam_me: fields.boolean()
     });
 
     form.handle(req, {
