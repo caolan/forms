@@ -53,3 +53,17 @@ exports['select'] = function(test){
     );
     test.done();
 };
+
+exports['textarea'] = function(test){
+    test.equals(
+        forms.widgets.textarea().toHTML('name', {}),
+        '<textarea name="name" id="id_name"></textarea>'
+    );
+    test.equals(
+        forms.widgets.textarea({classes: ['one', 'two']}).toHTML('name', {
+            id: 'someid', value: 'value'
+        }),
+        '<textarea name="name" id="someid" class="one two">value</textarea>'
+    );
+    test.done();
+};
