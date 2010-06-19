@@ -24,13 +24,9 @@ http.createServer(function(req, res){
         website: forms.fields.string({
             validators: [forms.validators.url()]
         }),
-        password: forms.fields.string({
+        password: forms.fields.password({required: true}),
+        password_confirm: forms.fields.password({
             required: true,
-            widget: forms.widgets.password()
-        }),
-        password_confirm: forms.fields.string({
-            required: true,
-            widget: forms.widgets.password(),
             validators: [forms.validators.matchField('password')]
         }),
         options: forms.fields.string({
