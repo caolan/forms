@@ -11,13 +11,15 @@ var testField = function(field){
             required: true,
             label: 'test label',
             validators: [fn1, fn2],
-            widget: 'some widget'
+            widget: 'some widget',
+            choices: {one:'option one', two:'option two'}
         });
 
         test.equals(f.required, true);
         test.equals(f.label, 'test label');
         test.same(f.validators, [fn1, fn2]);
         test.equals(f.widget, 'some widget');
+        test.same(f.choices, {one:'option one', two:'option two'});
         test.done();
     };
 

@@ -24,6 +24,14 @@ http.createServer(function(req, res){
         password: forms.fields.string({
             widget: forms.widgets.password()
         }),
+        options: forms.fields.string({
+            choices: {
+                one: 'option one',
+                two: 'option two',
+                three: 'option three'
+            },
+            widget: forms.widgets.select()
+        }),
         spam_me: forms.fields.boolean()
     });
 
