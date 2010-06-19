@@ -58,8 +58,9 @@ exports['regexp'] = function(test){
         test.equals(err.message, 'Invalid format');
         validators.regexp(/^\d+$/)('form', {data: '123'}, function(err){
             test.equals(err, undefined);
-            validators.regexp('^\\d+$')('form', {data: 'abc123'}, function(err){
-                test.equals(err.message, 'Invalid format');
+            var v = validators.regexp('^\\d+$', 'my message');
+            v('form', {data: 'abc123'}, function(err){
+                test.equals(err.message, 'my message');
                 test.done();
             });
         });
@@ -68,7 +69,7 @@ exports['regexp'] = function(test){
 
 exports['email'] = function(test){
     validators.email()('form', {data: 'asdf'}, function(err){
-        test.equals(err.message, 'Invalid format');
+        test.equals(err.message, 'Please enter a valid email address');
         validators.email()('form', {data: 'asdf@asdf.com'}, function(err){
             test.equals(err, undefined);
             validators.email()('form', {data: 'a←+b@f.museum'}, function(err){
@@ -81,7 +82,7 @@ exports['email'] = function(test){
 
 exports['url'] = function(test){
     validators.url()('form', {data: 'asdf.com'}, function(err){
-        test.equals(err.message, 'Invalid format');
+        test.equals(err.message, 'Please enter a valid URL');
         validators.url()('form', {data: 'http://asdf.com'}, function(err){
             test.equals(err, undefined);
             test.done();
