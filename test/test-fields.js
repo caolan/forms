@@ -2,14 +2,6 @@ var forms = require('forms');
 
 
 var testField = function(field){
-    exports[field] = function(test){
-        var f = forms.fields[field]();
-        test.equals(
-            f.widget.toHTML('test'),
-            forms.widgets.text().toHTML('test')
-        );
-        test.done();
-    };
 
     exports[field + ' options'] = function(test){
         var fn1 = function(){return 'one'};
@@ -124,5 +116,16 @@ exports['number parse'] = function(test){
     test.equals(forms.fields.number().parse(0), 0);
     test.ok(isNaN(forms.fields.number().parse('')));
     test.equals(forms.fields.number().parse('123'), 123);
+    test.done();
+};
+
+exports['number toHTML'] = function(test){
+    test.equals(
+        forms.fields.number().toHTML('fieldname'),
+        '<div class="field">' +
+            '<label for="id_fieldname">Fieldname</label>' +
+            '<input type="text" name="fieldname" id="id_fieldname" />' +
+        '</div>'
+    );
     test.done();
 };
