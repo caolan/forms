@@ -82,6 +82,23 @@ var testField = function(field){
         });
     };
 
+    exports[field + ' validate empty'] = function(test){
+        test.expect(1);
+        var f = forms.fields[field]({
+            validators: [function(form, field, callback){
+                test.ok(false, 'validators should not be called');
+                callback(Error('some error'));
+            }]
+        });
+        f.parse = function(data){
+            return;
+        };
+        f.bind().validate('form', function(err, bound){
+            test.equals(bound.error, undefined);
+            test.done();
+        });
+    };
+
     exports[field + ' validate required'] = function(test){
         test.expect(5);
         var f = forms.fields[field]({required: true});

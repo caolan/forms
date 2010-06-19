@@ -1,4 +1,5 @@
-var validators = require('forms').validators;
+var validators = require('forms').validators,
+    async = require('async');
 
 
 exports['matchField'] = function(test){
@@ -111,22 +112,36 @@ exports['maxlength'] = function(test){
 };
 
 exports['rangelength'] = function(test){
-    validators.rangelength(2,4)('form', {data:'12345'}, function(err){
-        test.equals(
-            err.message, 'Please enter a value between 2 and 4 characters long'
-        );
-        validators.rangelength(2,4)('form', {data:'1'}, function(err){
-            test.equals(
-                err.message,
-                'Please enter a value between 2 and 4 characters long'
-            );
+    async.parallel([
+        function(callback){
+            validators.rangelength(2,4)('form', {data:'12345'}, function(err){
+                test.equals(
+                    err.message,
+                    'Please enter a value between 2 and 4 characters long'
+                );
+                callback();
+            });
+        },
+        function(callback){
+            validators.rangelength(2,4)('form', {data:'1'}, function(err){
+                test.equals(
+                    err.message,
+                    'Please enter a value between 2 and 4 characters long'
+                );
+                callback();
+            });
+        },
+        function(callback){
             validators.rangelength(2,4)('form', {data:'12'}, function(err){
                 test.equals(err, undefined);
-                validators.rangelength(2,4)('form',{data:'1234'}, function(err){
-                    test.equals(err, undefined);
-                    test.done();
-                });
+                callback();
             });
-        });
-    });
+        },
+        function(callback){
+            validators.rangelength(2,4)('form',{data:'1234'}, function(err){
+                test.equals(err, undefined);
+                callback();
+            });
+        },
+    ], test.done);
 };
