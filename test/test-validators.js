@@ -48,3 +48,16 @@ exports['between'] = function(test){
         });
     });
 };
+
+exports['regexp'] = function(test){
+    validators.regexp(/^\d+$/)('form', {data: 'abc123'}, function(err){
+        test.equals(err.message, 'Invalid format');
+        validators.regexp(/^\d+$/)('form', {data: '123'}, function(err){
+            test.equals(err, undefined);
+            validators.regexp('^\\d+$')('form', {data: 'abc123'}, function(err){
+                test.equals(err.message, 'Invalid format');
+                test.done();
+            });
+        });
+    })
+};
