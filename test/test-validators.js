@@ -88,3 +88,44 @@ exports['url'] = function(test){
         });
     })
 };
+
+exports['minlength'] = function(test){
+    validators.minlength(5)('form', {data:'1234'}, function(err){
+        test.equals(err.message, 'Please enter at least 5 characters');
+        validators.minlength(5)('form', {data:'12345'}, function(err){
+            test.equals(err, undefined);
+            test.done();
+        });
+    });
+};
+
+exports['maxlength'] = function(test){
+    validators.maxlength(5)('form', {data:'123456'}, function(err){
+        test.equals(err.message, 'Please enter no more than 5 characters');
+        validators.maxlength(5)('form', {data:'12345'}, function(err){
+            test.equals(err, undefined);
+            test.done();
+        });
+    });
+};
+
+exports['rangelength'] = function(test){
+    validators.rangelength(2,4)('form', {data:'12345'}, function(err){
+        test.equals(
+            err.message, 'Please enter a value between 2 and 4 characters long'
+        );
+        validators.rangelength(2,4)('form', {data:'1'}, function(err){
+            test.equals(
+                err.message,
+                'Please enter a value between 2 and 4 characters long'
+            );
+            validators.rangelength(2,4)('form', {data:'12'}, function(err){
+                test.equals(err, undefined);
+                validators.rangelength(2,4)('form',{data:'1234'}, function(err){
+                    test.equals(err, undefined);
+                    test.done();
+                });
+            });
+        });
+    });
+};
