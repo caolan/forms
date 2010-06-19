@@ -18,3 +18,33 @@ exports['matchField'] = function(test){
         });
     });
 };
+
+exports['above'] = function(test){
+    validators.above(100)('form', {data: 50}, function(err){
+        test.equals(err.message, 'Not above 100');
+        validators.above(100)('form', {data: 150}, function(err){
+            test.equals(err, undefined);
+            test.done();
+        });
+    });
+};
+
+exports['below'] = function(test){
+    validators.below(100)('form', {data: 150}, function(err){
+        test.equals(err.message, 'Not below 100');
+        validators.below(100)('form', {data: 50}, function(err){
+            test.equals(err, undefined);
+            test.done();
+        });
+    });
+};
+
+exports['between'] = function(test){
+    validators.between(10, 20)('form', {data: 50}, function(err){
+        test.equals(err.message, 'Not between 10 and 20');
+        validators.between(10, 20)('form', {data: 15}, function(err){
+            test.equals(err, undefined);
+            test.done();
+        });
+    });
+};
