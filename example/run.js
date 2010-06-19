@@ -28,12 +28,7 @@ http.createServer(function(req, res){
         password_confirm: forms.fields.string({
             required: true,
             widget: forms.widgets.password(),
-            validators: [function(form, field, callback){
-                if(form.data.password != form.data.password_confirm){
-                    callback(Error("passwords don't match"));
-                }
-                else callback();
-            }]
+            validators: [forms.validators.matchField('password')]
         }),
         options: forms.fields.string({
             choices: {
