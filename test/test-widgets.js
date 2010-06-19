@@ -23,8 +23,29 @@ var test_input = function(type){
 
 exports['text'] = test_input('text');
 exports['password'] = test_input('password');
-exports['checkbox'] = test_input('checkbox');
 exports['hidden'] = test_input('hidden');
+
+exports['checkbox'] = function(test){
+    test.equals(
+        forms.widgets.checkbox().toHTML('field1'),
+        '<input type="checkbox" name="field1" id="id_field1" />'
+    );
+    var w = forms.widgets.checkbox({classes: ['test1', 'test2', 'test3']});
+    test.equals(
+        w.toHTML('field2', {id:'form2_field2'}),
+        '<input type="checkbox" name="field2" id="form2_field2"' +
+        ' class="test1 test2 test3" />'
+    );
+    test.equals(
+        forms.widgets.checkbox().toHTML('field', {value:true}),
+        '<input type="checkbox" name="field" id="id_field" checked="checked" />'
+    );
+    test.equals(
+        forms.widgets.checkbox().toHTML('field', {value:false}),
+        '<input type="checkbox" name="field" id="id_field" />'
+    );
+    test.done();
+};
 
 exports['select'] = function(test){
     test.equals(
