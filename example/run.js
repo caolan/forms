@@ -20,10 +20,7 @@ http.createServer(function(req, res){
     // create a new form object
     var form = forms.create({
         name:  forms.fields.string({required: true}),
-        email: forms.fields.string({
-            required: true,
-            validators: [forms.validators.email()]
-        }),
+        email: forms.fields.email({required: true, label: 'Email Address'}),
         website: forms.fields.string({
             validators: [forms.validators.url()]
         }),
@@ -44,8 +41,7 @@ http.createServer(function(req, res){
             },
             widget: forms.widgets.select(),
             validators: [function(form, field, callback){
-                if(field.data === 'two')
-                    callback(Error('two?! are you crazy?!'));
+                if(field.data === 'two') callback('two?! are you crazy?!');
                 else callback();
             }]
         }),
