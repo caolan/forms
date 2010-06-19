@@ -136,3 +136,26 @@ exports['number toHTML'] = function(test){
     );
     test.done();
 };
+
+testField('boolean');
+
+exports['boolean parse'] = function(test){
+    test.equals(forms.fields.boolean().parse(), false);
+    test.equals(forms.fields.boolean().parse(null), false);
+    test.equals(forms.fields.boolean().parse(0), false);
+    test.equals(forms.fields.boolean().parse(''), false);
+    test.equals(forms.fields.boolean().parse('on'), true);
+    test.equals(forms.fields.boolean().parse('true'), true);
+    test.done();
+};
+
+exports['boolean toHTML'] = function(test){
+    test.equals(
+        forms.fields.boolean().toHTML('fieldname'),
+        '<div class="field">' +
+            '<label for="id_fieldname">Fieldname</label>' +
+            '<input type="checkbox" name="fieldname" id="id_fieldname" />' +
+        '</div>'
+    );
+    test.done();
+};
