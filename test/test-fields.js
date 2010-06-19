@@ -10,12 +10,14 @@ var testField = function(field){
         var f = forms.fields[field]({
             required: true,
             label: 'test label',
-            validators: [fn1, fn2]
+            validators: [fn1, fn2],
+            widget: 'some widget'
         });
 
         test.equals(f.required, true);
         test.equals(f.label, 'test label');
         test.same(f.validators, [fn1, fn2]);
+        test.equals(f.widget, 'some widget');
         test.done();
     };
 

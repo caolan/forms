@@ -20,7 +20,11 @@ http.createServer(function(req, res){
     // create a new form object
     var form = forms.create({
         name:  forms.fields.string({required: true}),
-        email: forms.fields.string()
+        email: forms.fields.string(),
+        password: forms.fields.string({
+            widget: forms.widgets.password()
+        }),
+        spam_me: forms.fields.boolean()
     });
 
     form.handle(req, {
