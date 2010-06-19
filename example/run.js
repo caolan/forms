@@ -25,6 +25,16 @@ http.createServer(function(req, res){
             required: true,
             widget: forms.widgets.password()
         }),
+        password_confirm: forms.fields.string({
+            required: true,
+            widget: forms.widgets.password(),
+            validators: [function(form, field, callback){
+                if(form.data.password != form.data.password_confirm){
+                    callback(Error("passwords don't match"));
+                }
+                else callback();
+            }]
+        }),
         options: forms.fields.string({
             choices: {
                 one: 'option one',
@@ -32,8 +42,9 @@ http.createServer(function(req, res){
                 three: 'option three'
             },
             widget: forms.widgets.select(),
-            validators: [function(data, raw_data, callback){
-                if(data === 'two') callback(Error('two?! are you crazy?!'));
+            validators: [function(form, field, callback){
+                if(field.data === 'two')
+                    callback(Error('two?! are you crazy?!'));
                 else callback();
             }]
         }),

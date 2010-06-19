@@ -4,11 +4,11 @@
         <style>
             form {
                 border-top: 1px dashed #ccc;
-                width: 275px;
+                width: 375px;
             }
             label {
                 position: relative;
-                width: 100px;
+                width: 200px;
                 top: 2px;
             }
             .required label {
@@ -21,7 +21,7 @@
             }
             .field input, .field select {
                 position: absolute;
-                left: 75px;
+                left: 175px;
             }
             .error {
                 background: #ffcccc;
