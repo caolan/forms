@@ -53,10 +53,14 @@ exports['bind valid data'] = function(test){
 
 exports['bind invalid data'] = function(test){
     var f = forms.create({
-        field1: forms.fields.string(),
+        field1: forms.fields.string({
+            validators: [function(data, raw_value, callback){
+                callback(new Error('validation error 1'));
+            }]
+        }),
         field2: forms.fields.string({
             validators: [function(data, raw_value, callback){
-                callback(new Error('validation error'));
+                callback(new Error('validation error 2'));
             }]
         })
     });
@@ -64,12 +68,13 @@ exports['bind invalid data'] = function(test){
         test.equals(f.isValid(), false);
         test.equals(
             f.toHTML(),
-            '<div class="field">' +
+            '<div class="field error">' +
+                '<p class="error_msg">validation error 1</p>' +
                 '<label for="id_field1">Field1</label>' +
                 '<input type="text" name="field1" id="id_field1" value="1" />' +
             '</div>' +
             '<div class="field error">' +
-                '<p class="error_msg">validation error</p>' +
+                '<p class="error_msg">validation error 2</p>' +
                 '<label for="id_field2">Field2</label>' +
                 '<input type="text" name="field2" id="id_field2" value="2" />' +
             '</div>'

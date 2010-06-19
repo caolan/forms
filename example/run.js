@@ -31,7 +31,11 @@ http.createServer(function(req, res){
                 two: 'option two',
                 three: 'option three'
             },
-            widget: forms.widgets.select()
+            widget: forms.widgets.select(),
+            validators: [function(data, raw_data, callback){
+                if(data === 'two') callback(Error('two?! are you crazy?!'));
+                else callback();
+            }]
         }),
         spam_me: forms.fields.boolean()
     });
