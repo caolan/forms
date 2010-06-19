@@ -20,8 +20,9 @@ http.createServer(function(req, res){
     // create a new form object
     var form = forms.create({
         name:  forms.fields.string({required: true}),
-        email: forms.fields.string(),
+        email: forms.fields.string({required: true}),
         password: forms.fields.string({
+            required: true,
             widget: forms.widgets.password()
         }),
         options: forms.fields.string({

@@ -19,7 +19,7 @@
                 padding: 15px 5px 20px 5px;
                 position: relative;
             }
-            .field input {
+            .field input, .field select {
                 position: absolute;
                 left: 75px;
             }
