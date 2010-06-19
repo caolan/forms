@@ -78,3 +78,13 @@ exports['email'] = function(test){
         });
     })
 };
+
+exports['url'] = function(test){
+    validators.url()('form', {data: 'asdf.com'}, function(err){
+        test.equals(err.message, 'Invalid format');
+        validators.url()('form', {data: 'http://asdf.com'}, function(err){
+            test.equals(err, undefined);
+            test.done();
+        });
+    })
+};
