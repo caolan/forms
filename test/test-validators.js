@@ -19,30 +19,34 @@ exports['matchField'] = function(test){
     });
 };
 
-exports['above'] = function(test){
-    validators.above(100)('form', {data: 50}, function(err){
-        test.equals(err.message, 'Not above 100');
-        validators.above(100)('form', {data: 150}, function(err){
+exports['min'] = function(test){
+    validators.min(100)('form', {data: 50}, function(err){
+        test.equals(
+            err.message, 'Please enter a value greater than or equal to 100'
+        );
+        validators.min(100)('form', {data: 100}, function(err){
             test.equals(err, undefined);
             test.done();
         });
     });
 };
 
-exports['below'] = function(test){
-    validators.below(100)('form', {data: 150}, function(err){
-        test.equals(err.message, 'Not below 100');
-        validators.below(100)('form', {data: 50}, function(err){
+exports['max'] = function(test){
+    validators.max(100)('form', {data: 150}, function(err){
+        test.equals(
+            err.message, 'Please enter a value less than or equal to 100'
+        );
+        validators.max(100)('form', {data: 100}, function(err){
             test.equals(err, undefined);
             test.done();
         });
     });
 };
 
-exports['between'] = function(test){
-    validators.between(10, 20)('form', {data: 50}, function(err){
-        test.equals(err.message, 'Not between 10 and 20');
-        validators.between(10, 20)('form', {data: 15}, function(err){
+exports['range'] = function(test){
+    validators.range(10, 20)('form', {data: 50}, function(err){
+        test.equals(err.message, 'Please enter a value between 10 and 20');
+        validators.range(10, 20)('form', {data: 15}, function(err){
             test.equals(err, undefined);
             test.done();
         });
@@ -56,6 +60,19 @@ exports['regexp'] = function(test){
             test.equals(err, undefined);
             validators.regexp('^\\d+$')('form', {data: 'abc123'}, function(err){
                 test.equals(err.message, 'Invalid format');
+                test.done();
+            });
+        });
+    })
+};
+
+exports['email'] = function(test){
+    validators.email()('form', {data: 'asdf'}, function(err){
+        test.equals(err.message, 'Invalid format');
+        validators.email()('form', {data: 'asdf@asdf.com'}, function(err){
+            test.equals(err, undefined);
+            validators.email()('form', {data: 'a←+b@f.museum'}, function(err){
+                test.equals(err, undefined);
                 test.done();
             });
         });
