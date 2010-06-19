@@ -25,3 +25,8 @@ exports['text'] = test_input('text');
 exports['password'] = test_input('password');
 exports['checkbox'] = test_input('checkbox');
 exports['hidden'] = test_input('hidden');
+
+/*exports['select'] = function(test){
+    test.equals(
+        forms.widgets.select(
+};*/

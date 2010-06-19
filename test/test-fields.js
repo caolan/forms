@@ -97,6 +97,7 @@ exports['string parse'] = function(test){
 };
 
 exports['string toHTML'] = function(test){
+    test.expect(3);
     test.equals(
         forms.fields.string().toHTML('fieldname'),
         '<div class="field">' +
@@ -104,7 +105,13 @@ exports['string toHTML'] = function(test){
             '<input type="text" name="fieldname" id="id_fieldname" />' +
         '</div>'
     );
-    test.done();
+    var f = forms.fields.string();
+    f.widget.toHTML = function(name, field){
+        test.equals(name, 'fieldname');
+        test.equals(field, f);
+        test.done();
+    };
+    f.toHTML('fieldname');
 };
 
 
