@@ -76,7 +76,7 @@ var testField = function(field){
             test.equals(bound.label, 'test label');
             test.equals(bound.value, 'some data');
             test.equals(bound.data, 'some data parsed');
-            test.equals(bound.error, 'validation error');
+            test.equals(bound.error, 'Error: validation error');
             test.ok(bound != f, 'bind returns a new field object');
             test.done();
         });
@@ -87,7 +87,7 @@ var testField = function(field){
         var f = forms.fields[field]({
             validators: [function(form, field, callback){
                 test.ok(false, 'validators should not be called');
-                callback(Error('some error'));
+                callback('some error');
             }]
         });
         f.parse = function(data){

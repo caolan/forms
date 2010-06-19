@@ -33,7 +33,7 @@ exports['validate'] = function(test){
             validators: [function(form, field, callback){
                 test.equals(field.data, 'data two');
                 test.equals(field.value, 'data two');
-                callback(new Error('validation error'));
+                callback('validation error');
             }]
         })
     });
@@ -80,12 +80,12 @@ exports['validate invalid data'] = function(test){
     var f = forms.create({
         field1: forms.fields.string({
             validators: [function(form, field, callback){
-                callback(new Error('validation error 1'));
+                callback('validation error 1');
             }]
         }),
         field2: forms.fields.string({
             validators: [function(form, field, callback){
-                callback(new Error('validation error 2'));
+                callback('validation error 2');
             }]
         })
     });
@@ -281,7 +281,7 @@ exports['div bound error'] = function(test){
     var f = forms.create({
         field_name: forms.fields.string({
             validators: [function(form, field, callback){
-                callback(new Error('validation error'));
+                callback('validation error');
             }]
         })
     });
