@@ -6,7 +6,7 @@ exports['bind'] = function(test){
     var form = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string({
-            validators: [function(data, raw_value, callback){
+            validators: [function(form, field, callback){
                 test.ok(false, 'validators should not be called');
                 callback(new Error('validation error'));
             }]
@@ -30,14 +30,15 @@ exports['validate'] = function(test){
     var form = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string({
-            validators: [function(data, raw_value, callback){
-                test.equals(data, 'data two');
-                test.equals(raw_value, 'data two');
+            validators: [function(form, field, callback){
+                test.equals(field.data, 'data two');
+                test.equals(field.value, 'data two');
                 callback(new Error('validation error'));
             }]
         })
     });
-    form.bind({field1:'data one', field2:'data two'}).validate(function(err, f){
+    var data = {field1:'data one', field2:'data two'};
+    form.bind(data).validate(function(err, f){
         test.equals(f.fields.field1.value, 'data one');
         test.equals(f.fields.field1.data, 'data one');
         test.equals(f.fields.field1.error, null);
@@ -78,12 +79,12 @@ exports['validate valid data'] = function(test){
 exports['validate invalid data'] = function(test){
     var f = forms.create({
         field1: forms.fields.string({
-            validators: [function(data, raw_value, callback){
+            validators: [function(form, field, callback){
                 callback(new Error('validation error 1'));
             }]
         }),
         field2: forms.fields.string({
-            validators: [function(data, raw_value, callback){
+            validators: [function(form, field, callback){
                 callback(new Error('validation error 2'));
             }]
         })
@@ -279,7 +280,7 @@ exports['div bound error'] = function(test){
     test.expect(1);
     var f = forms.create({
         field_name: forms.fields.string({
-            validators: [function(data, raw_value, callback){
+            validators: [function(form, field, callback){
                 callback(new Error('validation error'));
             }]
         })

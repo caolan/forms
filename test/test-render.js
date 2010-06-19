@@ -46,7 +46,7 @@ exports['div bound error'] = function(test){
     test.expect(1);
     var f = forms.create({
         field_name: forms.fields.string({
-            validators: [function(data, raw_value, callback){
+            validators: [function(form, field, callback){
                 callback(new Error('validation error'));
             }]
         })
@@ -110,7 +110,7 @@ exports['p bound error'] = function(test){
     test.expect(1);
     var f = forms.create({
         field_name: forms.fields.string({
-            validators: [function(data, raw_value, callback){
+            validators: [function(form, field, callback){
                 callback(new Error('validation error'));
             }]
         })
@@ -175,7 +175,7 @@ exports['li bound error'] = function(test){
     test.expect(1);
     var f = forms.create({
         field_name: forms.fields.string({
-            validators: [function(data, raw_value, callback){
+            validators: [function(form, field, callback){
                 callback(new Error('validation error'));
             }]
         })
@@ -246,7 +246,7 @@ exports['table bound error'] = function(test){
     test.expect(1);
     var f = forms.create({
         field_name: forms.fields.string({
-            validators: [function(data, raw_value, callback){
+            validators: [function(form, field, callback){
                 callback(new Error('validation error'));
             }]
         })
