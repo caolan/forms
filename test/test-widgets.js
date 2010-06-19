@@ -26,7 +26,30 @@ exports['password'] = test_input('password');
 exports['checkbox'] = test_input('checkbox');
 exports['hidden'] = test_input('hidden');
 
-/*exports['select'] = function(test){
+exports['select'] = function(test){
     test.equals(
-        forms.widgets.select(
-};*/
+        forms.widgets.select().toHTML('name', {choices: {
+            val1:'text1',
+            val2:'text2'
+        }}),
+        '<select name="name" id="id_name">' +
+            '<option value="val1">text1</option>' +
+            '<option value="val2">text2</option>' +
+        '</select>'
+    );
+    test.equals(
+        forms.widgets.select({classes: ['one', 'two']}).toHTML('name', {
+            choices: {
+                val1:'text1',
+                val2:'text2'
+            },
+            id: 'someid',
+            value: 'val2'
+        }),
+        '<select name="name" id="someid" class="one two">' +
+            '<option value="val1">text1</option>' +
+            '<option value="val2" selected="selected">text2</option>' +
+        '</select>'
+    );
+    test.done();
+};
