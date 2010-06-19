@@ -30,7 +30,7 @@ exports['div required'] = function(test){
 exports['div bound'] = function(test){
     test.expect(1);
     var f = forms.create({name: forms.fields.string()});
-    f.bind({name: 'val'}, function(err, f){
+    f.bind({name: 'val'}).validate(function(err, f){
         test.equals(
             f.toHTML(forms.render.div),
             '<div class="field">' +
@@ -51,7 +51,7 @@ exports['div bound error'] = function(test){
             }]
         })
     });
-    f.bind({field_name: 'val'}, function(err, f){
+    f.bind({field_name: 'val'}).validate(function(err, f){
         test.equals(
             f.toHTML(forms.render.div),
             '<div class="field error">' +
@@ -94,7 +94,7 @@ exports['p required'] = function(test){
 exports['p bound'] = function(test){
     test.expect(1);
     var f = forms.create({name: forms.fields.string()});
-    f.bind({name: 'val'}, function(err, f){
+    f.bind({name: 'val'}).validate(function(err, f){
         test.equals(
             f.toHTML(forms.render.p),
             '<p class="field">' +
@@ -115,7 +115,7 @@ exports['p bound error'] = function(test){
             }]
         })
     });
-    f.bind({field_name: 'val'}, function(err, f){
+    f.bind({field_name: 'val'}).validate(function(err, f){
         test.equals(
             f.toHTML(forms.render.p),
             '<p class="field error">' +
@@ -158,7 +158,7 @@ exports['li required'] = function(test){
 exports['li bound'] = function(test){
     test.expect(1);
     var f = forms.create({name: forms.fields.string()});
-    f.bind({name: 'val'}, function(err, f){
+    f.bind({name: 'val'}).validate(function(err, f){
         test.equals(
             f.toHTML(forms.render.li),
             '<li class="field">' +
@@ -180,7 +180,7 @@ exports['li bound error'] = function(test){
             }]
         })
     });
-    f.bind({field_name: 'val'}, function(err, f){
+    f.bind({field_name: 'val'}).validate(function(err, f){
         test.equals(
             f.toHTML(forms.render.li),
             '<li class="field error">' +
@@ -227,7 +227,7 @@ exports['table required'] = function(test){
 exports['table bound'] = function(test){
     test.expect(1);
     var f = forms.create({name: forms.fields.string()});
-    f.bind({name: 'val'}, function(err, f){
+    f.bind({name: 'val'}).validate(function(err, f){
         test.equals(
             f.toHTML(forms.render.table),
             '<tr class="field">' +
@@ -251,7 +251,7 @@ exports['table bound error'] = function(test){
             }]
         })
     });
-    f.bind({field_name: 'val'}, function(err, f){
+    f.bind({field_name: 'val'}).validate(function(err, f){
         test.equals(
             f.toHTML(forms.render.table),
             '<tr class="field error">' +

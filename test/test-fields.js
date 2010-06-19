@@ -20,10 +20,36 @@ var testField = function(field){
         test.same(f.validators, [fn1, fn2]);
         test.equals(f.widget, 'some widget');
         test.same(f.choices, {one:'option one', two:'option two'});
+        test.equals(f.validate, undefined);
         test.done();
     };
 
     exports[field + ' bind'] = function(test){
+        test.expect(7);
+
+        var f = forms.fields[field]({
+            label: 'test label',
+            validators: [
+                function(data, raw_value, callback){
+                    test.ok(false, 'validators should not be called');
+                }
+            ]
+        });
+        f.parse = function(data){
+            test.equals(data, 'some data');
+            return 'some data parsed';
+        };
+        var bound = f.bind('some data');
+        test.equals(bound.label, 'test label');
+        test.equals(bound.value, 'some data');
+        test.equals(bound.data, 'some data parsed');
+        test.equals(bound.error, undefined);
+        test.ok(bound.validate instanceof Function);
+        test.ok(bound != f, 'bind returns a new field object');
+        test.done();
+    };
+
+    exports[field + ' validate'] = function(test){
         test.expect(10);
 
         var f = forms.fields[field]({
@@ -46,26 +72,26 @@ var testField = function(field){
             test.equals(data, 'some data');
             return 'some data parsed';
         };
-        f.bind('some data', function(err, bound){
+        f.bind('some data').validate(function(err, bound){
             test.equals(bound.label, 'test label');
             test.equals(bound.value, 'some data');
             test.equals(bound.data, 'some data parsed');
             test.equals(bound.error, 'validation error');
             test.ok(bound != f, 'bind returns a new field object');
+            test.done();
         });
-        setTimeout(test.done, 25);
     };
 
-    exports[field + ' bind required'] = function(test){
+    exports[field + ' validate required'] = function(test){
         test.expect(5);
         var f = forms.fields[field]({required: true});
-        f.bind(undefined, function(err, f){
+        f.bind(undefined).validate(function(err, f){
             test.equals(f.value, undefined);
             test.equals(f.error, 'required field');
         });
         var f2 = forms.fields[field]({required: true});
         f2.parse = function(val){return val;};
-        f2.bind('val', function(err, f2){
+        f2.bind('val').validate(function(err, f2){
             test.equals(f2.value, 'val');
             test.equals(f2.data, 'val');
             test.equals(f2.error, null);
@@ -73,19 +99,19 @@ var testField = function(field){
         setTimeout(test.done, 25);
     };
 
-    exports[field + ' bind no validators'] = function(test){
+    exports[field + ' validate no validators'] = function(test){
         test.expect(4);
         var f = forms.fields[field]();
         f.parse = function(data){
             test.equals(data, 'some data');
             return 'some data parsed';
         };
-        f.bind('some data', function(err, f){
+        f.bind('some data').validate(function(err, f){
             test.equals(f.value, 'some data');
             test.equals(f.data, 'some data parsed');
             test.equals(f.error, null);
+            test.done();
         });
-        setTimeout(test.done, 25);
     };
 };
 

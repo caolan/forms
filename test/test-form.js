@@ -7,13 +7,37 @@ exports['bind'] = function(test){
         field1: forms.fields.string(),
         field2: forms.fields.string({
             validators: [function(data, raw_value, callback){
+                test.ok(false, 'validators should not be called');
+                callback(new Error('validation error'));
+            }]
+        })
+    });
+    var f = form.bind({field1: 'data one', field2: 'data two'});
+    test.equals(f.fields.field1.value, 'data one');
+    test.equals(f.fields.field1.data, 'data one');
+    test.equals(f.fields.field1.error, undefined);
+    test.equals(f.fields.field2.value, 'data two');
+    test.equals(f.fields.field2.data, 'data two');
+    test.equals(f.fields.field2.error, undefined);
+
+    test.same(f.data, {field1: 'data one', field2: 'data two'});
+    test.ok(form != f, 'bind returns new form object');
+
+    test.done();
+};
+
+exports['validate'] = function(test){
+    var form = forms.create({
+        field1: forms.fields.string(),
+        field2: forms.fields.string({
+            validators: [function(data, raw_value, callback){
                 test.equals(data, 'data two');
                 test.equals(raw_value, 'data two');
                 callback(new Error('validation error'));
             }]
         })
     });
-    form.bind({field1: 'data one', field2: 'data two'}, function(err, f){
+    form.bind({field1:'data one', field2:'data two'}).validate(function(err, f){
         test.equals(f.fields.field1.value, 'data one');
         test.equals(f.fields.field1.data, 'data one');
         test.equals(f.fields.field1.error, null);
@@ -29,12 +53,12 @@ exports['bind'] = function(test){
     });
 };
 
-exports['bind valid data'] = function(test){
+exports['validate valid data'] = function(test){
     var f = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string()
     });
-    f.bind({field1: '1', field2: '2'}, function(err, f){
+    f.bind({field1: '1', field2: '2'}).validate(function(err, f){
         test.equals(f.isValid(), true);
         test.equals(
             f.toHTML(),
@@ -51,7 +75,7 @@ exports['bind valid data'] = function(test){
     });
 };
 
-exports['bind invalid data'] = function(test){
+exports['validate invalid data'] = function(test){
     var f = forms.create({
         field1: forms.fields.string({
             validators: [function(data, raw_value, callback){
@@ -64,7 +88,7 @@ exports['bind invalid data'] = function(test){
             }]
         })
     });
-    f.bind({field1: '1', field2: '2'}, function(err, f){
+    f.bind({field1: '1', field2: '2'}).validate(function(err, f){
         test.equals(f.isValid(), false);
         test.equals(
             f.toHTML(),
@@ -113,10 +137,16 @@ exports['handle empty'] = function(test){
 };
 
 exports['handle success'] = function(test){
-    test.expect(5);
+    test.expect(7);
     var f = forms.create({field1: forms.fields.string()});
+    var call_order = [];
     f.bind = function(raw_data, callback){
+        call_order.push('bind');
         test.ok(true, 'bind called');
+        return f;
+    };
+    f.validate = function(callback){
+        test.ok(true, 'validate called');
         callback(null, f);
     };
     f.handle({field1: 'test'}, {
@@ -137,17 +167,21 @@ exports['handle success'] = function(test){
     f.handle({field1: 'test'}, {
         other: function(form){
             test.ok(true, 'other called');
+            test.done();
         }
     });
-    setTimeout(test.done, 50);
 };
 
 exports['handle error'] = function(test){
-    test.expect(5);
+    test.expect(7);
     var f = forms.create({field1: forms.fields.string()});
     f.bind = function(raw_data, callback){
         test.ok(true, 'bind called');
         f.fields.field1.error = 'some error';
+        return f;
+    };
+    f.validate = function(callback){
+        test.ok(true, 'validate called');
         callback(null, f);
     };
     f.handle({}, {
@@ -229,7 +263,7 @@ exports['div required'] = function(test){
 exports['div bound'] = function(test){
     test.expect(1);
     var f = forms.create({name: forms.fields.string()});
-    f.bind({name: 'val'}, function(err, f){
+    f.bind({name: 'val'}).validate(function(err, f){
         test.equals(
             f.toHTML(),
             '<div class="field">' +
@@ -250,7 +284,7 @@ exports['div bound error'] = function(test){
             }]
         })
     });
-    f.bind({field_name: 'val'}, function(err, f){
+    f.bind({field_name: 'val'}).validate(function(err, f){
         test.equals(
             f.toHTML(),
             '<div class="field error">' +
