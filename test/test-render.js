@@ -65,6 +65,27 @@ exports['div bound error'] = function(test){
     setTimeout(test.done, 25);
 };
 
+exports['div multipleCheckbox'] = function(test){
+    var f = forms.create({
+        fieldname: forms.fields.string({
+            choices: {one: 'item one'},
+            widget: forms.widgets.multipleCheckbox()
+        })
+    });
+    test.equals(
+        f.toHTML(forms.render.div),
+        '<div class="field">' +
+            '<fieldset>' +
+                '<legend>Fieldname</legend>' +
+                '<input type="checkbox" name="fieldname" id="id_fieldname_one"'+
+                ' value="one">' +
+                '<label for="id_fieldname_one">item one</label>' +
+            '</fieldset>' +
+        '</div>'
+    );
+    test.done();
+};
+
 exports['p'] = function(test){
     var f = forms.create({fieldname: forms.fields.string()});
     test.equals(
@@ -127,6 +148,27 @@ exports['p bound error'] = function(test){
         );
     });
     setTimeout(test.done, 25);
+};
+
+exports['p multipleCheckbox'] = function(test){
+    var f = forms.create({
+        fieldname: forms.fields.string({
+            choices: {one: 'item one'},
+            widget: forms.widgets.multipleCheckbox()
+        })
+    });
+    test.equals(
+        f.toHTML(forms.render.p),
+        '<p class="field">' +
+            '<fieldset>' +
+                '<legend>Fieldname</legend>' +
+                '<input type="checkbox" name="fieldname" id="id_fieldname_one"'+
+                ' value="one">' +
+                '<label for="id_fieldname_one">item one</label>' +
+            '</fieldset>' +
+        '</p>'
+    );
+    test.done();
 };
 
 exports['li'] = function(test){
@@ -192,6 +234,27 @@ exports['li bound error'] = function(test){
         );
     });
     setTimeout(test.done, 25);
+};
+
+exports['li multipleCheckbox'] = function(test){
+    var f = forms.create({
+        fieldname: forms.fields.string({
+            choices: {one: 'item one'},
+            widget: forms.widgets.multipleCheckbox()
+        })
+    });
+    test.equals(
+        f.toHTML(forms.render.li),
+        '<li class="field">' +
+            '<fieldset>' +
+                '<legend>Fieldname</legend>' +
+                '<input type="checkbox" name="fieldname" id="id_fieldname_one"'+
+                ' value="one">' +
+                '<label for="id_fieldname_one">item one</label>' +
+            '</fieldset>' +
+        '</li>'
+    );
+    test.done();
 };
 
 exports['table'] = function(test){
