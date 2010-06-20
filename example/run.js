@@ -50,6 +50,10 @@ http.createServer(function(req, res){
             choices: {one: 'item 1', two: 'item 2', three: 'item 3'},
             widget: widgets.multipleRadio()
         }),
+        and_more: fields.array({
+            choices: {one: 'item 1', two: 'item 2', three: 'item 3'},
+            widget: widgets.multipleSelect()
+        }),
         notes: fields.string({widget: widgets.textarea()}),
         spam_me: fields.boolean()
     });

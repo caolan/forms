@@ -177,3 +177,34 @@ exports['multipleRadio mutliple selected'] = function(test){
     test.equals(forms.widgets.multipleRadio().type, 'multipleRadio');
     test.done();
 };
+
+exports['multipleSelect'] = function(test){
+    test.equals(
+        forms.widgets.multipleSelect().toHTML('name', {choices: {
+            val1:'text1',
+            val2:'text2'
+        }}),
+        '<select multiple="mulitple" name="name" id="id_name">' +
+            '<option value="val1">text1</option>' +
+            '<option value="val2">text2</option>' +
+        '</select>'
+    );
+    test.equals(
+        forms.widgets.multipleSelect({classes: ['one', 'two']}).toHTML('name', {
+            choices: {
+                val1:'text1',
+                val2:'text2',
+                val3:'text3'
+            },
+            id: 'someid',
+            value: ['val2','val3']
+        }),
+        '<select multiple="mulitple" name="name" id="someid" class="one two">' +
+            '<option value="val1">text1</option>' +
+            '<option value="val2" selected="selected">text2</option>' +
+            '<option value="val3" selected="selected">text3</option>' +
+        '</select>'
+    );
+    test.equals(forms.widgets.multipleSelect().type, 'multipleSelect');
+    test.done();
+};
