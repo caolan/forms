@@ -91,3 +91,22 @@ exports['textarea'] = function(test){
     );
     test.done();
 };
+
+exports['multipleCheckbox'] = function(test){
+    var w = forms.widgets.multipleCheckbox();
+    var field = {
+        choices: {one:'Item one',two:'Item two',three:'Item three'},
+        value: 'two'
+    };
+    test.equals(
+        w.toHTML('name', field),
+        '<input type="checkbox" name="name" id="id_name_one" value="one">' +
+        '<label for="id_name_one">Item one</label>' +
+        '<input type="checkbox" name="name" id="id_name_two" value="two"' +
+        ' checked="checked">' +
+        '<label for="id_name_two">Item two</label>' +
+        '<input type="checkbox" name="name" id="id_name_three" value="three">' +
+        '<label for="id_name_three">Item three</label>'
+    );
+    test.done();
+};
