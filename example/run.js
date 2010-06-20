@@ -46,6 +46,10 @@ http.createServer(function(req, res){
             choices: {one: 'item 1', two: 'item 2', three: 'item 3'},
             widget: widgets.multipleCheckbox()
         }),
+        even_more: fields.string({
+            choices: {one: 'item 1', two: 'item 2', three: 'item 3'},
+            widget: widgets.multipleRadio()
+        }),
         notes: fields.string({widget: widgets.textarea()}),
         spam_me: fields.boolean()
     });
