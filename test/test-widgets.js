@@ -81,10 +81,13 @@ exports['textarea'] = function(test){
         '<textarea name="name" id="id_name"></textarea>'
     );
     test.equals(
-        forms.widgets.textarea({classes: ['one', 'two']}).toHTML('name', {
-            id: 'someid', value: 'value'
-        }),
-        '<textarea name="name" id="someid" class="one two">value</textarea>'
+        forms.widgets.textarea({
+            classes: ['one', 'two'],
+            rows: 20,
+            cols: 80
+        }).toHTML('name', {id: 'someid', value: 'value'}),
+        '<textarea name="name" id="someid" class="one two" rows="20"' +
+        ' cols="80">value</textarea>'
     );
     test.done();
 };
