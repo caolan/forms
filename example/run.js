@@ -42,15 +42,21 @@ http.createServer(function(req, res){
                 else callback();
             }]
         }),
+        more_options: fields.string({
+            choices: {one: 'item 1', two: 'item 2', three: 'item 3'},
+            widget: widgets.multipleCheckbox()
+        }),
         notes: fields.string({widget: widgets.textarea()}),
         spam_me: fields.boolean()
     });
 
     form.handle(req, {
         success: function(form){
+            var req_data = require('url').parse(req.url,1).query;
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.write('<h1>Success!</h1>');
-            res.end('<pre>' + JSON.stringify(form.data) + '</pre>');
+            res.write('<pre>' + sys.inspect(form.data) + '</pre>');
+            res.end('<pre>' + sys.inspect(req_data) + '</pre>');
         },
         // perhaps also have error and empty events
         other: function(form){

@@ -31,6 +31,10 @@
                 margin-left: 32px;
                 top: 4px;
             }
+            .field fieldset input {
+                margin: 0;
+                width: 20px;
+            }
             .error {
                 background: #ffcccc;
             }
