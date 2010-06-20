@@ -9,19 +9,27 @@
             label {
                 position: relative;
                 width: 200px;
-                top: 2px;
+                top: 6px;
             }
             .required label {
                 font-weight: bold;
             }
             .field {
                 border-bottom: 1px dashed #ccc;
-                padding: 15px 5px 20px 5px;
+                padding: 10px 5px 15px 5px;
                 position: relative;
             }
-            .field input, .field select {
-                position: absolute;
-                left: 175px;
+            .field input, .field select, .field textarea {
+                margin: -20px 0 0 175px;
+                width: 180px;
+            }
+            .field textarea {
+                margin-top: -15px;
+            }
+            .field input[type='checkbox'] {
+                position: relative;
+                margin-left: 32px;
+                top: 4px;
             }
             .error {
                 background: #ffcccc;

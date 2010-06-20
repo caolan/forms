@@ -42,6 +42,7 @@ http.createServer(function(req, res){
                 else callback();
             }]
         }),
+        notes: fields.string({widget: widgets.textarea()}),
         spam_me: fields.boolean()
     });
 
