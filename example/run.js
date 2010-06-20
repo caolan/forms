@@ -42,7 +42,7 @@ http.createServer(function(req, res){
                 else callback();
             }]
         }),
-        more_options: fields.string({
+        more_options: fields.array({
             choices: {one: 'item 1', two: 'item 2', three: 'item 3'},
             widget: widgets.multipleCheckbox()
         }),
