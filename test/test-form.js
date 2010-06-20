@@ -12,6 +12,10 @@ exports['bind'] = function(test){
             }]
         })
     });
+    // unbound
+    test.equals(form.isValid, undefined);
+
+    // bound
     var f = form.bind({field1: 'data one', field2: 'data two'});
     test.equals(f.fields.field1.value, 'data one');
     test.equals(f.fields.field1.data, 'data one');
@@ -19,6 +23,10 @@ exports['bind'] = function(test){
     test.equals(f.fields.field2.value, 'data two');
     test.equals(f.fields.field2.data, 'data two');
     test.equals(f.fields.field2.error, undefined);
+
+    test.ok(f.isValid instanceof Function);
+    test.equals(f.bind, undefined);
+    test.equals(f.handle, undefined);
 
     test.same(f.data, {field1: 'data one', field2: 'data two'});
     test.ok(form != f, 'bind returns new form object');
@@ -141,9 +149,10 @@ exports['handle success'] = function(test){
     test.expect(7);
     var f = forms.create({field1: forms.fields.string()});
     var call_order = [];
-    f.bind = function(raw_data, callback){
+    f.bind = function(raw_data){
         call_order.push('bind');
         test.ok(true, 'bind called');
+        f.isValid = function(){return true;};
         return f;
     };
     f.validate = function(callback){
@@ -179,6 +188,7 @@ exports['handle error'] = function(test){
     f.bind = function(raw_data, callback){
         test.ok(true, 'bind called');
         f.fields.field1.error = 'some error';
+        f.isValid = function(){return false;};
         return f;
     };
     f.validate = function(callback){
