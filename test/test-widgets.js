@@ -17,6 +17,7 @@ var test_input = function(type){
             '<input type="' + type + '" name="field1" id="id_field1"' +
             ' value="some value" />'
         );
+        test.equals(forms.widgets[type]().type, type);
         test.done();
     };
 };
@@ -44,6 +45,7 @@ exports['checkbox'] = function(test){
         forms.widgets.checkbox().toHTML('field', {value:false}),
         '<input type="checkbox" name="field" id="id_field" />'
     );
+    test.equals(forms.widgets.checkbox().type, 'checkbox');
     test.done();
 };
 
@@ -72,6 +74,7 @@ exports['select'] = function(test){
             '<option value="val2" selected="selected">text2</option>' +
         '</select>'
     );
+    test.equals(forms.widgets.select().type, 'select');
     test.done();
 };
 
@@ -89,6 +92,7 @@ exports['textarea'] = function(test){
         '<textarea name="name" id="someid" class="one two" rows="20"' +
         ' cols="80">value</textarea>'
     );
+    test.equals(forms.widgets.textarea().type, 'textarea');
     test.done();
 };
 
@@ -108,5 +112,6 @@ exports['multipleCheckbox'] = function(test){
         '<input type="checkbox" name="name" id="id_name_three" value="three">' +
         '<label for="id_name_three">Item three</label>'
     );
+    test.equals(forms.widgets.multipleCheckbox().type, 'multipleCheckbox');
     test.done();
 };
