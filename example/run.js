@@ -54,7 +54,9 @@ http.createServer(function(req, res){
             choices: {one: 'item 1', two: 'item 2', three: 'item 3'},
             widget: widgets.multipleSelect()
         }),
-        notes: fields.string({widget: widgets.textarea()}),
+        notes: fields.string({
+            widget: widgets.textarea({rows: 6})
+        }),
         spam_me: fields.boolean()
     });
 
