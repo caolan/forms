@@ -1,261 +1,118 @@
 var forms = require('forms');
 
 
-exports['div'] = function(test){
-    var f = forms.create({fieldname: forms.fields.string()});
-    test.equals(
-        f.toHTML(forms.render.div),
-        '<div class="field">' +
-            '<label for="id_fieldname">Fieldname</label>' +
-            '<input type="text" name="fieldname" id="id_fieldname" />' +
-        '</div>'
-    );
-    test.done();
-};
-
-exports['div required'] = function(test){
-    var f = forms.create({
-        fieldname: forms.fields.string({required:true})
-    });
-    test.equals(
-        f.toHTML(forms.render.div),
-        '<div class="field required">' +
-            '<label for="id_fieldname">Fieldname</label>' +
-            '<input type="text" name="fieldname" id="id_fieldname" />' +
-        '</div>'
-    );
-    test.done();
-};
-
-exports['div bound'] = function(test){
-    test.expect(1);
-    var f = forms.create({name: forms.fields.string()});
-    f.bind({name: 'val'}).validate(function(err, f){
+var testWrap = function(tag){
+    exports[tag] = function(test){
+        var f = forms.create({fieldname: forms.fields.string()});
         test.equals(
-            f.toHTML(forms.render.div),
-            '<div class="field">' +
-                '<label for="id_name">Name</label>' +
-                '<input type="text" name="name" id="id_name" value="val" />' +
-            '</div>'
+            f.toHTML(forms.render[tag]),
+            '<' + tag + ' class="field">' +
+                '<label for="id_fieldname">Fieldname</label>' +
+                '<input type="text" name="fieldname" id="id_fieldname" />' +
+            '</' + tag + '>'
         );
-    });
-    setTimeout(test.done, 25);
-};
+        test.done();
+    };
 
-exports['div bound error'] = function(test){
-    test.expect(1);
-    var f = forms.create({
-        field_name: forms.fields.string({
-            validators: [function(form, field, callback){
-                callback('validation error');
-            }]
-        })
-    });
-    f.bind({field_name: 'val'}).validate(function(err, f){
+    exports[tag + ' required'] = function(test){
+        var f = forms.create({
+            fieldname: forms.fields.string({required:true})
+        });
         test.equals(
-            f.toHTML(forms.render.div),
-            '<div class="field error">' +
-                '<p class="error_msg">validation error</p>' +
-                '<label for="id_field_name">Field name</label>' +
-                '<input type="text" name="field_name" id="id_field_name" ' +
-                'value="val" />' +
-            '</div>'
+            f.toHTML(forms.render[tag]),
+            '<' + tag + ' class="field required">' +
+                '<label for="id_fieldname">Fieldname</label>' +
+                '<input type="text" name="fieldname" id="id_fieldname" />' +
+            '</' + tag + '>'
         );
-    });
-    setTimeout(test.done, 25);
-};
+        test.done();
+    };
 
-exports['div multipleCheckbox'] = function(test){
-    var f = forms.create({
-        fieldname: forms.fields.string({
-            choices: {one: 'item one'},
-            widget: forms.widgets.multipleCheckbox()
-        })
-    });
-    test.equals(
-        f.toHTML(forms.render.div),
-        '<div class="field">' +
-            '<fieldset>' +
-                '<legend>Fieldname</legend>' +
-                '<input type="checkbox" name="fieldname" id="id_fieldname_one"'+
-                ' value="one">' +
-                '<label for="id_fieldname_one">item one</label>' +
-            '</fieldset>' +
-        '</div>'
-    );
-    test.done();
-};
+    exports[tag + ' bound'] = function(test){
+        test.expect(1);
+        var f = forms.create({name: forms.fields.string()});
+        f.bind({name: 'val'}).validate(function(err, f){
+            test.equals(
+                f.toHTML(forms.render[tag]),
+                '<' + tag + ' class="field">' +
+                    '<label for="id_name">Name</label>' +
+                    '<input type="text" name="name" id="id_name" value="val" />' +
+                '</' + tag + '>'
+            );
+        });
+        setTimeout(test.done, 25);
+    };
 
-exports['p'] = function(test){
-    var f = forms.create({fieldname: forms.fields.string()});
-    test.equals(
-        f.toHTML(forms.render.p),
-        '<p class="field">' +
-            '<label for="id_fieldname">Fieldname</label>' +
-            '<input type="text" name="fieldname" id="id_fieldname" />' +
-        '</p>'
-    );
-    test.done();
-};
+    exports[tag + ' bound error'] = function(test){
+        test.expect(1);
+        var f = forms.create({
+            field_name: forms.fields.string({
+                validators: [function(form, field, callback){
+                    callback('validation error');
+                }]
+            })
+        });
+        f.bind({field_name: 'val'}).validate(function(err, f){
+            test.equals(
+                f.toHTML(forms.render[tag]),
+                '<' + tag + ' class="field error">' +
+                    '<p class="error_msg">validation error</p>' +
+                    '<label for="id_field_name">Field name</label>' +
+                    '<input type="text" name="field_name" id="id_field_name" ' +
+                    'value="val" />' +
+                '</' + tag + '>'
+            );
+        });
+        setTimeout(test.done, 25);
+    };
 
-exports['p required'] = function(test){
-    var f = forms.create({
-        fieldname: forms.fields.string({required:true})
-    });
-    test.equals(
-        f.toHTML(forms.render.p),
-        '<p class="field required">' +
-            '<label for="id_fieldname">Fieldname</label>' +
-            '<input type="text" name="fieldname" id="id_fieldname" />' +
-        '</p>'
-    );
-    test.done();
-};
-
-exports['p bound'] = function(test){
-    test.expect(1);
-    var f = forms.create({name: forms.fields.string()});
-    f.bind({name: 'val'}).validate(function(err, f){
+    exports[tag + ' multipleCheckbox'] = function(test){
+        var f = forms.create({
+            fieldname: forms.fields.string({
+                choices: {one: 'item one'},
+                widget: forms.widgets.multipleCheckbox()
+            })
+        });
         test.equals(
-            f.toHTML(forms.render.p),
-            '<p class="field">' +
-                '<label for="id_name">Name</label>' +
-                '<input type="text" name="name" id="id_name" value="val" />' +
-            '</p>'
+            f.toHTML(forms.render[tag]),
+            '<' + tag + ' class="field">' +
+                '<fieldset>' +
+                    '<legend>Fieldname</legend>' +
+                    '<input type="checkbox" name="fieldname" id="id_fieldname_one"'+
+                    ' value="one">' +
+                    '<label for="id_fieldname_one">item one</label>' +
+                '</fieldset>' +
+            '</' + tag + '>'
         );
-    });
-    setTimeout(test.done, 25);
-};
+        test.done();
+    };
 
-exports['p bound error'] = function(test){
-    test.expect(1);
-    var f = forms.create({
-        field_name: forms.fields.string({
-            validators: [function(form, field, callback){
-                callback('validation error');
-            }]
-        })
-    });
-    f.bind({field_name: 'val'}).validate(function(err, f){
+    exports[tag + ' multipleRadio'] = function(test){
+        var f = forms.create({
+            fieldname: forms.fields.string({
+                choices: {one: 'item one'},
+                widget: forms.widgets.multipleRadio()
+            })
+        });
         test.equals(
-            f.toHTML(forms.render.p),
-            '<p class="field error">' +
-                '<p class="error_msg">validation error</p>' +
-                '<label for="id_field_name">Field name</label>' +
-                '<input type="text" name="field_name" id="id_field_name" ' +
-                'value="val" />' +
-            '</p>'
+            f.toHTML(forms.render[tag]),
+            '<' + tag + ' class="field">' +
+                '<fieldset>' +
+                    '<legend>Fieldname</legend>' +
+                    '<input type="radio" name="fieldname" id="id_fieldname_one"'+
+                    ' value="one">' +
+                    '<label for="id_fieldname_one">item one</label>' +
+                '</fieldset>' +
+            '</' + tag + '>'
         );
-    });
-    setTimeout(test.done, 25);
+        test.done();
+    };
+
 };
 
-exports['p multipleCheckbox'] = function(test){
-    var f = forms.create({
-        fieldname: forms.fields.string({
-            choices: {one: 'item one'},
-            widget: forms.widgets.multipleCheckbox()
-        })
-    });
-    test.equals(
-        f.toHTML(forms.render.p),
-        '<p class="field">' +
-            '<fieldset>' +
-                '<legend>Fieldname</legend>' +
-                '<input type="checkbox" name="fieldname" id="id_fieldname_one"'+
-                ' value="one">' +
-                '<label for="id_fieldname_one">item one</label>' +
-            '</fieldset>' +
-        '</p>'
-    );
-    test.done();
-};
-
-exports['li'] = function(test){
-    var f = forms.create({fieldname: forms.fields.string()});
-    test.equals(
-        f.toHTML(forms.render.li),
-        '<li class="field">' +
-            '<label for="id_fieldname">Fieldname</label>' +
-            '<input type="text" name="fieldname" id="id_fieldname" />' +
-        '</li>'
-    );
-    test.done();
-};
-
-exports['li required'] = function(test){
-    var f = forms.create({
-        fieldname: forms.fields.string({required:true})
-    });
-    test.equals(
-        f.toHTML(forms.render.li),
-        '<li class="field required">' +
-            '<label for="id_fieldname">Fieldname</label>' +
-            '<input type="text" name="fieldname" id="id_fieldname" />' +
-        '</li>'
-    );
-    test.done();
-};
-
-exports['li bound'] = function(test){
-    test.expect(1);
-    var f = forms.create({name: forms.fields.string()});
-    f.bind({name: 'val'}).validate(function(err, f){
-        test.equals(
-            f.toHTML(forms.render.li),
-            '<li class="field">' +
-                '<label for="id_name">Name</label>' +
-                '<input type="text" name="name" id="id_name"' +
-                ' value="val" />' +
-            '</li>'
-        );
-    });
-    setTimeout(test.done, 25);
-};
-
-exports['li bound error'] = function(test){
-    test.expect(1);
-    var f = forms.create({
-        field_name: forms.fields.string({
-            validators: [function(form, field, callback){
-                callback('validation error');
-            }]
-        })
-    });
-    f.bind({field_name: 'val'}).validate(function(err, f){
-        test.equals(
-            f.toHTML(forms.render.li),
-            '<li class="field error">' +
-                '<p class="error_msg">validation error</p>' +
-                '<label for="id_field_name">Field name</label>' +
-                '<input type="text" name="field_name" id="id_field_name" ' +
-                'value="val" />' +
-            '</li>'
-        );
-    });
-    setTimeout(test.done, 25);
-};
-
-exports['li multipleCheckbox'] = function(test){
-    var f = forms.create({
-        fieldname: forms.fields.string({
-            choices: {one: 'item one'},
-            widget: forms.widgets.multipleCheckbox()
-        })
-    });
-    test.equals(
-        f.toHTML(forms.render.li),
-        '<li class="field">' +
-            '<fieldset>' +
-                '<legend>Fieldname</legend>' +
-                '<input type="checkbox" name="fieldname" id="id_fieldname_one"'+
-                ' value="one">' +
-                '<label for="id_fieldname_one">item one</label>' +
-            '</fieldset>' +
-        '</li>'
-    );
-    test.done();
-};
+testWrap('div');
+testWrap('p');
+testWrap('li');
 
 exports['table'] = function(test){
     var f = forms.create({fieldname: forms.fields.string()});
