@@ -4,6 +4,8 @@ Constructing a good form by hand is a lot of work. Popular frameworks like
 Ruby on Rails and Django contain code to make this process less painful.
 This module is an attempt to provide the same sort of helpers for node.js.
 
+    npm install forms
+
 ## Contribute
 
 This code is still in its infancy, and I'd really appreciate any contributions,
