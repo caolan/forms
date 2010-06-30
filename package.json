@@ -1,0 +1,16 @@
+{ "name": "forms"
+, "description": "An easy way to create, parse and validate forms"
+, "main": "./index"
+, "author": "Caolan McMahon"
+, "version": "0.1.0"
+, "repository" :
+  { "type" : "git"
+  , "url" : "http://github.com/caolan/forms.git"
+  }
+, "bugs" : { "web" : "http://github.com/caolan/forms/issues" }
+, "licenses" :
+  [ { "type" : "MIT"
+    , "url" : "http://github.com/caolan/forms/raw/master/LICENSE"
+    }
+  ]
+}
