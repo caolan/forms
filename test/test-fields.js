@@ -52,21 +52,19 @@ var testField = function(field){
     exports[field + ' validate'] = function(test){
         test.expect(10);
 
-        var f = fields[field]({
-            label: 'test label',
-            validators: [
-                function(form, field, callback){
-                    test.equals(field.data, 'some data parsed');
-                    test.equals(field.value, 'some data');
-                    callback(null);
-                },
-                function(form, field, callback){
-                    test.equals(field.data, 'some data parsed');
-                    test.equals(field.value, 'some data');
-                    callback(new Error('validation error'));
-                }
-            ]
-        });
+        var f = fields[field]({label: 'test label'});
+        f.validators = [
+            function(form, field, callback){
+                test.equals(field.data, 'some data parsed');
+                test.equals(field.value, 'some data');
+                callback(null);
+            },
+            function(form, field, callback){
+                test.equals(field.data, 'some data parsed');
+                test.equals(field.value, 'some data');
+                callback(new Error('validation error'));
+            }
+        ];
 
         f.parse = function(data){
             test.equals(data, 'some data');
@@ -78,6 +76,29 @@ var testField = function(field){
             test.equals(bound.data, 'some data parsed');
             test.equals(bound.error, 'Error: validation error');
             test.ok(bound != f, 'bind returns a new field object');
+            test.done();
+        });
+    };
+
+    exports[field + ' validate multiple errors'] = function(test){
+        test.expect(1);
+
+        var f = fields[field]();
+        f.validators = [
+            function(form, field, callback){
+                callback('error one');
+            },
+            function(form, field, callback){
+                test.ok(false, 'second validator should not be called');
+                callback('error two');
+            }
+        ];
+
+        f.parse = function(data){
+            return 'some data parsed';
+        };
+        f.bind('some data').validate('form', function(err, bound){
+            test.equals(bound.error, 'error one');
             test.done();
         });
     };
