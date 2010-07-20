@@ -20,6 +20,10 @@ bug reports or advice. Especially on the following key areas:
   let's try and make the most of it!
 * __Ensuring it's easy to use with existing node web frameworks__. Ideally this
   module would integrate well with projects using any of the popular frameworks.
+### Contributors
+
+* [luddep](http://github.com/luddep)
+
 
 ## Example
 
