@@ -126,7 +126,7 @@ var testField = function(field){
         f.validators = [];
         f.bind(undefined).validate('form', function(err, f){
             test.equals(f.value, undefined);
-            test.equals(f.error, 'required field');
+            test.equals(f.error, 'This field is required.');
         });
         var f2 = fields[field]({required: true});
         f2.parse = function(val){return val;};
