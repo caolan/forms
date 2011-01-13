@@ -1,4 +1,4 @@
-var forms = require('forms');
+var forms = require('../lib/forms');
 
 
 exports['create'] = function(test){

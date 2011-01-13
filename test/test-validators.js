@@ -1,4 +1,4 @@
-var validators = require('forms').validators,
+var validators = require('../lib/forms').validators,
     async = require('async');
 
 
