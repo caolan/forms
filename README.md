@@ -23,6 +23,7 @@ bug reports or advice. Especially on the following key areas:
 ### Contributors
 
 * [luddep](http://github.com/luddep)
+* [jedp](https://github.com/jedp)
 
 
 ## Example
