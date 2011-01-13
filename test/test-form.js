@@ -1,4 +1,4 @@
-var forms = require('forms'),
+var forms = require('../lib/forms'),
     http = require('http');
 
 
@@ -243,6 +243,19 @@ exports['handle ServerRequest POST'] = function(test){
     });
     req.emit('data', 'field1=test');
     req.emit('end');
+};
+
+exports['handle ServerRequest POST with bodyDecoder'] = function(test){
+    var f = forms.create({field1: forms.fields.string()});
+    var req = new http.IncomingMessage();
+    req.body = {field1: 'test'};
+    req.method = 'POST';
+    f.handle(req, {
+        success: function(form){
+            test.equals(form.data.field1, 'test');
+            test.done();
+        }
+    });
 };
 
 exports['div'] = function(test){
