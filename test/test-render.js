@@ -123,6 +123,21 @@ var testWrap = function(tag){
         );
         test.done();
     };
+
+    exports[tag + ' hidden label'] = function(test){
+        var f = forms.create({
+            fieldname: forms.fields.string({
+                widget: forms.widgets.hidden()
+            })
+        });
+        test.equals(
+            f.toHTML(forms.render[tag]),
+            '<' + tag + ' class="field">' +
+                '<input type="hidden" name="fieldname" id="id_fieldname" />' +
+            '</' + tag + '>'
+        );
+        test.done();
+    };
 };
 
 testWrap('div');
