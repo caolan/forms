@@ -108,6 +108,21 @@ var testWrap = function(tag){
         test.done();
     };
 
+    exports[tag + ' label custom id'] = function(test){
+        var f = forms.create({
+            fieldname: forms.fields.string({
+                id: 'custom-id'
+            })
+        });
+        test.equals(
+            f.toHTML(forms.render[tag]),
+            '<' + tag + ' class="field">' +
+                '<label for="custom-id">Fieldname</label>' +
+                '<input type="text" name="fieldname" id="custom-id" />' +
+            '</' + tag + '>'
+        );
+        test.done();
+    };
 };
 
 testWrap('div');
