@@ -110,6 +110,7 @@ components following the same API.
 * password
 * email
 * url
+* choice
 
 ### Widgets
 
@@ -135,6 +136,7 @@ components following the same API.
 * regexp
 * email
 * url
+* choice
 
 ### Renderers
 
