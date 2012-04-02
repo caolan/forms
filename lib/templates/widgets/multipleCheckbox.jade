@@ -1,0 +1,9 @@
+- var i=0, uid
+ul(class=self.class)
+  each v, k in self.choices
+    - uid = self.id + '-' + i
+    li
+      input(checked=self.value.indexOf(k) >= 0, id=uid, name=self.name, type='checkbox', value=k)
+      label(for=uid)= v
+      - i++
+

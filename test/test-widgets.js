@@ -4,18 +4,16 @@ var test_input = function(type){
     return function(test){
         test.equals(
             forms.widgets[type]().toHTML('field1'),
-            '<input type="' + type + '" name="field1" id="id_field1" />'
+            '<input id="field1" name="field1" type="' + type + '"/>'
         );
         var w = forms.widgets[type]({classes: ['test1', 'test2', 'test3']});
         test.equals(
             w.toHTML('field2', {id:'form2_field2'}),
-            '<input type="' + type + '" name="field2" id="form2_field2"' +
-            ' class="test1 test2 test3" />'
+            '<input id="form2_field2" name="field2" type="' + type + '" class="test1 test2 test3"/>'
         );
         test.equals(
             forms.widgets[type]().toHTML('field1', {value:'some value'}),
-            '<input type="' + type + '" name="field1" id="id_field1"' +
-            ' value="some value" />'
+            '<input id="field1" name="field1" type="' + type + '" value="some value"/>'
         );
         test.equals(forms.widgets[type]().type, type);
         test.done();
@@ -29,21 +27,20 @@ exports['hidden'] = test_input('hidden');
 exports['checkbox'] = function(test){
     test.equals(
         forms.widgets.checkbox().toHTML('field1'),
-        '<input type="checkbox" name="field1" id="id_field1" />'
+        '<input id="field1" name="field1" type="checkbox"/>'
     );
     var w = forms.widgets.checkbox({classes: ['test1', 'test2', 'test3']});
     test.equals(
         w.toHTML('field2', {id:'form2_field2'}),
-        '<input type="checkbox" name="field2" id="form2_field2"' +
-        ' class="test1 test2 test3" />'
+        '<input id="form2_field2" name="field2" type="checkbox" class="test1 test2 test3"/>'
     );
     test.equals(
         forms.widgets.checkbox().toHTML('field', {value:true}),
-        '<input type="checkbox" name="field" id="id_field" checked="checked" />'
+        '<input checked="checked" id="field" name="field" type="checkbox"/>'
     );
     test.equals(
         forms.widgets.checkbox().toHTML('field', {value:false}),
-        '<input type="checkbox" name="field" id="id_field" />'
+        '<input id="field" name="field" type="checkbox"/>'
     );
     test.equals(forms.widgets.checkbox().type, 'checkbox');
     test.done();
@@ -51,11 +48,13 @@ exports['checkbox'] = function(test){
 
 exports['select'] = function(test){
     test.equals(
-        forms.widgets.select().toHTML('name', {choices: {
-            val1:'text1',
-            val2:'text2'
-        }}),
-        '<select name="name" id="id_name">' +
+        forms.widgets.select().toHTML('name', {
+          choices: {
+              val1:'text1',
+              val2:'text2'
+          }
+        }),
+        '<select id="name" name="name">' +
             '<option value="val1">text1</option>' +
             '<option value="val2">text2</option>' +
         '</select>'
@@ -69,7 +68,7 @@ exports['select'] = function(test){
             id: 'someid',
             value: 'val2'
         }),
-        '<select name="name" id="someid" class="one two">' +
+        '<select id="someid" name="name" class="one two">' +
             '<option value="val1">text1</option>' +
             '<option value="val2" selected="selected">text2</option>' +
         '</select>'
@@ -81,7 +80,7 @@ exports['select'] = function(test){
 exports['textarea'] = function(test){
     test.equals(
         forms.widgets.textarea().toHTML('name', {}),
-        '<textarea name="name" id="id_name"></textarea>'
+        '<textarea id="name" name="name"></textarea>'
     );
     test.equals(
         forms.widgets.textarea({
@@ -89,8 +88,7 @@ exports['textarea'] = function(test){
             rows: 20,
             cols: 80
         }).toHTML('name', {id: 'someid', value: 'value'}),
-        '<textarea name="name" id="someid" class="one two" rows="20"' +
-        ' cols="80">value</textarea>'
+        '<textarea cols="80" id="someid" name="name" rows="20" class="one two">value</textarea>'
     );
     test.equals(forms.widgets.textarea().type, 'textarea');
     test.done();
@@ -104,13 +102,20 @@ exports['multipleCheckbox'] = function(test){
     };
     test.equals(
         w.toHTML('name', field),
-        '<input type="checkbox" name="name" id="id_name_one" value="one">' +
-        '<label for="id_name_one">Item one</label>' +
-        '<input type="checkbox" name="name" id="id_name_two" value="two"' +
-        ' checked="checked">' +
-        '<label for="id_name_two">Item two</label>' +
-        '<input type="checkbox" name="name" id="id_name_three" value="three">' +
-        '<label for="id_name_three">Item three</label>'
+        '<ul>' +
+          '<li>' + 
+            '<input id="name-0" name="name" type="checkbox" value="one"/>' +
+            '<label for="name-0">Item one</label>' +
+          '</li>' +
+          '<li>' +
+            '<input checked="checked" id="name-1" name="name" type="checkbox" value="two"/>' +
+            '<label for="name-1">Item two</label>' +
+          '</li>' +
+          '<li>' +
+            '<input id="name-2" name="name" type="checkbox" value="three"/>' +
+            '<label for="name-2">Item three</label>' +
+          '</li>' +
+        '</ul>'
     );
     test.equals(forms.widgets.multipleCheckbox().type, 'multipleCheckbox');
     test.done();
@@ -124,14 +129,20 @@ exports['multipleCheckbox mutliple selected'] = function(test){
     };
     test.equals(
         w.toHTML('name', field),
-        '<input type="checkbox" name="name" id="id_name_one" value="one">' +
-        '<label for="id_name_one">Item one</label>' +
-        '<input type="checkbox" name="name" id="id_name_two" value="two"' +
-        ' checked="checked">' +
-        '<label for="id_name_two">Item two</label>' +
-        '<input type="checkbox" name="name" id="id_name_three" value="three"' +
-        ' checked="checked">' +
-        '<label for="id_name_three">Item three</label>'
+        '<ul>' +
+          '<li>' +
+            '<input id="name-0" name="name" type="checkbox" value="one"/>' +
+            '<label for="name-0">Item one</label>' +
+          '</li>' +
+          '<li>' +
+            '<input checked="checked" id="name-1" name="name" type="checkbox" value="two"/>' +
+            '<label for="name-1">Item two</label>' +
+          '</li>' +
+          '<li>' +
+            '<input checked="checked" id="name-2" name="name" type="checkbox" value="three"/>' +
+            '<label for="name-2">Item three</label>' +
+          '</li>' +
+        '</ul>'
     );
     test.equals(forms.widgets.multipleCheckbox().type, 'multipleCheckbox');
     test.done();
@@ -145,34 +156,20 @@ exports['multipleRadio'] = function(test){
     };
     test.equals(
         w.toHTML('name', field),
-        '<input type="radio" name="name" id="id_name_one" value="one">' +
-        '<label for="id_name_one">Item one</label>' +
-        '<input type="radio" name="name" id="id_name_two" value="two"' +
-        ' checked="checked">' +
-        '<label for="id_name_two">Item two</label>' +
-        '<input type="radio" name="name" id="id_name_three" value="three">' +
-        '<label for="id_name_three">Item three</label>'
-    );
-    test.equals(forms.widgets.multipleRadio().type, 'multipleRadio');
-    test.done();
-};
-
-exports['multipleRadio mutliple selected'] = function(test){
-    var w = forms.widgets.multipleRadio();
-    var field = {
-        choices: {one:'Item one',two:'Item two',three:'Item three'},
-        value: ['two', 'three']
-    };
-    test.equals(
-        w.toHTML('name', field),
-        '<input type="radio" name="name" id="id_name_one" value="one">' +
-        '<label for="id_name_one">Item one</label>' +
-        '<input type="radio" name="name" id="id_name_two" value="two"' +
-        ' checked="checked">' +
-        '<label for="id_name_two">Item two</label>' +
-        '<input type="radio" name="name" id="id_name_three" value="three"' +
-        ' checked="checked">' +
-        '<label for="id_name_three">Item three</label>'
+        '<ul>' +
+          '<li>' +
+            '<input id="name-0" name="name" type="radio" value="one"/>' +
+            '<label for="name-0">Item one</label>' +
+          '</li>' +
+          '<li>' +
+            '<input checked="checked" id="name-1" name="name" type="radio" value="two"/>' +
+            '<label for="name-1">Item two</label>' +
+          '</li>' +
+          '<li>' +
+            '<input id="name-2" name="name" type="radio" value="three"/>' +
+            '<label for="name-2">Item three</label>' +
+          '</li>' +
+        '</ul>'
     );
     test.equals(forms.widgets.multipleRadio().type, 'multipleRadio');
     test.done();
@@ -184,7 +181,7 @@ exports['multipleSelect'] = function(test){
             val1:'text1',
             val2:'text2'
         }}),
-        '<select multiple="mulitple" name="name" id="id_name">' +
+        '<select id="name" multiple="multiple" name="name">' +
             '<option value="val1">text1</option>' +
             '<option value="val2">text2</option>' +
         '</select>'
@@ -199,7 +196,7 @@ exports['multipleSelect'] = function(test){
             id: 'someid',
             value: ['val2','val3']
         }),
-        '<select multiple="mulitple" name="name" id="someid" class="one two">' +
+        '<select id="someid" multiple="multiple" name="name" class="one two">' +
             '<option value="val1">text1</option>' +
             '<option value="val2" selected="selected">text2</option>' +
             '<option value="val3" selected="selected">text3</option>' +

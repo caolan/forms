@@ -1,0 +1,7 @@
+select(class=self.classes, dir=self.dir, disabled=self.disabled,
+       id=self.id, lang=self.lang, multiple=self.multiple,
+       name=self.name, size=self.size, tabindex=self.tabindex,
+       title=self.title)
+  each v, k in self.choices
+    option(value=k, selected=self.value.indexOf(k) >= 0)= v
+ 
