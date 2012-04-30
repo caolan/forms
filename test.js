@@ -1,8 +1,9 @@
 #!/usr/local/bin/node
 
-require.paths.push(__dirname);
-require.paths.push(__dirname + '/deps');
-require.paths.push(__dirname + '/lib');
+// require.paths.push(__dirname);
+// require.paths.push(__dirname + '/deps');
+// require.paths.push(__dirname + '/lib');
+/* Note: require.paths is removed in node v0.5 and later. Use 'NODE_PATH=`pwd`:`pwd`/deps/:`pwd`/lib/ node test.js' to run tests. */
 
 try {
     var testrunner = require('nodeunit').testrunner;
