@@ -71,6 +71,38 @@ Would produce:
 You'll notice you have to provide your own form tags and submit button, its
 more flexible this way ;)
 
+If you would still like to add a form tag or a submit button, do it like so:
+
+    var forms = require('forms'),
+        fields = forms.fields,
+        widgets = forms.widgets,
+        validators = forms.validators;
+
+    var reg_form = forms.create({
+        username: fields.string({required: true}),
+        password: fields.password({required: true}),
+        confirm:  fields.password({
+            required: true,
+            validators: [validators.matchField('password')]
+        }),
+        email: fields.email(),
+        login: fields.button({
+          label: 'Login',
+          widget: widgets.button({submit: true})
+        })
+    });
+    
+    reg_form.method('post');
+
+This would add:
+
+    <form method="post">
+        ...
+        <div class="field">
+            <input type="submit" name="submit" id="id_submit" value="Login" />
+        </div>
+    </form>
+
 Handling a request:
 
     function myView(req, res){
