@@ -8,7 +8,10 @@
   , "url" : "http://github.com/caolan/forms.git"
   }
 , "bugs" : { "web" : "http://github.com/caolan/forms/issues" }
-, "dependencies": { "async": "0.1.0" }
+, "dependencies": {
+    "async": "0.1.0"
+  , "jade": "latest"
+  }
 , "licenses" :
   [ { "type" : "MIT"
     , "url" : "http://github.com/caolan/forms/raw/master/LICENSE"
