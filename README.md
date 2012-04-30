@@ -24,6 +24,7 @@ bug reports or advice. Especially on the following key areas:
 
 * [luddep](http://github.com/luddep)
 * [jedp](https://github.com/jedp)
+* [ljharb](https://github.com/ljharb)
 
 
 ## Example
