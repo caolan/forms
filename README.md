@@ -9,7 +9,7 @@ This module is an attempt to provide the same sort of helpers for node.js.
 ## Contribute
 
 This code is still in its infancy, and I'd really appreciate any contributions,
-bug reports or advice. Especially on the following key areas:
+bug reports, or advice. Especially on the following key areas:
 
 * __Creating sensible default rendering functions that generate flexible,
   accessible markup__. This is an early priority because without being

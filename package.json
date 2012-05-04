@@ -1,6 +1,6 @@
 {
     "name": "forms",
-    "description": "An easy way to create, parse and validate forms",
+    "description": "An easy way to create, parse, and validate forms",
     "main": "./index",
     "author": "Caolan McMahon",
     "version": "0.1.1",
