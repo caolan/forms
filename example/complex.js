@@ -1,3 +1,5 @@
+/*jslint node: true */
+
 require.paths.push(__dirname + '/../lib');
 require.paths.push(__dirname + '/../deps');
 
@@ -35,9 +37,12 @@ var form = forms.create({
             three: 'option three'
         },
         widget: widgets.select(),
-        validators: [function(form, field, callback){
-            if(field.data === 'two') callback('two?! are you crazy?!');
-            else callback();
+        validators: [function (form, field, callback) {
+            if (field.data === 'two') {
+                callback('two?! are you crazy?!');
+            } else {
+                callback();
+            }
         }]
     }),
     more_options: fields.array({
@@ -59,16 +64,15 @@ var form = forms.create({
 });
 
 
-http.createServer(function(req, res){
-
+http.createServer(function (req, res) {
     form.handle(req, {
-        success: function(form){
-            var req_data = require('url').parse(req.url,1).query;
+        success: function (form) {
+            var req_data = require('url').parse(req.url, 1).query;
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.write('<h1>Success!</h1>');
             res.end('<pre>' + sys.inspect(form.data) + '</pre>');
         },
-        other: function(form){
+        other: function (form) {
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.end(template.expand({form: form.toHTML()}));
         }

@@ -7,8 +7,7 @@
 
 try {
     var testrunner = require('nodeunit').testrunner;
-}
-catch(e) {
+} catch(e) {
     var sys = require('sys');
     sys.puts("Cannot find nodeunit module.");
     sys.puts("You can download submodules for this project by doing:");

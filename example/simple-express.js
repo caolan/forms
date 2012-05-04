@@ -1,3 +1,5 @@
+/*jslint node: true */
+
 require.paths.push(__dirname + '/../lib');
 require.paths.push(__dirname + '/../deps');
 
@@ -25,7 +27,7 @@ var reg_form = forms.create({
     email: fields.email()
 });
 
-app.configure(function() {
+app.configure(function () {
     app.set('views', __dirname);
     app.set('view engine', 'jade');
 
@@ -34,28 +36,28 @@ app.configure(function() {
     app.use(app.router);
 });
 
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     res.render('page', {
         locals: {
             title: 'Filling out the form...',
             form: reg_form.toHTML()
-        }    
+        }
     });
 });
 
-app.post('/', function(req, res) {
+app.post('/', function (req, res) {
     reg_form.handle(req, {
-        success: function(form) {
+        success: function (form) {
             res.render('page', {
                 locals: {
                     title: 'Success!'
                 }
             });
         },
-        other: function(form) {
+        other: function (form) {
             res.render('page', {
                 locals: {
-                    title: 'Failed!', 
+                    title: 'Failed!',
                     form: form.toHTML()
                 }
             });

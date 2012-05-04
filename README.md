@@ -73,18 +73,18 @@ more flexible this way ;)
 
 Handling a request:
 
-    function myView(req, res){
+    function myView(req, res) {
 
         reg_form.handle(req, {
-            success: function(form){
+            success: function (form) {
                 // there is a request and the form is valid
                 // form.data contains the submitted data
             },
-            error: function(form){
+            error: function (form) {
                 // the data in the request didn't validate,
                 // calling form.toHTML() again will render the error messages
             },
-            empty: function(form){
+            empty: function (form) {
                 // there was no form data in the request
             }
         });
