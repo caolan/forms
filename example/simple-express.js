@@ -1,14 +1,15 @@
 /*jslint node: true */
 
-require.paths.push(__dirname + '/../lib');
-require.paths.push(__dirname + '/../deps');
-
+/* 
+ *  You need to additionally install express, jade for this to work 
+ *
+ *     $ npm install express jade
+*/
 
 var http = require('http'),
     sys = require('sys'),
     fs = require('fs'),
-    forms = require('forms'),
-    parse = require('url').parse,
+    forms = require('../lib/forms'),
     express = require('express'),
     app = module.exports = express.createServer();
 
@@ -31,8 +32,7 @@ app.configure(function () {
     app.set('views', __dirname);
     app.set('view engine', 'jade');
 
-    // This will work with or without the bodyDecoder.
-    app.use(express.bodyDecoder());
+    app.use(express.bodyParser());
     app.use(app.router);
 });
 

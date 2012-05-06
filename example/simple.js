@@ -1,13 +1,9 @@
 /*jslint node: true */
 
-require.paths.push(__dirname + '/../lib');
-require.paths.push(__dirname + '/../deps');
-
-
 var http = require('http'),
     sys = require('sys'),
     fs = require('fs'),
-    forms = require('forms'),
+    forms = require('../lib/forms'),
     jsontemplate = require('./json-template'),
     parse = require('url').parse;
 
