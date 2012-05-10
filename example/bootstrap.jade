@@ -1,0 +1,16 @@
+!!!
+html
+  head
+    title Test forms for express.js
+    link(rel='stylesheet', href='http://twitter.github.com/bootstrap/assets/css/bootstrap.css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js')
+  body
+  - if (typeof form !== 'undefined')
+    div.row-fluid
+      div.span6.offset3
+        form(method='post').well.form-horizontal
+          fieldset
+            legend Comment about a product
+            != form
+          div.form-actions
+            input(type='submit').btn.btn-primary
