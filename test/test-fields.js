@@ -338,3 +338,18 @@ exports['array toHTML'] = function(test){
     );
     test.done();
 };
+
+testField('bootstrap');
+
+exports['bootstrap toHTML'] = function(test){
+    test.equals(
+        fields.bootstrap().toHTML('fieldname'),
+        '<div class="control-group">' +
+            '<label class="control-label" for="id_fieldname">undefined</label>' +
+            '<div class="controls">' +
+                '<input type="text" name="fieldname" id="id_fieldname" />' +
+             '</div>' +
+        '</div>'
+    );
+    test.done();
+};
