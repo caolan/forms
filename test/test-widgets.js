@@ -208,3 +208,25 @@ exports['multipleSelect'] = function(test){
     test.equals(forms.widgets.multipleSelect().type, 'multipleSelect');
     test.done();
 };
+
+exports['optional text input'] = function(test){
+    test.equals(
+        forms.widgets.text({
+            placeholder: 'Enter some comment',
+            'data-trigger': 'focus'
+        }).toHTML('field1'),
+        '<input type="text" name="field1" id="id_field1"' + 
+        ' placeholder="Enter some comment" data-trigger="focus" />'
+    );
+    test.equals(
+        forms.widgets.text({
+            classes: ['one', 'two'],
+            placeholder: 'Enter some comment',
+            'data-trigger': 'focus',
+            'aria-required': 'false'
+        }).toHTML('field1'),
+        '<input type="text" name="field1" id="id_field1" class="one two"' + 
+        ' placeholder="Enter some comment" data-trigger="focus" aria-required="false" />'
+    );
+    test.done();
+};

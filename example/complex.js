@@ -17,10 +17,15 @@ var template = jsontemplate.Template(
     fs.readFileSync(__dirname + '/page.jsont').toString()
 );
 
+var inputWithOptionalAttributes = forms.widgets.text({
+    placeholder: 'Where do you work?',
+    'data-toggle': 'focus'
+});
 
 var form = forms.create({
     name:  fields.string({required: true}),
     email: fields.email({required: true, label: 'Email Address'}),
+    organization: fields.string({ widget: inputWithOptionalAttributes }),
     website: fields.url(),
     password: fields.password({required: true}),
     password_confirm: fields.password({
