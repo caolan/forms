@@ -208,3 +208,60 @@ exports['multipleSelect'] = function(test){
     test.equals(forms.widgets.multipleSelect().type, 'multipleSelect');
     test.done();
 };
+
+exports['optional text input'] = function(test){
+    test.equals(
+        forms.widgets.text({
+            placeholder: 'Enter some comment',
+            'data-trigger': 'focus'
+        }).toHTML('field1'),
+        '<input type="text" name="field1" id="id_field1"' + 
+        ' placeholder="Enter some comment" data-trigger="focus" />'
+    );
+    test.equals(
+        forms.widgets.text({
+            classes: ['one', 'two'],
+            placeholder: 'Enter some comment',
+            'data-trigger': 'focus',
+            'aria-required': 'false'
+        }).toHTML('field1'),
+        '<input type="text" name="field1" id="id_field1" class="one two"' + 
+        ' placeholder="Enter some comment" data-trigger="focus" aria-required="false" />'
+    );
+    test.equals(
+        forms.widgets.text({
+            placeholder: 'Enter some comment',
+            unknown: 'foo'
+        }).toHTML('field1'),
+        '<input type="text" name="field1" id="id_field1"' +
+        ' placeholder="Enter some comment" />'
+    );
+    test.equals(
+        forms.widgets.text({
+            min: '5',
+            max: '10',
+            unknown: 'foo',
+            autocomplete: 'on'
+        }).toHTML('field1'),
+        '<input type="text" name="field1" id="id_field1"' +
+        ' min="5" max="10" autocomplete="on" />'
+    );
+    test.equals(
+        forms.widgets.text({
+            placeholder: 'Enter "some" comment'
+        }).toHTML('field1'),
+        '<input type="text" name="field1" id="id_field1"' +
+        ' placeholder="Enter &quot;some&quot; comment" />'
+    );
+    test.done();
+};
+
+exports['optional data attribute regex test'] = function(test){
+  var re = forms.widgets.text().dataRegExp;
+  test.equals(re.test('data-'), false);
+  test.equals(re.test('data-input'), true);
+  test.equals(re.test('idata-input'), false);
+  test.equals(re.test('data-input1'), false);
+  test.equals(re.test('data_input'), false);
+  test.done();
+};
