@@ -257,7 +257,7 @@ exports['optional text input'] = function(test){
 };
 
 exports['optional data attribute regex test'] = function(test){
-  var re = forms.widgets.text().dataRegExp;
+  var re = forms.widgets.text().getDataRegExp();
   test.equals(re.test('data-'), false);
   test.equals(re.test('data-input'), true);
   test.equals(re.test('idata-input'), false);
