@@ -1,7 +1,7 @@
 /*jslint node: true */
 
 var http = require('http'),
-    sys = require('sys'),
+    util = require('util'),
     fs = require('fs'),
     forms = require('../lib/forms'),
     jsontemplate = require('./json-template'),
@@ -34,7 +34,7 @@ http.createServer(function (req, res) {
             var req_data = require('url').parse(req.url, 1).query;
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.write('<h1>Success!</h1>');
-            res.end('<pre>' + sys.inspect(form.data) + '</pre>');
+            res.end('<pre>' + util.inspect(form.data) + '</pre>');
         },
         // perhaps also have error and empty events
         other: function (form) {
@@ -45,4 +45,4 @@ http.createServer(function (req, res) {
 
 }).listen(8080);
 
-sys.puts('Server running at http://127.0.0.1:8080/');
+util.puts('Server running at http://127.0.0.1:8080/');
