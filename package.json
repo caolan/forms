@@ -12,7 +12,7 @@
         "url": "http://github.com/caolan/forms/issues"
     },
     "dependencies": {
-        "async": "0.1.15"
+        "async": "0.1.22"
     },
     "licenses": [
         {
