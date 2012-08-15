@@ -182,8 +182,8 @@ exports['handle success'] = function(test){
     });
 };
 
-exports['handle error'] = function(test){
-    test.expect(7);
+exports['handle empty object'] = function(test){
+    test.expect(3);
     var f = forms.create({field1: forms.fields.string()});
     f.bind = function(raw_data, callback){
         test.ok(true, 'bind called');
@@ -196,6 +196,42 @@ exports['handle error'] = function(test){
         callback(null, f);
     };
     f.handle({}, {
+        empty: function(form){
+            test.ok(true, 'empty called');
+            test.equals(form, f);
+        },
+        success: function(form){
+            test.ok(false, 'success should not be called');
+        },
+        error: function(form){
+            test.ok(false, 'error should not be called');
+        },
+        other: function(form){
+            test.ok(false, 'other should not be called');
+        }
+    });
+    f.handle({}, {
+        other: function(form){
+            test.ok(true, 'other called');
+        }
+    });
+    setTimeout(test.done, 50);
+};
+
+exports['handle error'] = function(test){
+    test.expect(5);
+    var f = forms.create({field1: forms.fields.string()});
+    f.bind = function(raw_data, callback){
+        test.ok(true, 'bind called');
+        f.fields.field1.error = 'some error';
+        f.isValid = function(){return false;};
+        return f;
+    };
+    f.validate = function(callback){
+        test.ok(true, 'validate called');
+        callback(null, f);
+    };
+    f.handle({foo: 'bar'}, {
         empty: function(form){
             test.ok(false, 'empty should not be called');
         },
