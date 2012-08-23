@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/caolan/forms.png)](http://travis-ci.org/caolan/forms)
 # Forms
 
 Constructing a good form by hand is a lot of work. Popular frameworks like
