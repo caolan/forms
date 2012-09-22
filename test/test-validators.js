@@ -84,7 +84,15 @@ exports['url'] = function(test){
             test.equals(err, undefined);
             test.done();
         });
-    })
+    });
+
+    validators.url(true)('form', {data: 'localhost/test.html'}, function (err) {
+        test.equals(err, 'Please enter a valid URL.');
+        validators.url(true)('form', {data: 'http://localhost/test.html'}, function (err) {
+            test.equals(err, undefined);
+            test.done();
+        });
+    });
 };
 
 exports['minlength'] = function(test){
