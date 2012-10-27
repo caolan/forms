@@ -11,13 +11,19 @@
     "bugs": {
         "url": "http://github.com/caolan/forms/issues"
     },
+    "scripts": {
+        "test": "node test.js"
+    },
     "dependencies": {
-        "async": "0.1.22"
+        "async": "~0.1.22"
     },
     "licenses": [
         {
             "type": "MIT",
             "url": "http://github.com/caolan/forms/raw/master/LICENSE"
         }
-    ]
+    ],
+    "devDependencies": {
+        "nodeunit": "~0.7.4"
+    }
 }

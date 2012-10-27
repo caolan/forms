@@ -78,21 +78,26 @@ exports['email'] = function(test){
 };
 
 exports['url'] = function(test){
-    validators.url()('form', {data: 'asdf.com'}, function(err){
-        test.equals(err, 'Please enter a valid URL.');
-        validators.url()('form', {data: 'http://asdf.com'}, function(err){
-            test.equals(err, undefined);
-            test.done();
-        });
-    });
-
-    validators.url(true)('form', {data: 'localhost/test.html'}, function (err) {
-        test.equals(err, 'Please enter a valid URL.');
-        validators.url(true)('form', {data: 'http://localhost/test.html'}, function (err) {
-            test.equals(err, undefined);
-            test.done();
-        });
-    });
+    async.parallel([
+        function(callback){
+            validators.url()('form', {data: 'asdf.com'}, function(err){
+                test.equals(err, 'Please enter a valid URL.');
+                validators.url()('form', {data: 'http://asdf.com'}, function(err){
+                    test.equals(err, undefined);
+                    callback();
+                });
+            });
+        },
+        function(callback){
+            validators.url(true)('form', {data: 'localhost/test.html'}, function (err) {
+                test.equals(err, 'Please enter a valid URL.');
+                validators.url(true)('form', {data: 'http://localhost/test.html'}, function (err) {
+                    test.equals(err, undefined);
+                    test.done();
+                });
+            });
+        }
+    ], test.done);
 };
 
 exports['minlength'] = function(test){
