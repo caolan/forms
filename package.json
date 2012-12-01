@@ -1,23 +1,29 @@
 {
-    "name": "forms",
-    "description": "An easy way to create, parse, and validate forms",
-    "main": "./index",
-    "author": "Caolan McMahon",
-    "version": "0.1.2",
-    "repository": {
-        "type": "git",
-        "url": "http://github.com/caolan/forms.git"
-    },
-    "bugs": {
-        "url": "http://github.com/caolan/forms/issues"
-    },
-    "dependencies": {
-        "async": "0.1.22"
-    },
-    "licenses": [
-        {
-            "type": "MIT",
-            "url": "http://github.com/caolan/forms/raw/master/LICENSE"
-        }
-    ]
+  "name": "forms",
+  "description": "An easy way to create, parse, and validate forms",
+  "main": "./index",
+  "author": "Caolan McMahon",
+  "version": "0.1.2",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/caolan/forms.git"
+  },
+  "bugs": {
+    "url": "http://github.com/caolan/forms/issues"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "async": "~0.1.22"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/caolan/forms/raw/master/LICENSE"
+    }
+  ],
+  "devDependencies": {
+    "nodeunit": "~0.7.4"
+  }
 }
