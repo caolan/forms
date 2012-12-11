@@ -185,7 +185,7 @@ exports['multipleSelect'] = function(test){
             val1:'text1',
             val2:'text2'
         }}),
-        '<select multiple="mulitple" name="name" id="id_name">' +
+        '<select multiple="multiple" name="name" id="id_name">' +
             '<option value="val1">text1</option>' +
             '<option value="val2">text2</option>' +
         '</select>'
@@ -200,7 +200,7 @@ exports['multipleSelect'] = function(test){
             id: 'someid',
             value: ['val2','val3']
         }),
-        '<select multiple="mulitple" name="name" id="someid" class="one two">' +
+        '<select multiple="multiple" name="name" id="someid" class="one two">' +
             '<option value="val1">text1</option>' +
             '<option value="val2" selected="selected">text2</option>' +
             '<option value="val3" selected="selected">text3</option>' +
