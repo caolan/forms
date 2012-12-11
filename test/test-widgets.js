@@ -25,6 +25,7 @@ var test_input = function(type){
 exports['text'] = test_input('text');
 exports['password'] = test_input('password');
 exports['hidden'] = test_input('hidden');
+exports['color'] = test_input('color');
 
 exports['checkbox'] = function(test){
     test.equals(
