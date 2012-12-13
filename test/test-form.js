@@ -361,3 +361,20 @@ exports['div bound error'] = function (test) {
     setTimeout(test.done, 25);
 };
 
+exports.dotify = function (test) {
+    test.equals(forms.dotify([1, 2, 3]), '1.2.3');
+    test.equals(forms.dotify([1, undefined, 3]), '1.3');
+	test.equals(forms.dotify(['foo']), 'foo');
+    test.equals(forms.dotify(['foo.bar', 'baz']), 'foo.bar.baz');
+    test.done();
+};
+
+exports.bracketify = function (test) {
+    test.equals(forms.bracketify([1, 2, 3]), '1[2][3]');
+    test.equals(forms.bracketify([1, undefined, 3]), '1[3]');
+	test.equals(forms.bracketify(['foo']), 'foo');
+    test.equals(forms.bracketify(['foo.bar', 'baz']), 'foo.bar[baz]');
+    test.equals(forms.bracketify(['foo[bar]', 'baz']), 'foo%5Bbar%5D[baz]');
+    test.done();
+};
+
