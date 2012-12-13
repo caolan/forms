@@ -227,7 +227,7 @@ exports['boolean toHTML'] = function (test) {
         fields.boolean().toHTML('fieldname'),
         '<div class="field">' +
             '<label for="id_fieldname">Fieldname</label>' +
-            '<input type="checkbox" name="fieldname" id="id_fieldname" />' +
+            '<input type="checkbox" name="fieldname" id="id_fieldname" value="on" />' +
         '</div>'
     );
     test.done();

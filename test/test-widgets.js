@@ -30,20 +30,20 @@ exports.color = test_input('color');
 exports.checkbox = function (test) {
     test.equals(
         forms.widgets.checkbox().toHTML('field1'),
-        '<input type="checkbox" name="field1" id="id_field1" />'
+        '<input type="checkbox" name="field1" id="id_field1" value="on" />'
     );
     var w = forms.widgets.checkbox({classes: ['test1', 'test2', 'test3']});
     test.equals(
         w.toHTML('field2', {id: 'form2_field2'}),
-        '<input type="checkbox" name="field2" id="form2_field2" class="test1 test2 test3" />'
+        '<input type="checkbox" name="field2" id="form2_field2" class="test1 test2 test3" value="on" />'
     );
     test.equals(
         forms.widgets.checkbox().toHTML('field', {value: true}),
-        '<input type="checkbox" name="field" id="id_field" checked="checked" />'
+        '<input type="checkbox" name="field" id="id_field" checked="checked" value="on" />'
     );
     test.equals(
         forms.widgets.checkbox().toHTML('field', {value: false}),
-        '<input type="checkbox" name="field" id="id_field" />'
+        '<input type="checkbox" name="field" id="id_field" value="on" />'
     );
     test.equals(forms.widgets.checkbox().type, 'checkbox');
     test.done();
