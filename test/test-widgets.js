@@ -230,8 +230,8 @@ exports['optional text input'] = function (test) {
     );
     test.equals(
         forms.widgets.text({
-            min: '5',
-            max: '10',
+            min: 5,
+            max: 10,
             unknown: 'foo',
             autocomplete: 'on'
         }).toHTML('field1'),
