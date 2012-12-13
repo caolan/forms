@@ -378,3 +378,33 @@ exports.bracketify = function (test) {
     test.done();
 };
 
+exports['nested fields'] = function (test) {
+	var f = forms.create({
+        normal: forms.fields.string(),
+        outer: {
+            nested_number: forms.fields.number(),
+            inner: {
+                double_nested_array: forms.fields.array()
+            }
+        }
+    });
+    f.bind({
+        normal: 'foo',
+        outer: {
+            nested_number: 42,
+            inner: {
+                double_nested_array: ['bar', 'baz']
+            }
+        }
+    }).validate(function (err, f) {
+        test.equals(f.isValid(), true);
+        test.equals(
+            f.toHTML(),
+            '<div class="field"><label for="id_normal">Normal</label><input type="text" name="normal" id="id_normal" value="foo" /></div>' +
+            '<div class="field"><label for="id_outer.nested_number">Nested number</label><input type="text" name="outer[nested_number]" id="id_outer.nested_number" value="42" /></div>' +
+            '<div class="field"><label for="id_outer.inner.double_nested_array">Double nested array</label><input type="text" name="outer[inner][double_nested_array]" id="id_outer.inner.double_nested_array" value="bar,baz" /></div>'
+        );
+        test.done();
+    });
+};
+
