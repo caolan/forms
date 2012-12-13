@@ -1,8 +1,9 @@
+/*jslint node: true */
+'use strict';
 var forms = require('../lib/forms');
 
-
-var testWrap = function(tag){
-    exports[tag] = function(test){
+var testWrap = function (tag) {
+    exports[tag] = function (test) {
         var f = forms.create({fieldname: forms.fields.string()});
         test.equals(
             f.toHTML(forms.render[tag]),
@@ -14,9 +15,9 @@ var testWrap = function(tag){
         test.done();
     };
 
-    exports[tag + ' required'] = function(test){
+    exports[tag + ' required'] = function (test) {
         var f = forms.create({
-            fieldname: forms.fields.string({required:true})
+            fieldname: forms.fields.string({required: true})
         });
         test.equals(
             f.toHTML(forms.render[tag]),
@@ -28,10 +29,10 @@ var testWrap = function(tag){
         test.done();
     };
 
-    exports[tag + ' bound'] = function(test){
+    exports[tag + ' bound'] = function (test) {
         test.expect(1);
         var f = forms.create({name: forms.fields.string()});
-        f.bind({name: 'val'}).validate(function(err, f){
+        f.bind({name: 'val'}).validate(function (err, f) {
             test.equals(
                 f.toHTML(forms.render[tag]),
                 '<' + tag + ' class="field">' +
@@ -43,16 +44,16 @@ var testWrap = function(tag){
         setTimeout(test.done, 25);
     };
 
-    exports[tag + ' bound error'] = function(test){
+    exports[tag + ' bound error'] = function (test) {
         test.expect(1);
         var f = forms.create({
             field_name: forms.fields.string({
-                validators: [function(form, field, callback){
+                validators: [function (form, field, callback) {
                     callback('validation error');
                 }]
             })
         });
-        f.bind({field_name: 'val'}).validate(function(err, f){
+        f.bind({field_name: 'val'}).validate(function (err, f) {
             test.equals(
                 f.toHTML(forms.render[tag]),
                 '<' + tag + ' class="field error">' +
@@ -66,7 +67,7 @@ var testWrap = function(tag){
         setTimeout(test.done, 25);
     };
 
-    exports[tag + ' multipleCheckbox'] = function(test){
+    exports[tag + ' multipleCheckbox'] = function (test) {
         var f = forms.create({
             fieldname: forms.fields.string({
                 choices: {one: 'item one'},
@@ -78,7 +79,7 @@ var testWrap = function(tag){
             '<' + tag + ' class="field">' +
                 '<fieldset>' +
                     '<legend>Fieldname</legend>' +
-                    '<input type="checkbox" name="fieldname" id="id_fieldname_one"'+
+                    '<input type="checkbox" name="fieldname" id="id_fieldname_one"' +
                     ' value="one">' +
                     '<label for="id_fieldname_one">item one</label>' +
                 '</fieldset>' +
@@ -87,7 +88,7 @@ var testWrap = function(tag){
         test.done();
     };
 
-    exports[tag + ' multipleRadio'] = function(test){
+    exports[tag + ' multipleRadio'] = function (test) {
         var f = forms.create({
             fieldname: forms.fields.string({
                 choices: {one: 'item one'},
@@ -99,7 +100,7 @@ var testWrap = function(tag){
             '<' + tag + ' class="field">' +
                 '<fieldset>' +
                     '<legend>Fieldname</legend>' +
-                    '<input type="radio" name="fieldname" id="id_fieldname_one"'+
+                    '<input type="radio" name="fieldname" id="id_fieldname_one"' +
                     ' value="one">' +
                     '<label for="id_fieldname_one">item one</label>' +
                 '</fieldset>' +
@@ -108,7 +109,7 @@ var testWrap = function(tag){
         test.done();
     };
 
-    exports[tag + ' label custom id'] = function(test){
+    exports[tag + ' label custom id'] = function (test) {
         var f = forms.create({
             fieldname: forms.fields.string({
                 id: 'custom-id'
@@ -124,7 +125,7 @@ var testWrap = function(tag){
         test.done();
     };
 
-    exports[tag + ' hidden label'] = function(test){
+    exports[tag + ' hidden label'] = function (test) {
         var f = forms.create({
             fieldname: forms.fields.string({
                 widget: forms.widgets.hidden()
@@ -144,7 +145,7 @@ testWrap('div');
 testWrap('p');
 testWrap('li');
 
-exports['table'] = function(test){
+exports.table = function (test) {
     var f = forms.create({fieldname: forms.fields.string()});
     test.equals(
         f.toHTML(forms.render.table),
@@ -158,9 +159,9 @@ exports['table'] = function(test){
     test.done();
 };
 
-exports['table required'] = function(test){
+exports['table required'] = function (test) {
     var f = forms.create({
-        fieldname: forms.fields.string({required:true})
+        fieldname: forms.fields.string({required: true})
     });
     test.equals(
         f.toHTML(forms.render.table),
@@ -174,10 +175,10 @@ exports['table required'] = function(test){
     test.done();
 };
 
-exports['table bound'] = function(test){
+exports['table bound'] = function (test) {
     test.expect(1);
     var f = forms.create({name: forms.fields.string()});
-    f.bind({name: 'val'}).validate(function(err, f){
+    f.bind({name: 'val'}).validate(function (err, f) {
         test.equals(
             f.toHTML(forms.render.table),
             '<tr class="field">' +
@@ -192,16 +193,16 @@ exports['table bound'] = function(test){
     setTimeout(test.done, 25);
 };
 
-exports['table bound error'] = function(test){
+exports['table bound error'] = function (test) {
     test.expect(1);
     var f = forms.create({
         field_name: forms.fields.string({
-            validators: [function(form, field, callback){
+            validators: [function (form, field, callback) {
                 callback('validation error');
             }]
         })
     });
-    f.bind({field_name: 'val'}).validate(function(err, f){
+    f.bind({field_name: 'val'}).validate(function (err, f) {
         test.equals(
             f.toHTML(forms.render.table),
             '<tr class="field error">' +

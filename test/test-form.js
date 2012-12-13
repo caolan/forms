@@ -1,12 +1,14 @@
+/*jslint node: true */
+'use strict';
 var forms = require('../lib/forms'),
     http = require('http');
 
 
-exports['bind'] = function(test){
+exports.bind = function (test) {
     var form = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string({
-            validators: [function(form, field, callback){
+            validators: [function (form, field, callback) {
                 test.ok(false, 'validators should not be called');
                 callback(new Error('validation error'));
             }]
@@ -29,24 +31,24 @@ exports['bind'] = function(test){
     test.equals(f.handle, undefined);
 
     test.same(f.data, {field1: 'data one', field2: 'data two'});
-    test.ok(form != f, 'bind returns new form object');
+    test.ok(form !== f, 'bind returns new form object');
 
     test.done();
 };
 
-exports['validate'] = function(test){
+exports.validate = function (test) {
     var form = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string({
-            validators: [function(form, field, callback){
+            validators: [function (form, field, callback) {
                 test.equals(field.data, 'data two');
                 test.equals(field.value, 'data two');
                 callback('validation error');
             }]
         })
     });
-    var data = {field1:'data one', field2:'data two'};
-    form.bind(data).validate(function(err, f){
+    var data = {field1: 'data one', field2: 'data two'};
+    form.bind(data).validate(function (err, f) {
         test.equals(f.fields.field1.value, 'data one');
         test.equals(f.fields.field1.data, 'data one');
         test.equals(f.fields.field1.error, null);
@@ -55,19 +57,19 @@ exports['validate'] = function(test){
         test.equals(f.fields.field2.error, 'validation error');
 
         test.same(f.data, {field1: 'data one', field2: 'data two'});
-        test.ok(form != f, 'bind returns new form object');
+        test.ok(form !== f, 'bind returns new form object');
 
         test.equals(f.isValid(), false);
         test.done();
     });
 };
 
-exports['validate valid data'] = function(test){
+exports['validate valid data'] = function (test) {
     var f = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string()
     });
-    f.bind({field1: '1', field2: '2'}).validate(function(err, f){
+    f.bind({field1: '1', field2: '2'}).validate(function (err, f) {
         test.equals(f.isValid(), true);
         test.equals(
             f.toHTML(),
@@ -84,20 +86,20 @@ exports['validate valid data'] = function(test){
     });
 };
 
-exports['validate invalid data'] = function(test){
+exports['validate invalid data'] = function (test) {
     var f = forms.create({
         field1: forms.fields.string({
-            validators: [function(form, field, callback){
+            validators: [function (form, field, callback) {
                 callback('validation error 1');
             }]
         }),
         field2: forms.fields.string({
-            validators: [function(form, field, callback){
+            validators: [function (form, field, callback) {
                 callback('validation error 2');
             }]
         })
     });
-    f.bind({field1: '1', field2: '2'}).validate(function(err, f){
+    f.bind({field1: '1', field2: '2'}).validate(function (err, f) {
         test.equals(f.isValid(), false);
         test.equals(
             f.toHTML(),
@@ -116,163 +118,163 @@ exports['validate invalid data'] = function(test){
     });
 };
 
-exports['handle empty'] = function(test){
+exports['handle empty'] = function (test) {
     test.expect(3);
     var f = forms.create({field1: forms.fields.string()});
-    f.bind = function(){
+    f.bind = function () {
         test.ok(false, 'bind should not be called');
     };
     f.handle(undefined, {
-        empty: function(form){
+        empty: function (form) {
             test.ok(true, 'empty called');
             test.equals(form, f);
         },
-        success: function(form){
+        success: function (form) {
             test.ok(false, 'success should not be called');
         },
-        error: function(form){
+        error: function (form) {
             test.ok(false, 'error should not be called');
         },
-        other: function(form){
+        other: function (form) {
             test.ok(false, 'other should not be called');
         }
     });
     f.handle(null, {
-        other: function(form){
+        other: function (form) {
             test.ok(true, 'other called');
         }
     });
     setTimeout(test.done, 50);
 };
 
-exports['handle success'] = function(test){
+exports['handle success'] = function (test) {
     test.expect(7);
-    var f = forms.create({field1: forms.fields.string()});
-    var call_order = [];
-    f.bind = function(raw_data){
+    var f = forms.create({field1: forms.fields.string()}),
+        call_order = [];
+    f.bind = function (raw_data) {
         call_order.push('bind');
         test.ok(true, 'bind called');
-        f.isValid = function(){return true;};
+        f.isValid = function () { return true; };
         return f;
     };
-    f.validate = function(callback){
+    f.validate = function (callback) {
         test.ok(true, 'validate called');
         callback(null, f);
     };
     f.handle({field1: 'test'}, {
-        empty: function(form){
+        empty: function (form) {
             test.ok(false, 'empty should not be called');
         },
-        success: function(form){
+        success: function (form) {
             test.ok(true, 'success called');
             test.equals(form, f);
         },
-        error: function(form){
+        error: function (form) {
             test.ok(false, 'error should not be called');
         },
-        other: function(form){
+        other: function (form) {
             test.ok(false, 'other should not be called');
         }
     });
     f.handle({field1: 'test'}, {
-        other: function(form){
+        other: function (form) {
             test.ok(true, 'other called');
             test.done();
         }
     });
 };
 
-exports['handle empty object'] = function(test){
+exports['handle empty object'] = function (test) {
     test.expect(3);
     var f = forms.create({field1: forms.fields.string()});
-    f.bind = function(raw_data, callback){
+    f.bind = function (raw_data, callback) {
         test.ok(true, 'bind called');
         f.fields.field1.error = 'some error';
-        f.isValid = function(){return false;};
+        f.isValid = function () { return false; };
         return f;
     };
-    f.validate = function(callback){
+    f.validate = function (callback) {
         test.ok(true, 'validate called');
         callback(null, f);
     };
     f.handle({}, {
-        empty: function(form){
+        empty: function (form) {
             test.ok(true, 'empty called');
             test.equals(form, f);
         },
-        success: function(form){
+        success: function (form) {
             test.ok(false, 'success should not be called');
         },
-        error: function(form){
+        error: function (form) {
             test.ok(false, 'error should not be called');
         },
-        other: function(form){
+        other: function (form) {
             test.ok(false, 'other should not be called');
         }
     });
     f.handle({}, {
-        other: function(form){
+        other: function (form) {
             test.ok(true, 'other called');
         }
     });
     setTimeout(test.done, 50);
 };
 
-exports['handle error'] = function(test){
+exports['handle error'] = function (test) {
     test.expect(5);
     var f = forms.create({field1: forms.fields.string()});
-    f.bind = function(raw_data, callback){
+    f.bind = function (raw_data, callback) {
         test.ok(true, 'bind called');
         f.fields.field1.error = 'some error';
-        f.isValid = function(){return false;};
+        f.isValid = function () { return false; };
         return f;
     };
-    f.validate = function(callback){
+    f.validate = function (callback) {
         test.ok(true, 'validate called');
         callback(null, f);
     };
     f.handle({foo: 'bar'}, {
-        empty: function(form){
+        empty: function (form) {
             test.ok(false, 'empty should not be called');
         },
-        success: function(form){
+        success: function (form) {
             test.ok(false, 'success should not be called');
         },
-        error: function(form){
+        error: function (form) {
             test.ok(true, 'error called');
             test.equals(form, f);
         },
-        other: function(form){
+        other: function (form) {
             test.ok(false, 'other should not be called');
         }
     });
     f.handle({}, {
-        other: function(form){
+        other: function (form) {
             test.ok(true, 'other called');
         }
     });
     setTimeout(test.done, 50);
 };
 
-exports['handle ServerRequest GET'] = function(test){
-    var f = forms.create({field1: forms.fields.string()});
-    var req = new http.IncomingMessage();
+exports['handle ServerRequest GET'] = function (test) {
+    var f = forms.create({field1: forms.fields.string()}),
+        req = new http.IncomingMessage();
     req.method = 'GET';
     req.url = '/?field1=test';
     f.handle(req, {
-        success: function(form){
+        success: function (form) {
             test.equals(form.data.field1, 'test');
             test.done();
         }
     });
 };
 
-exports['handle ServerRequest POST'] = function(test){
-    var f = forms.create({field1: forms.fields.string()});
-    var req = new http.IncomingMessage();
+exports['handle ServerRequest POST'] = function (test) {
+    var f = forms.create({field1: forms.fields.string()}),
+        req = new http.IncomingMessage();
     req.method = 'POST';
     f.handle(req, {
-        success: function(form){
+        success: function (form) {
             test.equals(form.data.field1, 'test');
             test.done();
         }
@@ -281,20 +283,20 @@ exports['handle ServerRequest POST'] = function(test){
     req.emit('end');
 };
 
-exports['handle ServerRequest POST with bodyDecoder'] = function(test){
-    var f = forms.create({field1: forms.fields.string()});
-    var req = new http.IncomingMessage();
+exports['handle ServerRequest POST with bodyDecoder'] = function (test) {
+    var f = forms.create({field1: forms.fields.string()}),
+        req = new http.IncomingMessage();
     req.body = {field1: 'test'};
     req.method = 'POST';
     f.handle(req, {
-        success: function(form){
+        success: function (form) {
             test.equals(form.data.field1, 'test');
             test.done();
         }
     });
 };
 
-exports['div'] = function(test){
+exports.div = function (test) {
     var f = forms.create({fieldname: forms.fields.string()});
     test.equals(
         f.toHTML(),
@@ -306,9 +308,9 @@ exports['div'] = function(test){
     test.done();
 };
 
-exports['div required'] = function(test){
+exports['div required'] = function (test) {
     var f = forms.create({
-        fieldname: forms.fields.string({required:true})
+        fieldname: forms.fields.string({required: true})
     });
     test.equals(
         f.toHTML(),
@@ -320,10 +322,10 @@ exports['div required'] = function(test){
     test.done();
 };
 
-exports['div bound'] = function(test){
+exports['div bound'] = function (test) {
     test.expect(1);
     var f = forms.create({name: forms.fields.string()});
-    f.bind({name: 'val'}).validate(function(err, f){
+    f.bind({name: 'val'}).validate(function (err, f) {
         test.equals(
             f.toHTML(),
             '<div class="field">' +
@@ -335,16 +337,16 @@ exports['div bound'] = function(test){
     setTimeout(test.done, 25);
 };
 
-exports['div bound error'] = function(test){
+exports['div bound error'] = function (test) {
     test.expect(1);
     var f = forms.create({
         field_name: forms.fields.string({
-            validators: [function(form, field, callback){
+            validators: [function (form, field, callback) {
                 callback('validation error');
             }]
         })
     });
-    f.bind({field_name: 'val'}).validate(function(err, f){
+    f.bind({field_name: 'val'}).validate(function (err, f) {
         test.equals(
             f.toHTML(),
             '<div class="field error">' +

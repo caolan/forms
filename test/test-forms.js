@@ -1,7 +1,8 @@
+/*jslint node: true */
+'use strict';
 var forms = require('../lib/forms');
 
-
-exports['create'] = function(test){
+exports.create = function (test) {
     var f = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string()
