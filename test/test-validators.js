@@ -94,7 +94,7 @@ exports.url = function (test) {
                 test.equals(err, 'Please enter a valid URL.');
                 validators.url(true)('form', {data: 'http://localhost/test.html'}, function (err) {
                     test.equals(err, undefined);
-                    test.done();
+                    callback();
                 });
             });
         }
