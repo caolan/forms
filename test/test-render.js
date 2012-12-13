@@ -80,7 +80,7 @@ var testWrap = function (tag) {
                 '<fieldset>' +
                     '<legend>Fieldname</legend>' +
                     '<input type="checkbox" name="fieldname" id="id_fieldname_one"' +
-                    ' value="one">' +
+                    ' value="one" />' +
                     '<label for="id_fieldname_one">item one</label>' +
                 '</fieldset>' +
             '</' + tag + '>'
