@@ -116,7 +116,7 @@ exports.multipleCheckbox = function (test) {
     test.done();
 };
 
-exports['multipleCheckbox mutliple selected'] = function (test) {
+exports['multipleCheckbox multiple selected'] = function (test) {
     var w = forms.widgets.multipleCheckbox(),
         field = {
             choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
@@ -154,7 +154,7 @@ exports.multipleRadio = function (test) {
     test.done();
 };
 
-exports['multipleRadio mutliple selected'] = function (test) {
+exports['multipleRadio multiple selected'] = function (test) {
     var w = forms.widgets.multipleRadio(),
 	    field = {
             choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
