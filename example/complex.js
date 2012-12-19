@@ -74,7 +74,8 @@ var form = forms.create({
         nested_2: {
             nested: fields.string()
         }
-    }
+    },
+    file: fields.file()
 });
 
 
