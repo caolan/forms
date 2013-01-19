@@ -117,6 +117,7 @@ components following the same API.
 * text
 * password
 * hidden
+* color
 * checkbox
 * select
 * textarea
@@ -130,10 +131,11 @@ components following the same API.
 * min
 * max
 * range
-* minLength
-* maxLength
-* rangeLength
+* minlength
+* maxlength
+* rangelength
 * regexp
+* color
 * email
 * url
 
