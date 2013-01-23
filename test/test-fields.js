@@ -187,6 +187,20 @@ exports['string toHTML'] = function (test) {
     f.toHTML('fieldname');
 };
 
+exports['string toHTML with extra CSS classes'] = function (test) {
+    test.expect(1);
+    test.equals(
+        fields.string({
+            extraClasses: ['custom-field-class1', 'custom-field-class2'],
+            labelClasses: ['custom-label-class1', 'custom-label-class2']
+        }).toHTML('fieldname'),
+        '<div class="field custom-field-class1 custom-field-class2">' +
+            '<label for="id_fieldname" class="custom-label-class1 custom-label-class2">Fieldname</label>' +
+            '<input type="text" name="fieldname" id="id_fieldname" />' +
+        '</div>'
+    );
+    test.done();
+};
 
 testField('number');
 
