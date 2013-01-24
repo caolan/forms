@@ -212,6 +212,7 @@ for highly customised markup.
 * widget - A widget object to use when rendering the field
 * id - An optional id to override the default
 * choices - A list of options, used for multiple choice fields
+* cssClasses - A list of CSS classes for label and field wrapper
 
 #### field.parse(rawdata)
 
