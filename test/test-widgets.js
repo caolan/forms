@@ -143,11 +143,11 @@ exports.multipleRadio = function (test) {
         };
     test.equals(
         w.toHTML('name', field),
-        '<input type="radio" name="name" id="id_name_one" value="one">' +
+        '<input type="radio" name="name" id="id_name_one" value="one" />' +
         '<label for="id_name_one">Item one</label>' +
-        '<input type="radio" name="name" id="id_name_two" value="two" checked="checked">' +
+        '<input type="radio" name="name" id="id_name_two" value="two" checked="checked" />' +
         '<label for="id_name_two">Item two</label>' +
-        '<input type="radio" name="name" id="id_name_three" value="three">' +
+        '<input type="radio" name="name" id="id_name_three" value="three" />' +
         '<label for="id_name_three">Item three</label>'
     );
     test.equals(forms.widgets.multipleRadio().type, 'multipleRadio');
@@ -162,11 +162,11 @@ exports['multipleRadio multiple selected'] = function (test) {
         };
     test.equals(
         w.toHTML('name', field),
-        '<input type="radio" name="name" id="id_name_one" value="one">' +
+        '<input type="radio" name="name" id="id_name_one" value="one" />' +
         '<label for="id_name_one">Item one</label>' +
-        '<input type="radio" name="name" id="id_name_two" value="two" checked="checked">' +
+        '<input type="radio" name="name" id="id_name_two" value="two" checked="checked" />' +
         '<label for="id_name_two">Item two</label>' +
-        '<input type="radio" name="name" id="id_name_three" value="three" checked="checked">' +
+        '<input type="radio" name="name" id="id_name_three" value="three" checked="checked" />' +
         '<label for="id_name_three">Item three</label>'
     );
     test.equals(forms.widgets.multipleRadio().type, 'multipleRadio');
