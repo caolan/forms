@@ -35,7 +35,7 @@ exports.checkbox = function (test) {
     var w = forms.widgets.checkbox({classes: ['test1', 'test2', 'test3']});
     test.equals(
         w.toHTML('field2', {id: 'form2_field2'}),
-        '<input type="checkbox" name="field2" id="form2_field2" class="test1 test2 test3" value="on" />'
+        '<input type="checkbox" name="field2" id="form2_field2" value="on" class="test1 test2 test3" />'
     );
     test.equals(
         forms.widgets.checkbox().toHTML('field', {value: true}),
@@ -91,7 +91,7 @@ exports.textarea = function (test) {
             rows: 20,
             cols: 80
         }).toHTML('name', {id: 'someid', value: 'value'}),
-        '<textarea name="name" id="someid" class="one two" rows="20" cols="80">value</textarea>'
+        '<textarea name="name" id="someid" rows="20" cols="80" class="one two">value</textarea>'
     );
     test.equals(forms.widgets.textarea().type, 'textarea');
     test.done();
