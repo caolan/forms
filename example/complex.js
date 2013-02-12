@@ -1,5 +1,5 @@
 /*jslint node: true */
-
+'use strict';
 
 var http = require('http'),
     util = require('util'),

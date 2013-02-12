@@ -1,4 +1,5 @@
 /*jslint node: true */
+'use strict';
 
 /* 
  *  You need to additionally install express, jade for this to work 
