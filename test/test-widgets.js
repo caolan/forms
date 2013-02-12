@@ -255,3 +255,22 @@ exports['optional data attribute regex test'] = function (test) {
     test.equals(re.test('data_input'), false);
     test.done();
 };
+
+exports.label = function (test) {
+    test.equals(
+        forms.widgets.label({
+            classes: ['foo', 'bar', 'quux'],
+            content: 'Foobar'
+        }).toHTML('field1'),
+        '<label for="field1" class="foo bar quux">Foobar</label>'
+    );
+    test.equals(
+        forms.widgets.label({
+            classes: [],
+            content: 'Foobar'
+        }).toHTML('field1'),
+        '<label for="field1">Foobar</label>'
+    );
+    test.done();
+};
+

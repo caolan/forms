@@ -124,6 +124,7 @@ components following the same API.
 * multipleCheckbox
 * multipleRadio
 * multipleSelect
+* label
 
 ### Validators
 
