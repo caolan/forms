@@ -20,12 +20,12 @@ bug reports, or advice. Especially on the following key areas:
   let's try and make the most of it!
 * __Ensuring it's easy to use with existing node web frameworks__. Ideally this
   module would integrate well with projects using any of the popular frameworks.
-### Contributors
+### [Contributors](https://github.com/caolan/forms/contributors)
 
-* [luddep](http://github.com/luddep)
-* [jedp](https://github.com/jedp)
 * [ljharb](https://github.com/ljharb)
-
+* [richardngn](https://github.com/richardngn)
+* [caulagi](https://github.com/caulagi)
+* [luddep](http://github.com/luddep)
 
 ## Example
 
