@@ -530,3 +530,4 @@ return {Template: Template, HtmlEscape: HtmlEscape};
 
 // commonjs
 for (var key in jsontemplate) exports[key] = jsontemplate[key];
+
