@@ -52,11 +52,11 @@ exports.checkbox = function (test) {
 exports.select = function (test) {
     test.equals(
         forms.widgets.select().toHTML('name', {
-		    choices: {
+            choices: {
                 val1: 'text1',
                 val2: 'text2'
             }
-		}),
+        }),
         '<select name="name" id="id_name">' +
             '<option value="val1">text1</option>' +
             '<option value="val2">text2</option>' +
@@ -156,7 +156,7 @@ exports.multipleRadio = function (test) {
 
 exports['multipleRadio multiple selected'] = function (test) {
     var w = forms.widgets.multipleRadio(),
-	    field = {
+        field = {
             choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
             value: ['two', 'three']
         };
