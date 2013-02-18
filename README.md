@@ -214,6 +214,7 @@ for highly customised markup.
 * id - An optional id to override the default
 * choices - A list of options, used for multiple choice fields
 * cssClasses - A list of CSS classes for label and field wrapper
+* errorAfterField - if true, the error message will be displayed after the field, rather than before.
 
 #### field.parse(rawdata)
 

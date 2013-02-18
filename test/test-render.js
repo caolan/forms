@@ -51,16 +51,26 @@ var testWrap = function (tag) {
                 validators: [function (form, field, callback) {
                     callback('validation error');
                 }]
+            }),
+            field_name_error_after: forms.fields.string({
+                errorAfterField: true,
+                validators: [function (form, field, callback) {
+                    callback('validation error after field');
+                }]
             })
         });
-        f.bind({field_name: 'val'}).validate(function (err, f) {
+        f.bind({field_name: 'val', field_name_error_after: 'foo'}).validate(function (err, f) {
             test.equals(
                 f.toHTML(forms.render[tag]),
                 '<' + tag + ' class="field error">' +
                     '<p class="error_msg">validation error</p>' +
                     '<label for="id_field_name">Field name</label>' +
-                    '<input type="text" name="field_name" id="id_field_name" ' +
-                    'value="val" />' +
+                    '<input type="text" name="field_name" id="id_field_name" value="val" />' +
+                '</' + tag + '>' +
+                '<' + tag + ' class="field error">' +
+                    '<label for="id_field_name_error_after">Field name_error_after</label>' +
+                    '<input type="text" name="field_name_error_after" id="id_field_name_error_after" value="foo" />' +
+                    '<p class="error_msg">validation error after field</p>' +
                 '</' + tag + '>'
             );
         });
@@ -79,8 +89,7 @@ var testWrap = function (tag) {
             '<' + tag + ' class="field">' +
                 '<fieldset>' +
                     '<legend>Fieldname</legend>' +
-                    '<input type="checkbox" name="fieldname" id="id_fieldname_one"' +
-                    ' value="one" />' +
+                    '<input type="checkbox" name="fieldname" id="id_fieldname_one" value="one" />' +
                     '<label for="id_fieldname_one">item one</label>' +
                 '</fieldset>' +
             '</' + tag + '>'
@@ -100,8 +109,7 @@ var testWrap = function (tag) {
             '<' + tag + ' class="field">' +
                 '<fieldset>' +
                     '<legend>Fieldname</legend>' +
-                    '<input type="radio" name="fieldname" id="id_fieldname_one"' +
-                    ' value="one" />' +
+                    '<input type="radio" name="fieldname" id="id_fieldname_one" value="one" />' +
                     '<label for="id_fieldname_one">item one</label>' +
                 '</fieldset>' +
             '</' + tag + '>'
@@ -184,8 +192,7 @@ exports['table bound'] = function (test) {
             '<tr class="field">' +
                 '<th><label for="id_name">Name</label></th>' +
                 '<td>' +
-                    '<input type="text" name="name" id="id_name"' +
-                    ' value="val" />' +
+                    '<input type="text" name="name" id="id_name" value="val" />' +
                 '</td>' +
             '</tr>'
         );
@@ -200,17 +207,29 @@ exports['table bound error'] = function (test) {
             validators: [function (form, field, callback) {
                 callback('validation error');
             }]
+        }),
+        field_name_error_after: forms.fields.string({
+          errorAfterField: true,
+          validators: [function (form, field, callback) {
+              callback('validation error after field');
+          }]
         })
     });
-    f.bind({field_name: 'val'}).validate(function (err, f) {
+    f.bind({field_name: 'val', field_name_error_after: 'foo'}).validate(function (err, f) {
         test.equals(
             f.toHTML(forms.render.table),
             '<tr class="field error">' +
                 '<th><label for="id_field_name">Field name</label></th>' +
                 '<td>' +
                     '<p class="error_msg">validation error</p>' +
-                    '<input type="text" name="field_name"' +
-                    ' id="id_field_name" value="val" />' +
+                    '<input type="text" name="field_name" id="id_field_name" value="val" />' +
+                '</td>' +
+            '</tr>' +
+            '<tr class="field error">' +
+                '<th><label for="id_field_name_error_after">Field name_error_after</label></th>' +
+                '<td>' +
+                    '<input type="text" name="field_name_error_after" id="id_field_name_error_after" value="foo" />' +
+                    '<p class="error_msg">validation error after field</p>' +
                 '</td>' +
             '</tr>'
         );
