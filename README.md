@@ -111,6 +111,7 @@ components following the same API.
 * password
 * email
 * url
+* date
 
 ### Widgets
 
@@ -118,6 +119,7 @@ components following the same API.
 * password
 * hidden
 * color
+* date
 * checkbox
 * select
 * textarea
@@ -139,6 +141,7 @@ components following the same API.
 * color
 * email
 * url
+* date
 
 ### Renderers
 

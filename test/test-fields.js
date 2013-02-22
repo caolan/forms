@@ -335,6 +335,40 @@ exports['url validators'] = function (test) {
     test.done();
 };
 
+testField('date');
+
+exports['date parse'] = function (test) {
+    test.equals(
+        fields.date().parse.toString(),
+        fields.string().parse.toString()
+    );
+    test.done();
+};
+
+exports['date toHTML'] = function (test) {
+    test.equals(
+        fields.date().toHTML.toString(),
+        fields.string().toHTML.toString()
+    );
+    test.done();
+};
+
+exports['date validators'] = function (test) {
+    test.equals(
+        fields.date().validators[0].toString(),
+        forms.validators.date().toString()
+    );
+    var fn1 = function () { return 'one'; },
+        fn2 = function () { return 'two'; },
+        f = fields.date({validators: [fn1, fn2]});
+    test.equals(
+        f.validators[0].toString(),
+        forms.validators.date().toString()
+    );
+    test.same(f.validators.slice(1), [fn1, fn2]);
+    test.done();
+};
+
 testField('array');
 
 exports['array parse'] = function (test) {

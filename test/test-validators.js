@@ -101,6 +101,30 @@ exports.url = function (test) {
     ], test.done);
 };
 
+exports.date = function (test) {
+    var msg = 'Inputs of type "date" must be valid dates in the format "yyyy-mm-dd"';
+    async.parallel([
+        function (callback) {
+            validators.date()('form', {data: '02/28/2012'}, function (err) {
+                test.equals(err, msg);
+                validators.date()('form', {data: '2012-02-28'}, function (err) {
+                    test.equals(err, undefined);
+                    callback();
+                });
+            });
+        },
+        function (callback) {
+            validators.date(true)('form', {data: '2012.02.30'}, function (err) {
+                test.equals(err, msg);
+                validators.date(true)('form', {data: '2012-02-30'}, function (err) {
+                    test.equals(err, undefined);
+                    callback();
+                });
+            });
+        }
+    ], test.done);
+};
+
 exports.minlength = function (test) {
     validators.minlength(5)('form', {data: '1234'}, function (err) {
         test.equals(err, 'Please enter at least 5 characters.');
