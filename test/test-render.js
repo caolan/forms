@@ -68,7 +68,7 @@ var testWrap = function (tag) {
                     '<input type="text" name="field_name" id="id_field_name" value="val" />' +
                 '</' + tag + '>' +
                 '<' + tag + ' class="field error">' +
-                    '<label for="id_field_name_error_after">Field name_error_after</label>' +
+                    '<label for="id_field_name_error_after">Field name error after</label>' +
                     '<input type="text" name="field_name_error_after" id="id_field_name_error_after" value="foo" />' +
                     '<p class="error_msg">validation error after field</p>' +
                 '</' + tag + '>'
@@ -226,7 +226,7 @@ exports['table bound error'] = function (test) {
                 '</td>' +
             '</tr>' +
             '<tr class="field error">' +
-                '<th><label for="id_field_name_error_after">Field name_error_after</label></th>' +
+                '<th><label for="id_field_name_error_after">Field name error after</label></th>' +
                 '<td>' +
                     '<input type="text" name="field_name_error_after" id="id_field_name_error_after" value="foo" />' +
                     '<p class="error_msg">validation error after field</p>' +
