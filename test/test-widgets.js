@@ -18,6 +18,8 @@ var test_input = function (type) {
             '<input type="' + type + '" name="field1" id="id_field1" value="some value" />'
         );
         test.equals(forms.widgets[type]().type, type);
+        test.equals(forms.widgets[type]().formatValue('hello'), 'hello');
+        test.strictEqual(forms.widgets[type]().formatValue(false), null);
         test.done();
     };
 };
@@ -26,7 +28,28 @@ exports.text = test_input('text');
 exports.password = test_input('password');
 exports.hidden = test_input('hidden');
 exports.color = test_input('color');
-exports.date = test_input('date');
+
+exports.date = function (test) {
+    var w = forms.widgets.date();
+    test.equals(w.formatValue(new Date(Date.UTC(2013, 2, 1))), '2013-03-01');
+    test.equals(w.formatValue('2013-03-02'), '2013-03-02');
+    test.strictEqual(w.formatValue('invalid'), null);
+
+    test.equals(w.type, 'date');
+
+    test.equals(
+        w.toHTML('field1'),
+        '<input type="date" name="field1" id="id_field1" />'
+    );
+
+    test.equals(
+        w.toHTML('field1', {value: '2013-03-03'}),
+        '<input type="date" name="field1" id="id_field1" value="2013-03-03" />'
+    );
+
+
+    test.done();
+};
 
 exports.checkbox = function (test) {
     test.equals(
