@@ -3,7 +3,7 @@
     "description": "An easy way to create, parse, and validate forms",
     "main": "./index",
     "author": "Caolan McMahon",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "repository": {
         "type": "git",
         "url": "http://github.com/caolan/forms.git"
