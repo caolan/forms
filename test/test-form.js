@@ -272,6 +272,7 @@ exports['handle ServerRequest GET'] = function (test) {
 exports['handle ServerRequest POST'] = function (test) {
     var f = forms.create({field1: forms.fields.string()}),
         req = new http.IncomingMessage();
+    req.body = {field1: 'test'};
     req.method = 'POST';
     f.handle(req, {
         success: function (form) {
