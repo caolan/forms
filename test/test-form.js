@@ -118,6 +118,44 @@ exports['validate invalid data'] = function (test) {
     });
 };
 
+exports['validate invalid field - minlength'] = function (test) {
+    var f = forms.create({
+        password: forms.fields.password({
+            validators: [forms.validators.minlength(10)]
+        })
+    });
+    f.bind({password: '12345'}).validate(function (err, f) {
+        test.equals(f.isValid(), false);
+        test.equals(
+            f.toHTML(),
+            '<div class="field error">' +
+                '<p class="error_msg">Lorem ipsum minlength 10.</p>' +
+                '<label for="id_password">Password</label>' +
+                '<input type="password" name="password" id="id_password" value="12345" />' +
+            '</div>'
+        );
+        test.done();
+    }, { locale: 'lorem' });
+};
+
+exports['validate invalid field - email'] = function (test) {
+    var f = forms.create({
+        email: forms.fields.email()
+    });
+    f.bind({email: 't'}).validate(function (err, f) {
+        test.equals(f.isValid(), false);
+        test.equals(
+            f.toHTML(),
+            '<div class="field error">' +
+                '<p class="error_msg">Lorem ipsum email.</p>' +
+                '<label for="id_email">Email</label>' +
+                '<input type="email" name="email" id="id_email" value="t" />' +
+            '</div>'
+        );
+        test.done();
+    }, { locale: 'lorem' });
+};
+
 exports['handle empty'] = function (test) {
     test.expect(3);
     var f = forms.create({field1: forms.fields.string()});

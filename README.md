@@ -168,8 +168,12 @@ form object.
 * fields - Object literal containing the field objects passed to the create
   function
 
-#### form.handle(req, callbacks)
+#### form.handle(req, callbacks, opts)
 Inspects a request or object literal and binds any data to the correct fields.
+
+    opts = {
+        locale: 'en'
+    }
 
 #### form.bind(data)
 Binds data to correct fields, returning a new bound form object.
@@ -191,9 +195,11 @@ Contains the same methods as the unbound form, plus:
 * fields - Object literal containing the field objects passed to the create
   function
 
-#### form.validate(callback)
+#### form.validate(callback, opts)
 Calls validate on each field in the bound form and returns the resulting form
 object to the callback.
+
+*See `form.handle` for `opts`*
 
 #### form.isValid()
 Checks all fields for an error attribute. Returns false if any exist, otherwise
@@ -266,12 +272,13 @@ _same as field object, but with a few extensions_
 * data - The request data coerced to the correct format for this field
 * error - An error message if the field fails validation
 
-#### validate(callback)
+#### validate(callback, opts)
 
 Checks if the field is required and whether it is empty. Then runs the
 validator functions in order until one fails or they all pass. If a validator
 fails, the resulting message is stored in the field's error attribute.
 
+*See `form.handle` for `opts`*
 
 ### Widget object
 
