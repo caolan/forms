@@ -12,7 +12,8 @@
         "url": "http://github.com/caolan/forms/issues"
     },
     "scripts": {
-        "test": "node test.js"
+        "test": "node test.js",
+        "test-browser": "./node_modules/.bin/browserify test-browser.js | cat ./node_modules/nodeunit-browser-tap/lib/nodeunit.js - | ./node_modules/.bin/testling"
     },
     "dependencies": {
         "async": "~0.2.6"
@@ -24,7 +25,8 @@
         }
     ],
     "testling": {
-        "files": "index.js",
+        "scripts": "node_modules/nodeunit-browser-tap/lib/nodeunit.js",
+        "files": "test-browser.js",
         "browsers": [
             "iexplore/6.0..latest",
             "firefox/3.0",
@@ -41,7 +43,10 @@
         ]
     },
     "devDependencies": {
-        "nodeunit": "~0.8.0"
+        "nodeunit": "~0.8.0",
+        "testling": "~1.0",
+        "browserify": "~2.0",
+        "nodeunit-browser-tap": ">=0.0.2"
     }
 }
 
