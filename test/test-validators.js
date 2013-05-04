@@ -4,7 +4,7 @@ var validators = require('../lib/forms').validators,
     async = require('async');
 
 exports.matchField = function (test) {
-    var v = validators.matchField('field1'),
+    var v = validators.matchField('field1', 'f2 dnm %s'),
         data = {
             fields: {
                 field1: {data: 'one'},
@@ -12,7 +12,7 @@ exports.matchField = function (test) {
             }
         };
     v(data, data.fields.field2, function (err) {
-        test.equals(err, 'Does not match field1.');
+        test.equals(err, 'f2 dnm field1');
         data.fields.field2.data = 'one';
         v(data, data.fields.field2, function (err) {
             test.equals(err, undefined);
@@ -22,8 +22,8 @@ exports.matchField = function (test) {
 };
 
 exports.min = function (test) {
-    validators.min(100)('form', {data: 50}, function (err) {
-        test.equals(err, 'Please enter a value greater than or equal to 100.');
+    validators.min(100, 'Value must be greater than or equal to %s.')('form', {data: 50}, function (err) {
+        test.equals(err, 'Value must be greater than or equal to 100.');
         validators.min(100)('form', {data: 100}, function (err) {
             test.equals(err, undefined);
             test.done();
@@ -32,8 +32,8 @@ exports.min = function (test) {
 };
 
 exports.max = function (test) {
-    validators.max(100)('form', {data: 150}, function (err) {
-        test.equals(err, 'Please enter a value less than or equal to 100.');
+    validators.max(100, 'Value must be less than or equal to %s.')('form', {data: 150}, function (err) {
+        test.equals(err, 'Value must be less than or equal to 100.');
         validators.max(100)('form', {data: 100}, function (err) {
             test.equals(err, undefined);
             test.done();
@@ -42,8 +42,8 @@ exports.max = function (test) {
 };
 
 exports.range = function (test) {
-    validators.range(10, 20)('form', {data: 50}, function (err) {
-        test.equals(err, 'Please enter a value between 10 and 20.');
+    validators.range(10, 20, 'Value must be between %s and %s.')('form', {data: 50}, function (err) {
+        test.equals(err, 'Value must be between 10 and 20.');
         validators.range(10, 20)('form', {data: 15}, function (err) {
             test.equals(err, undefined);
             test.done();
@@ -66,8 +66,8 @@ exports.regexp = function (test) {
 };
 
 exports.email = function (test) {
-    validators.email()('form', {data: 'asdf'}, function (err) {
-        test.equals(err, 'Please enter a valid email address.');
+    validators.email('Email was invalid.')('form', {data: 'asdf'}, function (err) {
+        test.equals(err, 'Email was invalid.');
         validators.email()('form', {data: 'asdf@asdf.com'}, function (err) {
             test.equals(err, undefined);
             validators.email()('form', {data: 'a←+b@f.museum'}, function (err) {
@@ -81,8 +81,8 @@ exports.email = function (test) {
 exports.url = function (test) {
     async.parallel([
         function (callback) {
-            validators.url()('form', {data: 'asdf.com'}, function (err) {
-                test.equals(err, 'Please enter a valid URL.');
+            validators.url(false, 'URL was invalid.')('form', {data: 'asdf.com'}, function (err) {
+                test.equals(err, 'URL was invalid.');
                 validators.url()('form', {data: 'http://asdf.com'}, function (err) {
                     test.equals(err, undefined);
                     callback();
@@ -102,11 +102,10 @@ exports.url = function (test) {
 };
 
 exports.date = function (test) {
-    var msg = 'Inputs of type "date" must be valid dates in the format "yyyy-mm-dd"';
     async.parallel([
         function (callback) {
-            validators.date()('form', {data: '02/28/2012'}, function (err) {
-                test.equals(err, msg);
+            validators.date('Date input must contain a valid date.')('form', {data: '02/28/2012'}, function (err) {
+                test.equals(err, 'Date input must contain a valid date.');
                 validators.date()('form', {data: '2012-02-28'}, function (err) {
                     test.equals(err, undefined);
                     callback();
@@ -114,9 +113,9 @@ exports.date = function (test) {
             });
         },
         function (callback) {
-            validators.date(true)('form', {data: '2012.02.30'}, function (err) {
-                test.equals(err, msg);
-                validators.date(true)('form', {data: '2012-02-30'}, function (err) {
+            validators.date()('form', {data: '2012.02.30'}, function (err) {
+                test.equals(err, 'Inputs of type "date" must be valid dates in the format "yyyy-mm-dd"');
+                validators.date()('form', {data: '2012-02-30'}, function (err) {
                     test.equals(err, undefined);
                     callback();
                 });
@@ -126,8 +125,8 @@ exports.date = function (test) {
 };
 
 exports.minlength = function (test) {
-    validators.minlength(5)('form', {data: '1234'}, function (err) {
-        test.equals(err, 'Please enter at least 5 characters.');
+    validators.minlength(5, 'Enter at least %s characters.')('form', {data: '1234'}, function (err) {
+        test.equals(err, 'Enter at least 5 characters.');
         validators.minlength(5)('form', {data: '12345'}, function (err) {
             test.equals(err, undefined);
             test.done();
@@ -148,8 +147,8 @@ exports.maxlength = function (test) {
 exports.rangelength = function (test) {
     async.parallel([
         function (callback) {
-            validators.rangelength(2, 4)('form', {data: '12345'}, function (err) {
-                test.equals(err, 'Please enter a value between 2 and 4 characters long.');
+            validators.rangelength(2, 4, 'Enter between %s and %s characters.')('form', {data: '12345'}, function (err) {
+                test.equals(err, 'Enter between 2 and 4 characters.');
                 callback();
             });
         },
@@ -177,22 +176,24 @@ exports.rangelength = function (test) {
 exports.color = function (test) {
     var valids = ['#ABC', '#DEF123', '#ABCDEF12', '#01234567', '#890'],
         invalids = ['ABC', 'DEF123', '#ABCDEG', '#0123.3', null, true, false],
-        tests = valids.map(function (data) {
-            return function (callback) {
-                validators.color()('form', {data: data}, function (err) {
-                    test.equals(err, undefined);
-                    callback();
-                });
-            };
-        });
-    tests.concat(invalids.map(function (data) {
-        return function (callback) {
-            validators.color()('form', {data: data}, function (err) {
-                test.equals(err, 'Inputs of type "color" require hex notation, e.g. #FFF or #ABC123.');
-                callback();
-            });
-        };
-    }));
+        tests = [].concat(
+            valids.map(function (data) {
+                return function (callback) {
+                    validators.color()('form', {data: data}, function (err) {
+                        test.equals(err, undefined);
+                        callback();
+                    });
+                };
+            }),
+            invalids.map(function (data) {
+                return function (callback) {
+                    validators.color('Color inputs require hex notation.')('form', {data: data}, function (err) {
+                        test.equals(err, 'Color inputs require hex notation.');
+                        callback();
+                    });
+                };
+            })
+        );
     async.parallel(tests, test.done);
 };
 
