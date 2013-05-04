@@ -177,22 +177,24 @@ exports.rangelength = function (test) {
 exports.color = function (test) {
     var valids = ['#ABC', '#DEF123', '#ABCDEF12', '#01234567', '#890'],
         invalids = ['ABC', 'DEF123', '#ABCDEG', '#0123.3', null, true, false],
-        tests = valids.map(function (data) {
-            return function (callback) {
-                validators.color()('form', {data: data}, function (err) {
-                    test.equals(err, undefined);
-                    callback();
-                });
-            };
-        });
-    tests.concat(invalids.map(function (data) {
-        return function (callback) {
-            validators.color()('form', {data: data}, function (err) {
-                test.equals(err, 'Inputs of type "color" require hex notation, e.g. #FFF or #ABC123.');
-                callback();
-            });
-        };
-    }));
+        tests = [].concat(
+            valids.map(function (data) {
+                return function (callback) {
+                    validators.color()('form', {data: data}, function (err) {
+                        test.equals(err, undefined);
+                        callback();
+                    });
+                };
+            }),
+            invalids.map(function (data) {
+                return function (callback) {
+                    validators.color()('form', {data: data}, function (err) {
+                        test.equals(err, 'Inputs of type "color" require hex notation, e.g. #FFF or #ABC123.');
+                        callback();
+                    });
+                };
+            })
+        );
     async.parallel(tests, test.done);
 };
 
