@@ -13,12 +13,18 @@ var test_input = function (type) {
             w.toHTML('field2', {id: 'form2_field2'}),
             '<input type="' + type + '" name="field2" id="form2_field2" class="test1 test2 test3" />'
         );
-        test.equals(
-            forms.widgets[type]().toHTML('field1', {value: 'some value'}),
-            '<input type="' + type + '" name="field1" id="id_field1" value="some value" />'
-        );
+
+        var expectedHTML = '<input type="' + type + '" name="field1" id="id_field1" value="some value" />';
+        if (type === 'password') {
+            expectedHTML = '<input type="' + type + '" name="field1" id="id_field1" />';
+        }
+        test.equals(forms.widgets[type]().toHTML('field1', {value: 'some value'}), expectedHTML);
         test.equals(forms.widgets[type]().type, type);
-        test.equals(forms.widgets[type]().formatValue('hello'), 'hello');
+
+        var expectedValues = { password: null };
+        var expectedValue = typeof expectedValues[type] !== 'undefined' ? expectedValues[type] : 'hello';
+        test.equals(forms.widgets[type]().formatValue('hello'), expectedValue);
+
         test.strictEqual(forms.widgets[type]().formatValue(false), null);
         test.done();
     };
