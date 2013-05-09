@@ -31,6 +31,16 @@ exports.min = function (test) {
     });
 };
 
+exports['min with locale'] = function (test) {
+    validators.min(100)('form', {data: 50}, function (err) {
+        test.equals(err, 'Lorem ipsum min 100.');
+        validators.min(100)('form', {data: 100}, function (err) {
+            test.equals(err, undefined);
+            test.done();
+        });
+    }, { locale: 'lorem' });
+};
+
 exports.max = function (test) {
     validators.max(100)('form', {data: 150}, function (err) {
         test.equals(err, 'Please enter a value less than or equal to 100.');
