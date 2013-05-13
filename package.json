@@ -16,7 +16,7 @@
         "test-browser": "./node_modules/.bin/browserify test-browser.js | ./node_modules/.bin/testling"
     },
     "dependencies": {
-        "async": "~0.2.6"
+        "async": "~0.2.8"
     },
     "licenses": [
         {
@@ -45,7 +45,7 @@
     "devDependencies": {
         "nodeunit": "~0.8.0",
         "testling": "~1.0",
-        "browserify": "~2.0",
+        "browserify": "~2.13.3",
         "nodeunit-browser-tap": ">=0.0.3"
     }
 }
