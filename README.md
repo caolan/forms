@@ -100,23 +100,25 @@ An example server using the form above can be run by doing:
 For integrating with Twitter bootstrap 3 (horizontal form), this is what you need to do:
 
     var my_form = forms.create({
-        title: fields.string({required: true
-            , widget: widgets.text({classes: ['input-with-feedback']})
-            , errorAfterField: true
-            , cssClasses: {
-                label: ['control-label col col-lg-3'],
+            title: fields.string({
+            required: true,
+            widget: widgets.text({ classes: ['input-with-feedback'] }),
+            errorAfterField: true,
+            cssClasses: {
+                label: ['control-label col col-lg-3']
             }
         }),
 
-        description: fields.string({errorAfterField: true
-            , widget: widgets.text({classes: ['input-with-feedback']})
-            , cssClasses: {
-                label: ['control-label col col-lg-3'],
+        description: fields.string({
+            errorAfterField: true,
+            widget: widgets.text({ classes: ['input-with-feedback'] }),
+            cssClasses: {
+                label: ['control-label col col-lg-3']
             }
         })
     });
 
-    var bootstrap_field = function(name, object) {
+    var bootstrap_field = function (name, object) {
         var label = object.labelHTML(name);
         var error = object.error ? '<p class="form-error-tooltip">' + object.error + '</p>' : '';
         var widget = '<div class="controls col col-lg-9">' + object.widget.toHTML(name, object) + error + '</div>';
@@ -125,7 +127,7 @@ For integrating with Twitter bootstrap 3 (horizontal form), this is what you nee
 
 And while rendering it:
 
-    form.toHTML(function(name, object){return bootstrap_field(name, object);})
+    form.toHTML(function (name, object) { return bootstrap_field(name, object); });
 
 ## Available types
 
