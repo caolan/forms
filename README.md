@@ -98,6 +98,7 @@ An example server using the form above can be run by doing:
 
 ### Bootstrap compatible output
 For integrating with Twitter bootstrap 3 (horizontal form), this is what you need to do:
+
     var my_form = forms.create({
         title: fields.string({required: true
             , widget: widgets.text({classes: ['input-with-feedback']})
@@ -123,6 +124,7 @@ For integrating with Twitter bootstrap 3 (horizontal form), this is what you nee
     }
 
 And while rendering it:
+
     form.toHTML(function(name, object){return bootstrap_field(name, object);})
 
 ## Available types
