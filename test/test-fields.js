@@ -283,6 +283,16 @@ exports['email validators'] = function (test) {
     test.done();
 };
 
+testField('tel');
+
+exports['tel toHTML'] = function (test) {
+    test.equals(
+        fields.tel().toHTML().toString(),
+        fields.string().toHTML().toString().replace(/type="text"/, 'type="tel"')
+    );
+    test.done();
+};
+
 testField('password');
 
 exports['password parse'] = function (test) {

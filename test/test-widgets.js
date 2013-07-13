@@ -35,6 +35,7 @@ exports.email = test_input('email');
 exports.password = test_input('password');
 exports.hidden = test_input('hidden');
 exports.color = test_input('color');
+exports.tel = test_input('tel');
 
 exports.date = function (test) {
     var w = forms.widgets.date();

@@ -143,6 +143,7 @@ components following the same API.
 * array
 * password
 * email
+* tel
 * url
 * date
 
@@ -153,6 +154,7 @@ components following the same API.
 * password
 * hidden
 * color
+* tel
 * date
 * checkbox
 * select
