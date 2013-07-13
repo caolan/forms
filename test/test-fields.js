@@ -1,7 +1,9 @@
 /*jslint node: true */
 'use strict';
 var forms = require('../lib/forms'),
-    fields = forms.fields;
+    fields = forms.fields,
+    stringField = fields.string(),
+    stringHTML = stringField.toHTML().toString();
 
 
 var testField = function (field) {
@@ -161,18 +163,18 @@ var testField = function (field) {
 testField('string');
 
 exports['string parse'] = function (test) {
-    test.equals(fields.string().parse(), '');
-    test.equals(fields.string().parse(null), '');
-    test.equals(fields.string().parse(0), '0');
-    test.equals(fields.string().parse(''), '');
-    test.equals(fields.string().parse('some string'), 'some string');
+    test.equals(stringField.parse(), '');
+    test.equals(stringField.parse(null), '');
+    test.equals(stringField.parse(0), '0');
+    test.equals(stringField.parse(''), '');
+    test.equals(stringField.parse('some string'), 'some string');
     test.done();
 };
 
 exports['string toHTML'] = function (test) {
     test.expect(3);
     test.equals(
-        fields.string().toHTML('fieldname'),
+        stringField.toHTML('fieldname'),
         '<div class="field">' +
             '<label for="id_fieldname">Fieldname</label>' +
             '<input type="text" name="fieldname" id="id_fieldname" />' +
@@ -207,11 +209,12 @@ exports['string toHTML with CSS classes'] = function (test) {
 testField('number');
 
 exports['number parse'] = function (test) {
-    test.ok(isNaN(fields.number().parse()));
-    test.ok(isNaN(fields.number().parse(null)));
-    test.equals(fields.number().parse(0), 0);
-    test.ok(isNaN(fields.number().parse('')));
-    test.equals(fields.number().parse('123'), 123);
+    var field = fields.number();
+    test.ok(isNaN(field.parse()));
+    test.ok(isNaN(field.parse(null)));
+    test.equals(field.parse(0), 0);
+    test.ok(isNaN(field.parse('')));
+    test.equals(field.parse('123'), 123);
     test.done();
 };
 
@@ -229,12 +232,13 @@ exports['number toHTML'] = function (test) {
 testField('boolean');
 
 exports['boolean parse'] = function (test) {
-    test.equals(fields.boolean().parse(), false);
-    test.equals(fields.boolean().parse(null), false);
-    test.equals(fields.boolean().parse(0), false);
-    test.equals(fields.boolean().parse(''), false);
-    test.equals(fields.boolean().parse('on'), true);
-    test.equals(fields.boolean().parse('true'), true);
+    var field = fields.boolean();
+    test.equals(field.parse(), false);
+    test.equals(field.parse(null), false);
+    test.equals(field.parse(0), false);
+    test.equals(field.parse(''), false);
+    test.equals(field.parse('on'), true);
+    test.equals(field.parse('true'), true);
     test.done();
 };
 
@@ -254,7 +258,7 @@ testField('email');
 exports['email parse'] = function (test) {
     test.equals(
         fields.email().parse().toString(),
-        fields.string().parse().toString()
+        stringField.parse().toString()
     );
     test.done();
 };
@@ -262,7 +266,7 @@ exports['email parse'] = function (test) {
 exports['email toHTML'] = function (test) {
     test.equals(
         fields.email().toHTML().toString(),
-        fields.string().toHTML().toString().replace(/type="text"/, 'type="email"')
+        stringHTML.replace(/type="text"/, 'type="email"')
     );
     test.done();
 };
@@ -288,7 +292,7 @@ testField('tel');
 exports['tel toHTML'] = function (test) {
     test.equals(
         fields.tel().toHTML().toString(),
-        fields.string().toHTML().toString().replace(/type="text"/, 'type="tel"')
+        stringHTML.replace(/type="text"/, 'type="tel"')
     );
     test.done();
 };
@@ -298,7 +302,7 @@ testField('password');
 exports['password parse'] = function (test) {
     test.equals(
         fields.password().parse().toString(),
-        fields.string().parse().toString()
+        stringField.parse().toString()
     );
     test.done();
 };
@@ -306,7 +310,7 @@ exports['password parse'] = function (test) {
 exports['password toHTML'] = function (test) {
     test.equals(
         fields.password().toHTML().toString(),
-        fields.string().toHTML().toString().replace(/type="text"/, 'type="password"')
+        stringHTML.replace(/type="text"/, 'type="password"')
     );
     test.done();
 };
@@ -316,7 +320,7 @@ testField('url');
 exports['url parse'] = function (test) {
     test.equals(
         fields.url().parse().toString(),
-        fields.string().parse().toString()
+        stringField.parse().toString()
     );
     test.done();
 };
@@ -324,7 +328,7 @@ exports['url parse'] = function (test) {
 exports['url toHTML'] = function (test) {
     test.equals(
         fields.url().toHTML().toString(),
-        fields.string().toHTML().toString()
+        stringHTML
     );
     test.done();
 };
@@ -350,7 +354,7 @@ testField('date');
 exports['date parse'] = function (test) {
     test.equals(
         fields.date().parse().toString(),
-        fields.string().parse().toString()
+        stringField.parse().toString()
     );
     test.done();
 };
@@ -358,7 +362,7 @@ exports['date parse'] = function (test) {
 exports['date toHTML'] = function (test) {
     test.equals(
         fields.date().toHTML().toString(),
-        fields.string().toHTML().toString()
+        stringHTML
     );
     test.done();
 };
@@ -382,19 +386,20 @@ exports['date validators'] = function (test) {
 testField('array');
 
 exports['array parse'] = function (test) {
-    test.same(fields.array().parse(), []);
-    test.same(fields.array().parse(null), [null]);
-    test.same(fields.array().parse(0), [0]);
-    test.same(fields.array().parse(''), ['']);
-    test.same(fields.array().parse('abc'), ['abc']);
-    test.same(fields.array().parse(['one', 'two', 'three']), ['one', 'two', 'three']);
+    var field = fields.array();
+    test.same(field.parse(), []);
+    test.same(field.parse(null), [null]);
+    test.same(field.parse(0), [0]);
+    test.same(field.parse(''), ['']);
+    test.same(field.parse('abc'), ['abc']);
+    test.same(field.parse(['one', 'two', 'three']), ['one', 'two', 'three']);
     test.done();
 };
 
 exports['array toHTML'] = function (test) {
     test.equals(
         fields.array().toHTML().toString(),
-        fields.string().toHTML().toString()
+        stringHTML
     );
     test.done();
 };
