@@ -253,16 +253,16 @@ testField('email');
 
 exports['email parse'] = function (test) {
     test.equals(
-        fields.email().parse.toString(),
-        fields.string().parse.toString()
+        fields.email().parse().toString(),
+        fields.string().parse().toString()
     );
     test.done();
 };
 
 exports['email toHTML'] = function (test) {
     test.equals(
-        fields.email().toHTML.toString(),
-        fields.string().toHTML.toString()
+        fields.email().toHTML().toString(),
+        fields.string().toHTML().toString()
     );
     test.done();
 };
@@ -287,16 +287,16 @@ testField('password');
 
 exports['password parse'] = function (test) {
     test.equals(
-        fields.password().parse.toString(),
-        fields.string().parse.toString()
+        fields.password().parse().toString(),
+        fields.string().parse().toString()
     );
     test.done();
 };
 
 exports['password toHTML'] = function (test) {
     test.equals(
-        fields.password().toHTML.toString(),
-        fields.string().toHTML.toString()
+        fields.password().toHTML().toString(),
+        fields.string().toHTML().toString().replace(/type="text"/, 'type="password"')
     );
     test.done();
 };
@@ -305,16 +305,16 @@ testField('url');
 
 exports['url parse'] = function (test) {
     test.equals(
-        fields.url().parse.toString(),
-        fields.string().parse.toString()
+        fields.url().parse().toString(),
+        fields.string().parse().toString()
     );
     test.done();
 };
 
 exports['url toHTML'] = function (test) {
     test.equals(
-        fields.url().toHTML.toString(),
-        fields.string().toHTML.toString()
+        fields.url().toHTML().toString(),
+        fields.string().toHTML().toString()
     );
     test.done();
 };
@@ -339,16 +339,16 @@ testField('date');
 
 exports['date parse'] = function (test) {
     test.equals(
-        fields.date().parse.toString(),
-        fields.string().parse.toString()
+        fields.date().parse().toString(),
+        fields.string().parse().toString()
     );
     test.done();
 };
 
 exports['date toHTML'] = function (test) {
     test.equals(
-        fields.date().toHTML.toString(),
-        fields.string().toHTML.toString()
+        fields.date().toHTML().toString(),
+        fields.string().toHTML().toString()
     );
     test.done();
 };
@@ -383,8 +383,8 @@ exports['array parse'] = function (test) {
 
 exports['array toHTML'] = function (test) {
     test.equals(
-        fields.array().toHTML.toString(),
-        fields.string().toHTML.toString()
+        fields.array().toHTML().toString(),
+        fields.string().toHTML().toString()
     );
     test.done();
 };
