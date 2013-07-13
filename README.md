@@ -149,6 +149,7 @@ components following the same API.
 ### Widgets
 
 * text
+* email
 * password
 * hidden
 * color

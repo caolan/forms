@@ -31,6 +31,7 @@ var test_input = function (type) {
 };
 
 exports.text = test_input('text');
+exports.email = test_input('email');
 exports.password = test_input('password');
 exports.hidden = test_input('hidden');
 exports.color = test_input('color');

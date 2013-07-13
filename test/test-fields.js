@@ -262,7 +262,7 @@ exports['email parse'] = function (test) {
 exports['email toHTML'] = function (test) {
     test.equals(
         fields.email().toHTML().toString(),
-        fields.string().toHTML().toString()
+        fields.string().toHTML().toString().replace(/type="text"/, 'type="email"')
     );
     test.done();
 };
