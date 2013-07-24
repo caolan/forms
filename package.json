@@ -16,7 +16,8 @@
         "test-browser": "./node_modules/.bin/browserify test-browser.js | ./node_modules/.bin/testling"
     },
     "dependencies": {
-        "async": "~0.2.9"
+        "async": "~0.2.9",
+        "qs": "~0.6.5"
     },
     "licenses": [
         {
