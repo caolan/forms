@@ -31,6 +31,12 @@ var form = forms.create({
         required: true,
         validators: [validators.matchField('password')]
     }),
+    phone_1: fields.string({
+        validators: [validators.requiresFieldIfEmpty('phone_2')]
+    }),
+    phone_2: fields.string({
+        validators: [validators.requiresFieldIfEmpty('phone_1')]
+    }),
     options: fields.string({
         choices: {
             one: 'option one',

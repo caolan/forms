@@ -21,6 +21,39 @@ exports.matchField = function (test) {
     });
 };
 
+exports.requiresFieldIfEmpty = function (test) {
+    var v = validators.requiresFieldIfEmpty('alternate_field', 'field 1: %s field2: %s'),
+        empty_fields = {
+            field: {name: 'field', data: ' '},
+            alternate_field: {name: 'alternate_field', data: ''}
+        },
+        filled_fields = {
+            field: {name: 'field', data: 'filled'},
+            alternate_field: {name: 'alternate_field', data: 'also filled'}
+        },
+        first_filled = {
+            field: {name: 'field', data: 'filled'},
+            alternate_field: {name: 'alternate_field', data: ''}
+        },
+        second_filled = {
+            field: {name: 'field', data: ''},
+            alternate_field: {name: 'alternate_field', data: 'filled'}
+        };
+    v({ fields: empty_fields }, empty_fields.field, function (err) {
+        test.equals(err, 'field 1: field field2: alternate_field');
+        v({ fields: filled_fields }, filled_fields.field, function (err) {
+            test.equals(err, undefined);
+            v({ fields: first_filled }, first_filled.field, function (err) {
+                test.equals(err, undefined);
+                v({ fields: second_filled }, second_filled.field, function (err) {
+                    test.equals(err, undefined);
+                    test.done();
+                });
+            });
+        });
+    });
+};
+
 exports.min = function (test) {
     validators.min(100, 'Value must be greater than or equal to %s.')('form', {data: 50}, function (err) {
         test.equals(err, 'Value must be greater than or equal to 100.');
