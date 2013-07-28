@@ -3,13 +3,13 @@
 var forms = require('../lib/forms'),
     fields = forms.fields,
     stringField = fields.string(),
-    stringHTML = stringField.toHTML().toString();
-
+    stringHTML = stringField.toHTML().toString(),
+    fn1 = function () { return 'one'; },
+    fn2 = function () { return 'two'; };
 
 var testField = function (field) {
 
     exports[field + ' options'] = function (test) {
-        var fn1 = function () { return 'one'; };
 
         var f = fields[field]({
             required: true,
@@ -276,9 +276,7 @@ exports['email validators'] = function (test) {
         fields.email().validators[0].toString(),
         forms.validators.email().toString()
     );
-    var fn1 = function () { return 'one'; },
-        fn2 = function () { return 'two'; },
-        f = fields.email({validators: [fn1, fn2]});
+    var f = fields.email({validators: [fn1, fn2]});
     test.equals(
         f.validators[0].toString(),
         forms.validators.email().toString()
@@ -338,9 +336,7 @@ exports['url validators'] = function (test) {
         fields.url().validators[0].toString(),
         forms.validators.url().toString()
     );
-    var fn1 = function () { return 'one'; },
-        fn2 = function () { return 'two'; },
-        f = fields.url({validators: [fn1, fn2]});
+    var f = fields.url({validators: [fn1, fn2]});
     test.equals(
         f.validators[0].toString(),
         forms.validators.url().toString()
@@ -372,9 +368,7 @@ exports['date validators'] = function (test) {
         fields.date().validators[0].toString(),
         forms.validators.date().toString()
     );
-    var fn1 = function () { return 'one'; },
-        fn2 = function () { return 'two'; },
-        f = fields.date({validators: [fn1, fn2]});
+    var f = fields.date({validators: [fn1, fn2]});
     test.equals(
         f.validators[0].toString(),
         forms.validators.date().toString()
