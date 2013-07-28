@@ -209,10 +209,10 @@ exports['table bound error'] = function (test) {
             }]
         }),
         field_name_error_after: forms.fields.string({
-          errorAfterField: true,
-          validators: [function (form, field, callback) {
-              callback('validation error after field');
-          }]
+            errorAfterField: true,
+            validators: [function (form, field, callback) {
+                callback('validation error after field');
+            }]
         })
     });
     f.bind({field_name: 'val', field_name_error_after: 'foo'}).validate(function (err, f) {
