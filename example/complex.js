@@ -67,7 +67,12 @@ var form = forms.create({
     notes: fields.string({
         widget: widgets.textarea({rows: 6})
     }),
-    spam_me: fields.boolean()
+    spam_me: fields.boolean(),
+    nested_1: {
+        nested_2: {
+            nested: fields.string()
+        }
+    }
 });
 
 
