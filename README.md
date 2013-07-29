@@ -1,3 +1,5 @@
+[![Build Status][1]][2] [![dependency status][3]][4]
+
 # Forms
 
 Constructing a good form by hand is a lot of work. Popular frameworks like
@@ -335,4 +337,9 @@ valid or with an error message if the field is invalid.
 
 A function which accepts a name and field as arguments and returns a string
 containing a HTML representation of the field.
+
+[1]: https://travis-ci.org/caolan/forms.png
+[2]: https://travis-ci.org/caolan/forms
+[3]: https://david-dm.org/caolan/forms.png
+[4]: https://david-dm.org/caolan/forms
 
