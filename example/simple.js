@@ -25,14 +25,22 @@ var reg_form = forms.create({
         required: true,
         validators: [validators.matchField('password')]
     }),
-    email: fields.email()
+    personal: {
+        name: fields.string({required: true, label: 'Name'}),
+        email: fields.email({required: true, label: 'Email'}),
+        address: {
+            address1: fields.string({required: true, label: 'Address 1'}),
+            address2: fields.string({label: 'Address 2'}),
+            city: fields.string({required: true, label: 'City'}),
+            state: fields.string({required: true, label: 'State'}),
+            zip: fields.number({required: true, label: 'ZIP'})
+        }
+    }
 });
-
 
 http.createServer(function (req, res) {
     reg_form.handle(req, {
         success: function (form) {
-            var req_data = require('url').parse(req.url, 1).query;
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.write('<h1>Success!</h1>');
             res.end('<pre>' + util.inspect(form.data) + '</pre>');
