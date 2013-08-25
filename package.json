@@ -45,8 +45,8 @@
     },
     "devDependencies": {
         "nodeunit": "~0.8.1",
-        "testling": "~1.2.2",
-        "browserify": "~2.25.0",
+        "testling": "~1.5.1",
+        "browserify": "~2.29.0",
         "nodeunit-browser-tap": "~0.0.3"
     }
 }
