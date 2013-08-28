@@ -19,6 +19,12 @@
         "async": "~0.2.9",
         "qs": "~0.6.5"
     },
+    "devDependencies": {
+        "nodeunit": "~0.8.1",
+        "testling": "~1.5.1",
+        "browserify": "~2.29.0",
+        "nodeunit-browser-tap": "~0.0.3"
+    },
     "licenses": [
         {
             "type": "MIT",
@@ -43,12 +49,6 @@
             "iphone/6.0..latest",
             "android-browser/4.2"
         ]
-    },
-    "devDependencies": {
-        "nodeunit": "~0.8.1",
-        "testling": "~1.5.1",
-        "browserify": "~2.29.0",
-        "nodeunit-browser-tap": "~0.0.3"
     }
 }
 
