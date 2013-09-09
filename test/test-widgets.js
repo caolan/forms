@@ -306,3 +306,13 @@ exports.label = function (test) {
     test.done();
 };
 
+exports['dynamic widget attributes'] = function(test) {
+    var re = /autocomplete="no"/;
+    Object.keys(forms.widgets).forEach(function(name) {
+        var w = forms.widgets[name]();
+        w.attrs = {autocomplete: 'no'};
+        var html = w.toHTML('test', {choices: {foo: 'bar'}});
+        test.equals(re.test(html), true);
+    });
+    test.done();
+};
