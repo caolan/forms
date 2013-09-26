@@ -21,6 +21,23 @@ exports.matchField = function (test) {
     });
 };
 
+exports.required = function (test) {
+    var v = validators.required(),
+        emptyFields = { field: { name: 'field', data: '' } },
+        whitespaceFields = { field: { name: 'field', data: '  ' } },
+        filledFields = { field: { name: 'field', data: 'foo' } };
+    v({ fields: emptyFields }, emptyFields.field, function (err) {
+        test.equals(err, 'field is required.');
+        v({ fields: whitespaceFields }, whitespaceFields.field, function (err) {
+            test.equals(err, 'field is required.');
+            v({ fields: filledFields }, filledFields.field, function (err) {
+                test.equals(err, undefined);
+                test.done();
+            });
+        });
+    });
+};
+
 exports.requiresFieldIfEmpty = function (test) {
     var v = validators.requiresFieldIfEmpty('alternate_field', 'field 1: %s field2: %s'),
         empty_fields = {

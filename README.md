@@ -169,6 +169,7 @@ components following the same API.
 ### Validators
 
 * matchField
+* required
 * requiresFieldIfEmpty
 * min
 * max
