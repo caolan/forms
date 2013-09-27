@@ -23,7 +23,9 @@ var inputWithOptionalAttributes = forms.widgets.text({
 });
 
 var form = forms.create({
-    name:  fields.string({required: true}),
+    name:  fields.string({
+        required: validators.required('%s is required, silly!')
+    }),
     email: fields.email({required: true, label: 'Email Address'}),
     website: fields.url(),
     password: fields.password({required: true}),
