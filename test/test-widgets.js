@@ -26,6 +26,9 @@ var test_input = function (type) {
         test.equals(forms.widgets[type]().formatValue('hello'), expectedValue);
 
         test.strictEqual(forms.widgets[type]().formatValue(false), null);
+
+        test.deepEqual(forms.widgets[type]( { min: 1 } ).getUserAttrs(), { min: 1 })
+
         test.done();
     };
 };
