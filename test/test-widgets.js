@@ -34,6 +34,7 @@ var test_input = function (type) {
 };
 
 exports.text = test_input('text');
+exports.number = test_input('number');
 exports.email = test_input('email');
 exports.password = test_input('password');
 exports.hidden = test_input('hidden');
