@@ -1,6 +1,8 @@
 [![Build Status][1]][2] [![dependency status][3]][4] [![dev dependency status][5]][6]
 
-# Forms
+# Forms <sup>[![Version Badge][9]][8]</sup>
+
+[![npm badge][7]][8]
 
 Constructing a good form by hand is a lot of work. Popular frameworks like
 Ruby on Rails and Django contain code to make this process less painful.
@@ -345,4 +347,7 @@ containing a HTML representation of the field.
 [4]: https://david-dm.org/caolan/forms
 [5]: https://david-dm.org/caolan/forms/dev-status.png
 [6]: https://david-dm.org/caolan/forms#info=devDependencies
+[7]: https://nodei.co/npm/forms.png?downloads=true&stars=true
+[8]: https://npmjs.org/package/forms
+[9]: http://vb.teelaun.ch/caolan/forms.svg
 
