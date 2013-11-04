@@ -1,6 +1,6 @@
-[![Build Status][1]][2] [![dependency status][3]][4] [![dev dependency status][5]][6]
-
 # Forms <sup>[![Version Badge][9]][8]</sup>
+
+[![Build Status][1]][2] [![dependency status][3]][4] [![dev dependency status][5]][6]
 
 [![npm badge][7]][8]
 
