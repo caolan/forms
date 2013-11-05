@@ -174,6 +174,29 @@ exports.date = function (test) {
     ], test.done);
 };
 
+exports.datetimelocal = function (test) {
+    async.parallel([
+        function (callback) {
+            validators.datetimelocal('Datetimelocal input must contain a valid datetime.')('form', {data: '02/28/2012'}, function (err) {
+                test.equals(err, 'Datetimelocal input must contain a valid datetime.');
+                validators.datetimelocal()('form', {data: '2012-02-28T01:01:00.000'}, function (err) {
+                    test.equals(err, undefined);
+                    callback();
+                });
+            });
+        },
+        function (callback) {
+            validators.datetimelocal()('form', {data: '2012.02.30'}, function (err) {
+                test.equals(err, 'Inputs of type "datetimelocal" must be valid datetimes in the format "yyyy-mm-ddT-hh:mm:ss.000"');
+                validators.datetimelocal()('form', {data: '2012-02-30T01:01:00.000'}, function (err) {
+                    test.equals(err, undefined);
+                    callback();
+                });
+            });
+        }
+    ], test.done);
+};
+
 exports.minlength = function (test) {
     validators.minlength(5, 'Enter at least %s characters.')('form', {data: '1234'}, function (err) {
         test.equals(err, 'Enter at least 5 characters.');
