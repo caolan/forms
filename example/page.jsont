@@ -50,7 +50,7 @@
     </head>
     <body>
         <h1>Example Form</h1>
-        <form action="" method="GET">
+        <form action="" method="{method}">
             {form}
             <button type="submit">Submit</button>
         </form>
