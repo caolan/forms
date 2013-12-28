@@ -43,7 +43,7 @@
                 margin: -15px 0 0 0;
                 padding: 5px 0;
             }
-            input[type='submit'] {
+            button[type="submit"] {
                 margin-top: 20px;
             }
         </style>
@@ -52,7 +52,7 @@
         <h1>Example Form</h1>
         <form action="" method="GET">
             {form}
-            <input type="submit" />
+            <button type="submit">Submit</button>
         </form>
     </body>
 </html>
