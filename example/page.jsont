@@ -26,7 +26,7 @@
             .field textarea {
                 margin-top: -15px;
             }
-            .field input[type='checkbox'] {
+            .field input[type="checkbox"] {
                 position: relative;
                 margin-left: 32px;
                 top: 4px;
