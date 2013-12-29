@@ -90,7 +90,8 @@ http.createServer(function (req, res) {
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.end(template.expand({
                 form: form.toHTML(),
-                method: 'GET'
+                method: 'POST',
+                enctype: 'multipart/form-data'
             }));
         }
     });
