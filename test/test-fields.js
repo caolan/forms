@@ -171,6 +171,14 @@ exports['string parse'] = function (test) {
     test.done();
 };
 
+exports['string labelText'] = function (test) {
+    test.equals(stringField.labelText('name'), 'Name');
+    test.equals(stringField.labelText('first_name'), 'First name');
+    test.equals(stringField.labelText('first-name'), 'First name');
+    test.equals(stringField.labelText('firstName'), 'First name');
+    test.done();
+}
+
 exports['string toHTML'] = function (test) {
     test.expect(3);
     test.equals(
