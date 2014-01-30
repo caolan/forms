@@ -51,6 +51,9 @@
             "iphone/6.0..latest",
             "android-browser/4.2"
         ]
+    },
+    "engines": {
+        "node": ">= 0.4"
     }
 }
 
