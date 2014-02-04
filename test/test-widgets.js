@@ -279,7 +279,7 @@ exports['optional text input'] = function (test) {
         forms.widgets.text({
             tabindex: 1
         }).toHTML('field1'),
-        '<input type="text" name="field1" id="id_field1" tabindex="l" />'
+        '<input type="text" name="field1" id="id_field1" tabindex="1" />'
     );
     test.done();
 };
