@@ -275,6 +275,12 @@ exports['optional text input'] = function (test) {
         }).toHTML('field1'),
         '<input type="text" name="field1" id="id_field1" placeholder="Enter &quot;some&quot; comment" />'
     );
+    test.equals(
+        forms.widgets.text({
+            tabindex: 1
+        }).toHTML('field1'),
+        '<input type="text" name="field1" id="id_field1" tabindex="l" />'
+    );
     test.done();
 };
 
