@@ -26,11 +26,15 @@ var test_input = function (type) {
         test.equals(forms.widgets[type]().formatValue('hello'), expectedValue);
 
         test.strictEqual(forms.widgets[type]().formatValue(false), null);
+
+        test.deepEqual(forms.widgets[type]( { min: 1 } ).getUserAttrs(), { min: 1 })
+
         test.done();
     };
 };
 
 exports.text = test_input('text');
+exports.number = test_input('number');
 exports.email = test_input('email');
 exports.password = test_input('password');
 exports.hidden = test_input('hidden');
