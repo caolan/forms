@@ -27,9 +27,9 @@ exports.required = function (test) {
         whitespaceFields = { field: { name: 'field', data: '  ' } },
         filledFields = { field: { name: 'field', data: 'foo' } };
     v({ fields: emptyFields }, emptyFields.field, function (err) {
-        test.equals(err, 'field is required.');
+        test.equals(err, 'This field is required.');
         v({ fields: whitespaceFields }, whitespaceFields.field, function (err) {
-            test.equals(err, 'field is required.');
+            test.equals(err, 'This field is required.');
             v({ fields: filledFields }, filledFields.field, function (err) {
                 test.equals(err, undefined);
                 test.done();
@@ -247,3 +247,40 @@ exports.color = function (test) {
     async.parallel(tests, test.done);
 };
 
+exports.nonFormatMessage1 = function (test) {
+    var v = validators.matchField('field1', 'f2 dnm f1'),
+        data = {
+            fields: {
+                field1: {data: 'one'},
+                field2: {data: 'two'}
+            }
+        };
+    v(data, data.fields.field2, function (err) {
+        test.equals(err, 'f2 dnm f1');
+        data.fields.field2.data = 'one';
+        v(data, data.fields.field2, function (err) {
+            test.equals(err, undefined);
+            test.done();
+        });
+    });
+}
+
+exports.nonFormatMessage2 = function (test) {
+    validators.min(100, '1234567890')('form', {data: 50}, function (err) {
+        test.equals(err, '1234567890');
+        validators.min(100)('form', {data: 100}, function (err) {
+            test.equals(err, undefined);
+            test.done();
+        });
+    });
+}
+
+exports.nonFormatMessage3 = function (test) {
+    validators.minlength(5, 'qwertyuiop')('form', {data: '1234'}, function (err) {
+        test.equals(err, 'qwertyuiop');
+        validators.minlength(5)('form', {data: '12345'}, function (err) {
+            test.equals(err, undefined);
+            test.done();
+        });
+    });
+};
