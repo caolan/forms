@@ -184,6 +184,7 @@ components following the same API.
 * email
 * url
 * date
+* alphanumeric
 
 ### Renderers
 
