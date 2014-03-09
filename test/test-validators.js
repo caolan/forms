@@ -247,3 +247,23 @@ exports.color = function (test) {
     async.parallel(tests, test.done);
 };
 
+exports.alphanumeric = function (test) {
+    function makeTest(message, data, expected) {
+        return function (callback) {
+            validators.alphanumeric(message)('form', {data: data}, function(err) {
+                test.equals(err, expected);
+                callback();
+            });
+        };
+    }
+
+    var tests = [
+        makeTest(undefined, 'asdf', undefined),
+        makeTest(undefined, '278', undefined),
+        makeTest(undefined, '%', 'Letters and numbers only.'),
+        makeTest(' qwer', 'a a', ' qwer'),
+        makeTest('_r ', ' 1 ', '_r ')
+    ];
+
+    async.parallel(tests, test.done);
+};
