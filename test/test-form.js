@@ -1,10 +1,10 @@
 /*jslint node: true */
 'use strict';
-var forms = require('../lib/forms'),
-    http = require('http');
+var forms = require('../lib/forms');
+var http = require('http');
+var test = require('tape');
 
-
-exports.bind = function (test) {
+test('bind', function (test) {
     var form = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string({
@@ -15,63 +15,63 @@ exports.bind = function (test) {
         })
     });
     // unbound
-    test.equals(form.isValid, undefined);
+    test.equal(form.isValid, undefined);
 
     // bound
     var f = form.bind({field1: 'data one', field2: 'data two'});
-    test.equals(f.fields.field1.value, 'data one');
-    test.equals(f.fields.field1.data, 'data one');
-    test.equals(f.fields.field1.error, undefined);
-    test.equals(f.fields.field2.value, 'data two');
-    test.equals(f.fields.field2.data, 'data two');
-    test.equals(f.fields.field2.error, undefined);
+    test.equal(f.fields.field1.value, 'data one');
+    test.equal(f.fields.field1.data, 'data one');
+    test.equal(f.fields.field1.error, undefined);
+    test.equal(f.fields.field2.value, 'data two');
+    test.equal(f.fields.field2.data, 'data two');
+    test.equal(f.fields.field2.error, undefined);
 
     test.ok(f.isValid instanceof Function);
-    test.equals(f.bind, undefined);
-    test.equals(f.handle, undefined);
+    test.equal(f.bind, undefined);
+    test.equal(f.handle, undefined);
 
-    test.same(f.data, {field1: 'data one', field2: 'data two'});
+    test.deepEqual(f.data, {field1: 'data one', field2: 'data two'});
     test.ok(form !== f, 'bind returns new form object');
 
-    test.done();
-};
+    test.end();
+});
 
-exports.validate = function (test) {
+test('validate', function (test) {
     var form = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string({
             validators: [function (form, field, callback) {
-                test.equals(field.data, 'data two');
-                test.equals(field.value, 'data two');
+                test.equal(field.data, 'data two');
+                test.equal(field.value, 'data two');
                 callback('validation error');
             }]
         })
     });
     var data = {field1: 'data one', field2: 'data two'};
     form.bind(data).validate(function (err, f) {
-        test.equals(f.fields.field1.value, 'data one');
-        test.equals(f.fields.field1.data, 'data one');
-        test.equals(f.fields.field1.error, null);
-        test.equals(f.fields.field2.value, 'data two');
-        test.equals(f.fields.field2.data, 'data two');
-        test.equals(f.fields.field2.error, 'validation error');
+        test.equal(f.fields.field1.value, 'data one');
+        test.equal(f.fields.field1.data, 'data one');
+        test.equal(f.fields.field1.error, undefined);
+        test.equal(f.fields.field2.value, 'data two');
+        test.equal(f.fields.field2.data, 'data two');
+        test.equal(f.fields.field2.error, 'validation error');
 
-        test.same(f.data, {field1: 'data one', field2: 'data two'});
+        test.deepEqual(f.data, {field1: 'data one', field2: 'data two'});
         test.ok(form !== f, 'bind returns new form object');
 
-        test.equals(f.isValid(), false);
-        test.done();
+        test.notOk(f.isValid());
+        test.end();
     });
-};
+});
 
-exports['validate valid data'] = function (test) {
+test('validate valid data', function (test) {
     var f = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string()
     });
     f.bind({field1: '1', field2: '2'}).validate(function (err, f) {
-        test.equals(f.isValid(), true);
-        test.equals(
+        test.true(f.isValid());
+        test.equal(
             f.toHTML(),
             '<div class="field">' +
                 '<label for="id_field1">Field1</label>' +
@@ -82,11 +82,11 @@ exports['validate valid data'] = function (test) {
                 '<input type="text" name="field2" id="id_field2" value="2" />' +
             '</div>'
         );
-        test.done();
+        test.end();
     });
-};
+});
 
-exports['validate invalid data'] = function (test) {
+test('validate invalid data', function (test) {
     var f = forms.create({
         field1: forms.fields.string({
             validators: [function (form, field, callback) {
@@ -100,8 +100,8 @@ exports['validate invalid data'] = function (test) {
         })
     });
     f.bind({field1: '1', field2: '2'}).validate(function (err, f) {
-        test.equals(f.isValid(), false);
-        test.equals(
+        test.equal(f.isValid(), false);
+        test.equal(
             f.toHTML(),
             '<div class="field error">' +
                 '<p class="error_msg">validation error 1</p>' +
@@ -114,12 +114,12 @@ exports['validate invalid data'] = function (test) {
                 '<input type="text" name="field2" id="id_field2" value="2" />' +
             '</div>'
         );
-        test.done();
+        test.end();
     });
-};
+});
 
-exports['handle empty'] = function (test) {
-    test.expect(3);
+test('handle empty', function (test) {
+    test.plan(3);
     var f = forms.create({field1: forms.fields.string()});
     f.bind = function () {
         test.ok(false, 'bind should not be called');
@@ -127,7 +127,7 @@ exports['handle empty'] = function (test) {
     f.handle(undefined, {
         empty: function (form) {
             test.ok(true, 'empty called');
-            test.equals(form, f);
+            test.equal(form, f);
         },
         success: function (form) {
             test.ok(false, 'success should not be called');
@@ -144,11 +144,11 @@ exports['handle empty'] = function (test) {
             test.ok(true, 'other called');
         }
     });
-    setTimeout(test.done, 50);
-};
+    setTimeout(test.end, 50);
+});
 
-exports['handle success'] = function (test) {
-    test.expect(7);
+test('handle success', function (test) {
+    test.plan(7);
     var f = forms.create({field1: forms.fields.string()}),
         call_order = [];
     f.bind = function (raw_data) {
@@ -167,7 +167,7 @@ exports['handle success'] = function (test) {
         },
         success: function (form) {
             test.ok(true, 'success called');
-            test.equals(form, f);
+            test.equal(form, f);
         },
         error: function (form) {
             test.ok(false, 'error should not be called');
@@ -179,13 +179,13 @@ exports['handle success'] = function (test) {
     f.handle({field1: 'test'}, {
         other: function (form) {
             test.ok(true, 'other called');
-            test.done();
+            test.end();
         }
     });
-};
+});
 
-exports['handle empty object'] = function (test) {
-    test.expect(3);
+test('handle empty object', function (test) {
+    test.plan(3);
     var f = forms.create({field1: forms.fields.string()});
     f.bind = function (raw_data, callback) {
         test.ok(true, 'bind called');
@@ -200,7 +200,7 @@ exports['handle empty object'] = function (test) {
     f.handle({}, {
         empty: function (form) {
             test.ok(true, 'empty called');
-            test.equals(form, f);
+            test.equal(form, f);
         },
         success: function (form) {
             test.ok(false, 'success should not be called');
@@ -217,11 +217,11 @@ exports['handle empty object'] = function (test) {
             test.ok(true, 'other called');
         }
     });
-    setTimeout(test.done, 50);
-};
+    setTimeout(test.end, 50);
+});
 
-exports['handle error'] = function (test) {
-    test.expect(5);
+test('handle error', function (test) {
+    test.plan(5);
     var f = forms.create({field1: forms.fields.string()});
     f.bind = function (raw_data, callback) {
         test.ok(true, 'bind called');
@@ -242,7 +242,7 @@ exports['handle error'] = function (test) {
         },
         error: function (form) {
             test.ok(true, 'error called');
-            test.equals(form, f);
+            test.equal(form, f);
         },
         other: function (form) {
             test.ok(false, 'other should not be called');
@@ -253,93 +253,93 @@ exports['handle error'] = function (test) {
             test.ok(true, 'other called');
         }
     });
-    setTimeout(test.done, 50);
-};
+    setTimeout(test.end, 50);
+});
 
-exports['handle ServerRequest GET'] = function (test) {
+test('handle ServerRequest GET', function (test) {
     var f = forms.create({field1: forms.fields.string()}),
         req = new http.IncomingMessage();
     req.method = 'GET';
     req.url = '/?field1=test';
     f.handle(req, {
         success: function (form) {
-            test.equals(form.data.field1, 'test');
-            test.done();
+            test.equal(form.data.field1, 'test');
+            test.end();
         }
     });
-};
+});
 
-exports['handle ServerRequest POST'] = function (test) {
+test('handle ServerRequest POST', function (test) {
     var f = forms.create({field1: forms.fields.string()}),
         req = new http.IncomingMessage();
     req.body = {field1: 'test'};
     req.method = 'POST';
     f.handle(req, {
         success: function (form) {
-            test.equals(form.data.field1, 'test');
-            test.done();
+            test.equal(form.data.field1, 'test');
+            test.end();
         }
     });
     req.emit('data', 'field1=test');
     req.emit('end');
-};
+});
 
-exports['handle ServerRequest POST with bodyDecoder'] = function (test) {
+test('handle ServerRequest POST with bodyDecoder', function (test) {
     var f = forms.create({field1: forms.fields.string()}),
         req = new http.IncomingMessage();
     req.body = {field1: 'test'};
     req.method = 'POST';
     f.handle(req, {
         success: function (form) {
-            test.equals(form.data.field1, 'test');
-            test.done();
+            test.equal(form.data.field1, 'test');
+            test.end();
         }
     });
-};
+});
 
-exports.div = function (test) {
+test('div', function (test) {
     var f = forms.create({fieldname: forms.fields.string()});
-    test.equals(
+    test.equal(
         f.toHTML(),
         '<div class="field">' +
             '<label for="id_fieldname">Fieldname</label>' +
             '<input type="text" name="fieldname" id="id_fieldname" />' +
         '</div>'
     );
-    test.done();
-};
+    test.end();
+});
 
-exports['div required'] = function (test) {
+test('div required', function (test) {
     var f = forms.create({
         fieldname: forms.fields.string({required: true})
     });
-    test.equals(
+    test.equal(
         f.toHTML(),
         '<div class="field required">' +
             '<label for="id_fieldname">Fieldname</label>' +
             '<input type="text" name="fieldname" id="id_fieldname" />' +
         '</div>'
     );
-    test.done();
-};
+    test.end();
+});
 
-exports['div bound'] = function (test) {
-    test.expect(1);
+test('div bound', function (test) {
+    test.plan(1);
     var f = forms.create({name: forms.fields.string()});
     f.bind({name: 'val'}).validate(function (err, f) {
-        test.equals(
+        test.equal(
             f.toHTML(),
             '<div class="field">' +
                 '<label for="id_name">Name</label>' +
                 '<input type="text" name="name" id="id_name" value="val" />' +
             '</div>'
         );
+        test.end();
     });
-    setTimeout(test.done, 25);
-};
+});
 
-exports['div bound error'] = function (test) {
-    test.expect(1);
+test('div bound error', function (test) {
+    test.plan(1);
     var f = forms.create({
         field_name: forms.fields.string({
             validators: [function (form, field, callback) {
@@ -348,7 +348,7 @@ exports['div bound error'] = function (test) {
         })
     });
     f.bind({field_name: 'val'}).validate(function (err, f) {
-        test.equals(
+        test.equal(
             f.toHTML(),
             '<div class="field error">' +
                 '<p class="error_msg">validation error</p>' +
@@ -357,7 +357,7 @@ exports['div bound error'] = function (test) {
                 'value="val" />' +
             '</div>'
         );
+        test.end();
     });
-    setTimeout(test.done, 25);
-};
+});
 
