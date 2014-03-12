@@ -155,6 +155,7 @@ components following the same API.
 
 * text
 * email
+* number
 * password
 * hidden
 * color

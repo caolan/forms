@@ -33,6 +33,7 @@ var test_input = function (type) {
 
 test('text', test_input('text'));
 test('email', test_input('email'));
+test('number', test_input('number'));
 test('password', test_input('password'));
 test('hidden', test_input('hidden'));
 test('color', test_input('color'));
