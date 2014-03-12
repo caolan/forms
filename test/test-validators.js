@@ -50,6 +50,15 @@ test('matchValue', function (t) {
         });
     });
 
+    t.test('fails when not provided a function', function (st) {
+        var nonFunctions = [undefined, null, 42, /a/g, 'foo', [], {}];
+        st.plan(nonFunctions.length);
+        nonFunctions.forEach(function (nonFunction) {
+            st.throws(function () { validators.matchValue(nonFunction); }, TypeError, nonFunction + ' is not a function');
+        });
+        st.end();
+    });
+
     t.end();
 });
 
