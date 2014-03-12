@@ -12,7 +12,7 @@
         "url": "http://github.com/caolan/forms/issues"
     },
     "scripts": {
-        "test": "node test/*.js",
+        "test": "tape test/*.js",
         "test-browser": "testling"
     },
     "dependencies": {
