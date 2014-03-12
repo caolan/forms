@@ -22,6 +22,36 @@ test('matchField', function (test) {
     });
 });
 
+test('matchValue', function (t) {
+    var data = {
+        fields: {
+            field1: { data: 'one' }
+        }
+    };
+
+    t.test('passes when matching the value', function (st) {
+        var getter = function () { return 'one'; }
+        var v = validators.matchValue(getter, 'name: %s | value: %s');
+        st.plan(1);
+        v(data, data.fields.field1, function (err) {
+            st.equal(err, undefined);
+            st.end();
+        });
+    });
+
+    t.test('fails when not matching the value', function (st) {
+        var getter = function () { return 'NOPE FAILURE'; }
+        var v = validators.matchValue(getter, 'name: %s | value: %s');
+        st.plan(1);
+        v(data, data.fields.field1, function (err) {
+            st.equal(err, 'name: This field | value: NOPE FAILURE');
+            st.end();
+        });
+    });
+
+    t.end();
+});
+
 test('required', function (test) {
     var v = validators.required(),
         emptyFields = { field: { name: 'field', data: '' } },
