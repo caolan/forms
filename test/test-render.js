@@ -4,49 +4,49 @@ var forms = require('../lib/forms');
 var test = require('tape');
 
 var testWrap = function (tag) {
-    test(tag, function (test) {
+    test(tag, function (t) {
         var f = forms.create({fieldname: forms.fields.string()});
-        test.equal(
+        t.equal(
             f.toHTML(forms.render[tag]),
             '<' + tag + ' class="field">' +
                 '<label for="id_fieldname">Fieldname</label>' +
                 '<input type="text" name="fieldname" id="id_fieldname" />' +
             '</' + tag + '>'
         );
-        test.end();
+        t.end();
     });
 
-    test(tag + ' required', function (test) {
+    test(tag + ' required', function (t) {
         var f = forms.create({
             fieldname: forms.fields.string({required: true})
         });
-        test.equal(
+        t.equal(
             f.toHTML(forms.render[tag]),
             '<' + tag + ' class="field required">' +
                 '<label for="id_fieldname">Fieldname</label>' +
                 '<input type="text" name="fieldname" id="id_fieldname" />' +
             '</' + tag + '>'
         );
-        test.end();
+        t.end();
     });
 
-    test(tag + ' bound', function (test) {
-        test.plan(1);
+    test(tag + ' bound', function (t) {
+        t.plan(1);
         var f = forms.create({name: forms.fields.string()});
         f.bind({name: 'val'}).validate(function (err, f) {
-            test.equal(
+            t.equal(
                 f.toHTML(forms.render[tag]),
                 '<' + tag + ' class="field">' +
                     '<label for="id_name">Name</label>' +
                     '<input type="text" name="name" id="id_name" value="val" />' +
                 '</' + tag + '>'
             );
-            test.end();
+            t.end();
         });
     });
 
-    test(tag + ' bound error', function (test) {
-        test.plan(1);
+    test(tag + ' bound error', function (t) {
+        t.plan(1);
         var f = forms.create({
             field_name: forms.fields.string({
                 validators: [function (form, field, callback) {
@@ -61,7 +61,7 @@ var testWrap = function (tag) {
             })
         });
         f.bind({field_name: 'val', field_name_error_after: 'foo'}).validate(function (err, f) {
-            test.equal(
+            t.equal(
                 f.toHTML(forms.render[tag]),
                 '<' + tag + ' class="field error">' +
                     '<p class="error_msg">validation error</p>' +
@@ -74,18 +74,18 @@ var testWrap = function (tag) {
                     '<p class="error_msg">validation error after field</p>' +
                 '</' + tag + '>'
             );
-            test.end();
+            t.end();
         });
     });
 
-    test(tag + ' multipleCheckbox', function (test) {
+    test(tag + ' multipleCheckbox', function (t) {
         var f = forms.create({
             fieldname: forms.fields.string({
                 choices: {one: 'item one'},
                 widget: forms.widgets.multipleCheckbox()
             })
         });
-        test.equal(
+        t.equal(
             f.toHTML(forms.render[tag]),
             '<' + tag + ' class="field">' +
                 '<fieldset>' +
@@ -95,17 +95,17 @@ var testWrap = function (tag) {
                 '</fieldset>' +
             '</' + tag + '>'
         );
-        test.end();
+        t.end();
     });
 
-    test(tag + ' multipleRadio', function (test) {
+    test(tag + ' multipleRadio', function (t) {
         var f = forms.create({
             fieldname: forms.fields.string({
                 choices: {one: 'item one'},
                 widget: forms.widgets.multipleRadio()
             })
         });
-        test.equal(
+        t.equal(
             f.toHTML(forms.render[tag]),
             '<' + tag + ' class="field">' +
                 '<fieldset>' +
@@ -115,38 +115,38 @@ var testWrap = function (tag) {
                 '</fieldset>' +
             '</' + tag + '>'
         );
-        test.end();
+        t.end();
     });
 
-    test(tag + ' label custom id', function (test) {
+    test(tag + ' label custom id', function (t) {
         var f = forms.create({
             fieldname: forms.fields.string({
                 id: 'custom-id'
             })
         });
-        test.equal(
+        t.equal(
             f.toHTML(forms.render[tag]),
             '<' + tag + ' class="field">' +
                 '<label for="custom-id">Fieldname</label>' +
                 '<input type="text" name="fieldname" id="custom-id" />' +
             '</' + tag + '>'
         );
-        test.end();
+        t.end();
     });
 
-    test(tag + ' hidden label', function (test) {
+    test(tag + ' hidden label', function (t) {
         var f = forms.create({
             fieldname: forms.fields.string({
                 widget: forms.widgets.hidden()
             })
         });
-        test.equal(
+        t.equal(
             f.toHTML(forms.render[tag]),
             '<' + tag + ' class="field">' +
                 '<input type="hidden" name="fieldname" id="id_fieldname" />' +
             '</' + tag + '>'
         );
-        test.end();
+        t.end();
     });
 };
 
@@ -154,9 +154,9 @@ testWrap('div');
 testWrap('p');
 testWrap('li');
 
-test('table', function (test) {
+test('table', function (t) {
     var f = forms.create({fieldname: forms.fields.string()});
-    test.equal(
+    t.equal(
         f.toHTML(forms.render.table),
         '<tr class="field">' +
             '<th><label for="id_fieldname">Fieldname</label></th>' +
@@ -165,14 +165,14 @@ test('table', function (test) {
             '</td>' +
         '</tr>'
     );
-    test.end();
+    t.end();
 });
 
-test('table required', function (test) {
+test('table required', function (t) {
     var f = forms.create({
         fieldname: forms.fields.string({required: true})
     });
-    test.equal(
+    t.equal(
         f.toHTML(forms.render.table),
         '<tr class="field required">' +
             '<th><label for="id_fieldname">Fieldname</label></th>' +
@@ -181,14 +181,14 @@ test('table required', function (test) {
             '</td>' +
         '</tr>'
     );
-    test.end();
+    t.end();
 });
 
-test('table bound', function (test) {
-    test.plan(1);
+test('table bound', function (t) {
+    t.plan(1);
     var f = forms.create({name: forms.fields.string()});
     f.bind({name: 'val'}).validate(function (err, f) {
-        test.equal(
+        t.equal(
             f.toHTML(forms.render.table),
             '<tr class="field">' +
                 '<th><label for="id_name">Name</label></th>' +
@@ -197,12 +197,12 @@ test('table bound', function (test) {
                 '</td>' +
             '</tr>'
         );
-        test.end();
+        t.end();
     });
 });
 
-test('table bound error', function (test) {
-    test.plan(1);
+test('table bound error', function (t) {
+    t.plan(1);
     var f = forms.create({
         field_name: forms.fields.string({
             validators: [function (form, field, callback) {
@@ -217,7 +217,7 @@ test('table bound error', function (test) {
         })
     });
     f.bind({field_name: 'val', field_name_error_after: 'foo'}).validate(function (err, f) {
-        test.equal(
+        t.equal(
             f.toHTML(forms.render.table),
             '<tr class="field error">' +
                 '<th><label for="id_field_name">Field name</label></th>' +
@@ -234,7 +234,7 @@ test('table bound error', function (test) {
                 '</td>' +
             '</tr>'
         );
-        test.end();
+        t.end();
     });
 });
 
