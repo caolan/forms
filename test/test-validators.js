@@ -250,14 +250,14 @@ test('color', function (test) {
 });
 
 test('alphanumeric', function (test) {
-    function makeTest(message, data, expected) {
+    var makeTest = function (message, data, expected) {
         return function (callback) {
             validators.alphanumeric(message)('form', {data: data}, function(err) {
                 test.equal(err, expected);
                 callback();
             });
         };
-    }
+    };
 
     var tests = [
         makeTest(undefined, 'asdf', undefined),
@@ -271,3 +271,40 @@ test('alphanumeric', function (test) {
     async.parallel(tests, test.end);
 });
 
+test('nonFormatMessage1', function (test) {
+    var v = validators.matchField('field1', 'f2 dnm f1'),
+        data = {
+            fields: {
+                field1: {data: 'one'},
+                field2: {data: 'two'}
+            }
+        };
+    v(data, data.fields.field2, function (err) {
+        test.equals(err, 'f2 dnm f1');
+        data.fields.field2.data = 'one';
+        v(data, data.fields.field2, function (err) {
+            test.equals(err, undefined);
+            test.end();
+        });
+    });
+});
+
+test('nonFormatMessage2', function (test) {
+    validators.min(100, '1234567890')('form', {data: 50}, function (err) {
+        test.equals(err, '1234567890');
+        validators.min(100)('form', {data: 100}, function (err) {
+            test.equals(err, undefined);
+            test.end();
+        });
+    });
+});
+
+test('nonFormatMessage3', function (test) {
+    validators.minlength(5, 'qwertyuiop')('form', {data: '1234'}, function (err) {
+        test.equals(err, 'qwertyuiop');
+        validators.minlength(5)('form', {data: '12345'}, function (err) {
+            test.equals(err, undefined);
+            test.end();
+        });
+    });
+});
