@@ -13,7 +13,9 @@
     },
     "scripts": {
         "test": "tape test/*.js",
-        "test-browser": "testling"
+        "test-browser": "testling",
+        "coverage": "covert test/*.js",
+        "coverage-quiet": "covert --quiet test/*.js"
     },
     "dependencies": {
         "async": "~0.2.9",
@@ -23,7 +25,8 @@
     },
     "devDependencies": {
         "tape": "~2.10.2",
-        "testling": "~1.6.1"
+        "testling": "~1.6.1",
+        "covert": "~0.3.1"
     },
     "licenses": [
         {
