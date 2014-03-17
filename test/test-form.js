@@ -1,6 +1,7 @@
 /*jslint node: true */
 'use strict';
 var forms = require('../lib/forms');
+var is = require('is');
 var http = require('http');
 var test = require('tape');
 
@@ -27,12 +28,12 @@ test('bind', function (t) {
     t.equal(f.fields.field2.data, 'data two');
     t.equal(f.fields.field2.error, undefined);
 
-    t.ok(f.isValid instanceof Function);
+    t.ok(is.fn(f.isValid), 'isValid is a function');
     t.equal(f.bind, undefined);
     t.equal(f.handle, undefined);
 
     t.deepEqual(f.data, {field1: 'data one', field2: 'data two'});
-    t.ok(form !== f, 'bind returns new form object');
+    t.notEqual(form, f, 'bind returns new form object');
 
     t.end();
 });
@@ -55,12 +56,12 @@ test('bind with missing field in data keeps field in form', function (t) {
     t.equal(f.fields.field2.data, '');
     t.equal(f.fields.field2.error, undefined);
 
-    t.ok(f.isValid instanceof Function);
+    t.ok(is.fn(f.isValid), 'isValid is function');
     t.equal(f.bind, undefined);
     t.equal(f.handle, undefined);
 
     t.deepEqual(f.data, {field1: 'data one', field2: ''});
-    t.ok(form !== f, 'bind returns new form object');
+    t.notEqual(form, f, 'bind returns new form object');
 
     t.end();
 });
@@ -87,7 +88,7 @@ test('validate', function (t) {
         t.equal(f.fields.field2.error, 'validation error');
 
         t.deepEqual(f.data, {field1: 'data one', field2: 'data two'});
-        t.ok(form !== f, 'bind returns new form object');
+        t.notEqual(form, f, 'bind returns new form object');
 
         t.notOk(f.isValid());
         t.end();

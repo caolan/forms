@@ -1,6 +1,7 @@
 /*jslint node: true */
 'use strict';
 var forms = require('../lib/forms');
+var is = require('is');
 var fields = forms.fields;
 var stringField = fields.string();
 var stringHTML = stringField.toHTML().toString();
@@ -50,8 +51,8 @@ var testField = function (field) {
         t.equal(bound.value, 'some data');
         t.equal(bound.data, 'some data parsed');
         t.equal(bound.error, undefined);
-        t.ok(bound.validate instanceof Function);
-        t.ok(bound !== f, 'bind returns a new field object');
+        t.ok(is.fn(bound.validate));
+        t.notEqual(bound, f, 'bind returns a new field object');
         t.end();
     });
 
@@ -81,7 +82,7 @@ var testField = function (field) {
             t.equal(bound.value, 'some data');
             t.equal(bound.data, 'some data parsed');
             t.equal(bound.error, 'Error: validation error');
-            t.ok(bound !== f, 'bind returns a new field object');
+            t.notEqual(bound, f, 'bind returns a new field object');
             t.end();
         });
     });
