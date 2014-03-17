@@ -37,6 +37,34 @@ test('bind', function (t) {
     t.end();
 });
 
+test('bind with missing field in data keeps field in form', function (t) {
+    t.plan(12);
+    var form = forms.create({
+        field1: forms.fields.string(),
+        field2: forms.fields.string()
+    });
+    // unbound
+    t.equal(form.isValid, undefined);
+
+    // bound
+    var f = form.bind({field1: 'data one'});
+    t.equal(f.fields.field1.value, 'data one');
+    t.equal(f.fields.field1.data, 'data one');
+    t.equal(f.fields.field1.error, undefined);
+    t.equal(f.fields.field2.value, undefined);
+    t.equal(f.fields.field2.data, '');
+    t.equal(f.fields.field2.error, undefined);
+
+    t.ok(f.isValid instanceof Function);
+    t.equal(f.bind, undefined);
+    t.equal(f.handle, undefined);
+
+    t.deepEqual(f.data, {field1: 'data one', field2: ''});
+    t.ok(form !== f, 'bind returns new form object');
+
+    t.end();
+});
+
 test('validate', function (t) {
     t.plan(11);
     var form = forms.create({
