@@ -9,10 +9,10 @@ var test_input = function (type) {
             forms.widgets[type]().toHTML('field1'),
             '<input type="' + type + '" name="field1" id="id_field1" />'
         );
-        var w = forms.widgets[type]({classes: ['test1', 'test2', 'test3']});
+        var w = forms.widgets[type]({classes: ['test1', 'test2', 'test3'], attrs: {disabled: 'disabled', maxlength: 100}});
         t.equal(
             w.toHTML('field2', {id: 'form2_field2'}),
-            '<input type="' + type + '" name="field2" id="form2_field2" class="test1 test2 test3" />'
+            '<input type="' + type + '" name="field2" id="form2_field2" class="test1 test2 test3" disabled="disabled" maxlength="100" />'
         );
 
         var expectedHTML = '<input type="' + type + '" name="field1" id="id_field1" value="some value" />';
@@ -66,10 +66,10 @@ test('checkbox', function (t) {
         forms.widgets.checkbox().toHTML('field1'),
         '<input type="checkbox" name="field1" id="id_field1" value="on" />'
     );
-    var w = forms.widgets.checkbox({classes: ['test1', 'test2', 'test3']});
+    var w = forms.widgets.checkbox({classes: ['test1', 'test2', 'test3'], attrs: {disabled: 'disabled'}});
     t.equal(
         w.toHTML('field2', {id: 'form2_field2'}),
-        '<input type="checkbox" name="field2" id="form2_field2" value="on" class="test1 test2 test3" />'
+        '<input type="checkbox" name="field2" id="form2_field2" value="on" class="test1 test2 test3" disabled="disabled" />'
     );
     t.equal(
         forms.widgets.checkbox().toHTML('field', {value: true}),
@@ -97,7 +97,10 @@ test('select', function (t) {
         '</select>'
     );
     t.equal(
-        forms.widgets.select({classes: ['one', 'two']}).toHTML('name', {
+        forms.widgets.select({
+            classes: ['one', 'two'],
+            attrs: {disabled: 'disabled'}
+        }).toHTML('name', {
             choices: {
                 val1: 'text1',
                 val2: 'text2'
@@ -105,7 +108,7 @@ test('select', function (t) {
             id: 'someid',
             value: 'val2'
         }),
-        '<select name="name" id="someid" class="one two">' +
+        '<select name="name" id="someid" class="one two" disabled="disabled">' +
             '<option value="val1">text1</option>' +
             '<option value="val2" selected="selected">text2</option>' +
         '</select>'
@@ -122,10 +125,11 @@ test('textarea', function (t) {
     t.equal(
         forms.widgets.textarea({
             classes: ['one', 'two'],
+            attrs: {maxlength: 100},
             rows: 20,
             cols: 80
         }).toHTML('name', {id: 'someid', value: 'value'}),
-        '<textarea name="name" id="someid" rows="20" cols="80" class="one two">value</textarea>'
+        '<textarea name="name" id="someid" rows="20" cols="80" class="one two" maxlength="100">value</textarea>'
     );
     t.equal(forms.widgets.textarea().type, 'textarea');
     t.end();
