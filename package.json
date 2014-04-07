@@ -6,10 +6,10 @@
     "version": "0.3.0",
     "repository": {
         "type": "git",
-        "url": "http://github.com/caolan/forms.git"
+        "url": "https://github.com/caolan/forms.git"
     },
     "bugs": {
-        "url": "http://github.com/caolan/forms/issues"
+        "url": "https://github.com/caolan/forms/issues"
     },
     "scripts": {
         "test": "tape test/*.js",
@@ -31,7 +31,7 @@
     "licenses": [
         {
             "type": "MIT",
-            "url": "http://github.com/caolan/forms/raw/master/LICENSE"
+            "url": "https://github.com/caolan/forms/raw/master/LICENSE"
         }
     ],
     "testling": {
