@@ -18,13 +18,13 @@
         "coverage-quiet": "covert --quiet test/*.js"
     },
     "dependencies": {
-        "async": "~0.2.9",
+        "async": "~0.7.0",
         "qs": "~0.6.5",
         "formidable": "~1.0.14",
         "is": "~0.3.0"
     },
     "devDependencies": {
-        "tape": "~2.10.2",
+        "tape": "~2.12.3",
         "testling": "~1.6.1",
         "covert": "~0.3.1"
     },
