@@ -361,3 +361,68 @@ test('nonFormatMessage3', function (t) {
         });
     });
 });
+
+
+test('int', function (t) {
+    var v = validators.int();
+
+    t.test('valid integers', function(st) {
+        var valids = ['1', '10', '-1', '-10', '+1', '-10'];
+
+        st.plan(valids.length);
+        valids.forEach(function (input) {
+            v('form', { data: input }, function (err) {
+                st.equal(err, undefined);
+            });
+        });
+        st.end();
+    });
+
+    t.test('invalid integers', function(st) {
+        var invalids = ['1.5', 'one', '1,5', 'FFFFF'];
+        var msg = 'Please enter an integer value.';
+
+        st.plan(invalids.length);
+
+        invalids.forEach(function (input) {
+            v('form', { data: input }, function (err) {
+                st.equal(err, msg);
+            });
+        });
+        st.end();
+    });
+
+    t.end();
+});
+
+test('digits', function (t) {
+    var v = validators.digits();
+
+    t.test('valid digits', function(st) {
+        var valids = ['1', '10', '100'];
+
+        st.plan(valids.length);
+        valids.forEach(function (input) {
+            v('form', { data: input }, function (err) {
+                st.equal(err, undefined);
+            });
+        });
+        st.end();
+    });
+
+    t.test('invalid digits', function(st) {
+        var invalids = ['-1', '+10', 'one', '1.5'];
+        var msg = 'Please enter a digit.';
+
+        st.plan(invalids.length);
+
+        invalids.forEach(function (input) {
+            v('form', { data: input }, function (err) {
+                st.equal(err, msg);
+            });
+        });
+        st.end();
+    });
+
+    t.end();
+});
