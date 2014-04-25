@@ -188,7 +188,7 @@ components following the same API.
 * date
 * alphanumeric
 * digits
-* int
+* integer
 
 ### Renderers
 

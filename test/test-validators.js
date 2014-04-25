@@ -363,11 +363,11 @@ test('nonFormatMessage3', function (t) {
 });
 
 
-test('int', function (t) {
-    var v = validators.int();
+test('integer', function (t) {
+    var v = validators.integer();
 
     t.test('valid integers', function(st) {
-        var valids = ['1', '10', '-1', '-10', '+1', '-10'];
+        var valids = ['1', '10', '-1', '-10', '-10'];
 
         st.plan(valids.length);
         valids.forEach(function (input) {
@@ -379,7 +379,7 @@ test('int', function (t) {
     });
 
     t.test('invalid integers', function(st) {
-        var invalids = ['1.5', 'one', '1,5', 'FFFFF'];
+        var invalids = ['1.5', 'one', '1,5', 'FFFFF', '+10'];
         var msg = 'Please enter an integer value.';
 
         st.plan(invalids.length);
@@ -412,7 +412,7 @@ test('digits', function (t) {
 
     t.test('invalid digits', function(st) {
         var invalids = ['-1', '+10', 'one', '1.5'];
-        var msg = 'Please enter a digit.';
+        var msg = 'Numbers only.';
 
         st.plan(invalids.length);
 
@@ -426,3 +426,4 @@ test('digits', function (t) {
 
     t.end();
 });
+
