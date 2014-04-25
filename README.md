@@ -187,6 +187,8 @@ components following the same API.
 * url
 * date
 * alphanumeric
+* digits
+* int
 
 ### Renderers
 
