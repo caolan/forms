@@ -1,7 +1,10 @@
+0.4.1 / 2014-04-24
+==================
+  * Updating dependencies
+  * Adding digits and integer validators
+
 0.4.0 / 2014-04-07
 ==================
-
-  * v0.4.0
   * Using https URLs in package.json
   * Updating async and tape.
   * Using `is` to check for things
