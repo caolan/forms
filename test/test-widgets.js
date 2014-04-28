@@ -293,6 +293,8 @@ test('optional data attribute regex test', function (t) {
     t.equal(re.test('idata-input'), false);
     t.equal(re.test('data-input1'), false);
     t.equal(re.test('data_input'), false);
+    t.equal(re.test('data--'), false);
+    t.equal(re.test('data-foo-bar'), true);
     t.end();
 });
 
