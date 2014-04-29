@@ -329,6 +329,44 @@ test('handle ServerRequest POST', function (t) {
     req.emit('end');
 });
 
+test('validation stops on first error', function (t) {
+    t.plan(3);
+    var f = forms.create({
+            field1: forms.fields.string({ required: true }),
+            field2: forms.fields.string({ required: true }),
+            field3: forms.fields.string({ required: true }) 
+        });
+    
+    f.handle({ field1: 'test' }, {
+        error: function(form) {
+            t.equal(form.fields.field1.error, undefined);
+            t.equal(form.fields.field2.error, 'field2 is required.');
+            t.equal(form.fields.field3.error, undefined);
+            t.end();
+        }
+    });
+});
+
+test('validates past first error with validatePastFirstError option', function (t) {
+    t.plan(3);
+    var f = forms.create({
+            field1: forms.fields.string({ required: true }),
+            field2: forms.fields.string({ required: true }),
+            field3: forms.fields.string({ required: true }) 
+        },{
+            validatePastFirstError: true
+        });
+
+    f.handle({ field1: 'test' }, {
+        error: function(form) {
+            t.equal(form.fields.field1.error, undefined);
+            t.equal(form.fields.field2.error, 'field2 is required.');
+            t.equal(form.fields.field3.error, 'field3 is required.');
+            t.end();
+        }
+    });
+});
+
 test('handle ServerRequest POST with bodyDecoder', function (t) {
     t.plan(1);
     var f = forms.create({field1: forms.fields.string()}),
