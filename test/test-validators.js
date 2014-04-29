@@ -226,7 +226,7 @@ test('datetimeLocal', function (t) {
         });
     });
     t.end();
-};
+});
 
 test('minlength', function (t) {
     t.plan(2);
