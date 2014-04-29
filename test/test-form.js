@@ -332,11 +332,11 @@ test('handle ServerRequest POST', function (t) {
 test('validation stops on first error', function (t) {
     t.plan(3);
     var f = forms.create({
-            field1: forms.fields.string({ required: true }),
-            field2: forms.fields.string({ required: true }),
-            field3: forms.fields.string({ required: true }) 
-        });
-    
+        field1: forms.fields.string({ required: true }),
+        field2: forms.fields.string({ required: true }),
+        field3: forms.fields.string({ required: true })
+    });
+
     f.handle({ field1: 'test' }, {
         error: function(form) {
             t.equal(form.fields.field1.error, undefined);
@@ -350,12 +350,12 @@ test('validation stops on first error', function (t) {
 test('validates past first error with validatePastFirstError option', function (t) {
     t.plan(3);
     var f = forms.create({
-            field1: forms.fields.string({ required: true }),
-            field2: forms.fields.string({ required: true }),
-            field3: forms.fields.string({ required: true }) 
-        },{
-            validatePastFirstError: true
-        });
+        field1: forms.fields.string({ required: true }),
+        field2: forms.fields.string({ required: true }),
+        field3: forms.fields.string({ required: true })
+    }, {
+        validatePastFirstError: true
+    });
 
     f.handle({ field1: 'test' }, {
         error: function(form) {
