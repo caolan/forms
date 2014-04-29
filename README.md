@@ -155,6 +155,7 @@ components following the same API.
 
 * text
 * email
+* number
 * password
 * hidden
 * color
@@ -171,6 +172,7 @@ components following the same API.
 ### Validators
 
 * matchField
+* matchValue
 * required
 * requiresFieldIfEmpty
 * min
@@ -184,6 +186,9 @@ components following the same API.
 * email
 * url
 * date
+* alphanumeric
+* digits
+* integer
 
 ### Renderers
 
@@ -201,6 +206,13 @@ you will not need to use directly.
 ### forms.create(fields)
 Converts a form definition (an object literal containing field objects) into a
 form object.
+
+#### forms.create(fields, options)
+Forms can be created with an optional "options" object as well.
+#### Supported options:
+* `validatePastFirstError`: `true`, otherwise assumes `false`
+ * If `false`, the first validation error will halt form validation.
+ * If `true`, all fields will be validated.
 
 
 ### Form object

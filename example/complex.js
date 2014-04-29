@@ -88,7 +88,11 @@ http.createServer(function (req, res) {
         },
         other: function (form) {
             res.writeHead(200, {'Content-Type': 'text/html'});
-            res.end(template.expand({form: form.toHTML()}));
+            res.end(template.expand({
+                form: form.toHTML(),
+                method: 'POST',
+                enctype: 'multipart/form-data'
+            }));
         }
     });
 

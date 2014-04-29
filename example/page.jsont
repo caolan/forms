@@ -26,7 +26,7 @@
             .field textarea {
                 margin-top: -15px;
             }
-            .field input[type='checkbox'] {
+            .field input[type="checkbox"] {
                 position: relative;
                 margin-left: 32px;
                 top: 4px;
@@ -43,16 +43,16 @@
                 margin: -15px 0 0 0;
                 padding: 5px 0;
             }
-            input[type='submit'] {
+            button[type="submit"] {
                 margin-top: 20px;
             }
         </style>
     </head>
     <body>
         <h1>Example Form</h1>
-        <form action="" method="GET">
+        <form action="" method="{method}" enctype="{enctype}">
             {form}
-            <input type="submit" />
+            <button type="submit">Submit</button>
         </form>
     </body>
 </html>

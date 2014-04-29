@@ -3,36 +3,38 @@
     "description": "An easy way to create, parse, and validate forms",
     "main": "./index",
     "author": "Caolan McMahon",
-    "version": "0.3.0",
+    "version": "0.4.1",
     "repository": {
         "type": "git",
-        "url": "http://github.com/caolan/forms.git"
+        "url": "https://github.com/caolan/forms.git"
     },
     "bugs": {
-        "url": "http://github.com/caolan/forms/issues"
+        "url": "https://github.com/caolan/forms/issues"
     },
     "scripts": {
-        "test": "node test.js",
-        "test-browser": "./node_modules/.bin/browserify test-browser.js | ./node_modules/.bin/testling"
+        "test": "tape test/*.js",
+        "test-browser": "testling",
+        "coverage": "covert test/*.js",
+        "coverage-quiet": "covert --quiet test/*.js"
     },
     "dependencies": {
-        "async": "~0.2.9",
-        "qs": "~0.6.5"
+        "async": "~0.8.0",
+        "qs": "~0.6.5",
+        "formidable": "~1.0.14",
+        "is": "~0.3.0"
     },
     "devDependencies": {
-        "nodeunit": "~0.8.1",
-        "testling": "~1.5.1",
-        "browserify": "~2.35.0",
-        "nodeunit-browser-tap": "~0.0.3"
+        "tape": "~2.12.3",
+        "testling": "~1.6.1",
+        "covert": "~0.4.0"
     },
     "licenses": [
         {
             "type": "MIT",
-            "url": "http://github.com/caolan/forms/raw/master/LICENSE"
+            "url": "https://github.com/caolan/forms/raw/master/LICENSE"
         }
     ],
     "testling": {
-        "scripts": "node_modules/nodeunit-browser-tap/lib/nodeunit.js",
         "files": "test-browser.js",
         "browsers": [
             "iexplore/6..latest",
@@ -49,6 +51,9 @@
             "iphone/6.0..latest",
             "android-browser/4.2"
         ]
+    },
+    "engines": {
+        "node": ">= 0.4"
     }
 }
 

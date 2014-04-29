@@ -1,15 +1,18 @@
 /*jslint node: true */
 'use strict';
-var forms = require('../lib/forms'),
-    fields = forms.fields,
-    stringField = fields.string(),
-    stringHTML = stringField.toHTML().toString(),
-    fn1 = function () { return 'one'; },
-    fn2 = function () { return 'two'; };
+var forms = require('../lib/forms');
+var is = require('is');
+var fields = forms.fields;
+var stringField = fields.string();
+var stringHTML = stringField.toHTML().toString();
+var fn1 = function () { return 'one'; };
+var fn2 = function () { return 'two'; };
+var test = require('tape');
 
 var testField = function (field) {
 
-    exports[field + ' options'] = function (test) {
+    test(field + ' options', function (t) {
+        t.plan(6);
 
         var f = fields[field]({
             required: true,
@@ -19,73 +22,73 @@ var testField = function (field) {
             choices: {one: 'option one', two: 'option two'}
         });
 
-        test.equals(f.required, true);
-        test.equals(f.label, 'test label');
-        test.equals(f.validators[f.validators.length - 1], fn1);
-        test.equals(f.widget, 'some widget');
-        test.same(f.choices, {one: 'option one', two: 'option two'});
-        test.equals(f.validate, undefined);
-        test.done();
-    };
+        t.equal(f.required, true);
+        t.equal(f.label, 'test label');
+        t.equal(f.validators[f.validators.length - 1], fn1);
+        t.equal(f.widget, 'some widget');
+        t.deepEqual(f.choices, {one: 'option one', two: 'option two'});
+        t.equal(f.validate, undefined);
+        t.end();
+    });
 
-    exports[field + ' bind'] = function (test) {
-        test.expect(7);
+    test(field + ' bind', function (t) {
+        t.plan(7);
 
         var f = fields[field]({
             label: 'test label',
             validators: [
                 function (form, field, callback) {
-                    test.ok(false, 'validators should not be called');
+                    t.ok(false, 'validators should not be called');
                 }
             ]
         });
         f.parse = function (data) {
-            test.equals(data, 'some data');
+            t.equal(data, 'some data');
             return 'some data parsed';
         };
         var bound = f.bind('some data');
-        test.equals(bound.label, 'test label');
-        test.equals(bound.value, 'some data');
-        test.equals(bound.data, 'some data parsed');
-        test.equals(bound.error, undefined);
-        test.ok(bound.validate instanceof Function);
-        test.ok(bound !== f, 'bind returns a new field object');
-        test.done();
-    };
+        t.equal(bound.label, 'test label');
+        t.equal(bound.value, 'some data');
+        t.equal(bound.data, 'some data parsed');
+        t.equal(bound.error, undefined);
+        t.ok(is.fn(bound.validate));
+        t.notEqual(bound, f, 'bind returns a new field object');
+        t.end();
+    });
 
-    exports[field + ' validate'] = function (test) {
-        test.expect(10);
+    test(field + ' validate', function (t) {
+        t.plan(10);
 
         var f = fields[field]({label: 'test label'});
         f.validators = [
             function (form, field, callback) {
-                test.equals(field.data, 'some data parsed');
-                test.equals(field.value, 'some data');
+                t.equal(field.data, 'some data parsed');
+                t.equal(field.value, 'some data');
                 callback(null);
             },
             function (form, field, callback) {
-                test.equals(field.data, 'some data parsed');
-                test.equals(field.value, 'some data');
+                t.equal(field.data, 'some data parsed');
+                t.equal(field.value, 'some data');
                 callback(new Error('validation error'));
             }
         ];
 
         f.parse = function (data) {
-            test.equals(data, 'some data');
+            t.equal(data, 'some data');
             return 'some data parsed';
         };
         f.bind('some data').validate('form', function (err, bound) {
-            test.equals(bound.label, 'test label');
-            test.equals(bound.value, 'some data');
-            test.equals(bound.data, 'some data parsed');
-            test.equals(bound.error, 'Error: validation error');
-            test.ok(bound !== f, 'bind returns a new field object');
-            test.done();
+            t.equal(bound.label, 'test label');
+            t.equal(bound.value, 'some data');
+            t.equal(bound.data, 'some data parsed');
+            t.equal(bound.error, 'Error: validation error');
+            t.notEqual(bound, f, 'bind returns a new field object');
+            t.end();
         });
-    };
+    });
 
-    exports[field + ' validate multiple errors'] = function (test) {
-        test.expect(1);
+    test(field + ' validate multiple errors', function (t) {
+        t.plan(1);
 
         var f = fields[field]();
         f.validators = [
@@ -93,7 +96,7 @@ var testField = function (field) {
                 callback('error one');
             },
             function (form, field, callback) {
-                test.ok(false, 'second validator should not be called');
+                t.ok(false, 'second validator should not be called');
                 callback('error two');
             }
         ];
@@ -102,16 +105,16 @@ var testField = function (field) {
             return 'some data parsed';
         };
         f.bind('some data').validate('form', function (err, bound) {
-            test.equals(bound.error, 'error one');
-            test.done();
+            t.equal(bound.error, 'error one');
+            t.end();
         });
-    };
+    });
 
-    exports[field + ' validate empty'] = function (test) {
-        test.expect(1);
+    test(field + ' validate empty', function (t) {
+        t.plan(1);
         var f = fields[field]({
             validators: [function (form, field, callback) {
-                test.ok(false, 'validators should not be called');
+                t.ok(false, 'validators should not be called');
                 callback('some error');
             }]
         });
@@ -119,61 +122,71 @@ var testField = function (field) {
             return;
         };
         f.bind().validate('form', function (err, bound) {
-            test.equals(bound.error, undefined);
-            test.done();
+            t.equal(bound.error, undefined);
+            t.end();
         });
-    };
+    });
 
-    exports[field + ' validate required'] = function (test) {
-        test.expect(5);
+    test(field + ' validate required', function (t) {
+        t.plan(5);
         var f = fields[field]({required: true});
         f.validators = [];
         f.bind(undefined).validate('form', function (err, f) {
-            test.equals(f.value, undefined);
-            test.equals(f.error, 'This field is required.');
+            t.equal(f.value, undefined);
+            t.equal(f.error, 'This field is required.');
         });
         var f2 = fields[field]({required: true});
         f2.parse = function (val) { return val; };
         f2.validators = [];
         f2.bind('val').validate('form', function (err, f2) {
-            test.equals(f2.value, 'val');
-            test.equals(f2.data, 'val');
-            test.equals(f2.error, null);
+            t.equal(f2.value, 'val');
+            t.equal(f2.data, 'val');
+            t.notOk(f2.error);
         });
-        setTimeout(test.done, 25);
-    };
+        t.end();
+    });
 
-    exports[field + ' validate no validators'] = function (test) {
-        test.expect(4);
+    test(field + ' validate no validators', function (t) {
+        t.plan(4);
         var f = fields[field]();
         f.validators = [];
         f.parse = function (data) {
-            test.equals(data, 'some data');
+            t.equal(data, 'some data');
             return 'some data parsed';
         };
         f.bind('some data').validate('form', function (err, f) {
-            test.equals(f.value, 'some data');
-            test.equals(f.data, 'some data parsed');
-            test.equals(f.error, null);
-            test.done();
+            t.equal(f.value, 'some data');
+            t.equal(f.data, 'some data parsed');
+            t.notOk(f.error);
+            t.end();
         });
-    };
+    });
 };
 
 testField('string');
 
-exports['string parse'] = function (test) {
-    test.equals(stringField.parse(), '');
-    test.equals(stringField.parse(null), '');
-    test.equals(stringField.parse(0), '0');
-    test.equals(stringField.parse(''), '');
-    test.equals(stringField.parse('some string'), 'some string');
-    test.done();
-};
+test('string parse', function (t) {
+    t.plan(5);
+    t.equal(stringField.parse(), '');
+    t.equal(stringField.parse(null), '');
+    t.equal(stringField.parse(0), '0');
+    t.equal(stringField.parse(''), '');
+    t.equal(stringField.parse('some string'), 'some string');
+    t.end();
+});
 
-exports['string toHTML'] = function (test) {
-    test.expect(3);
-    test.equals(
+test('string labelText', function (t) {
+    t.plan(4);
+    t.equal(stringField.labelText('name'), 'Name');
+    t.equal(stringField.labelText('first_name'), 'First name');
+    t.equal(stringField.labelText('first-name'), 'First name');
+    t.equal(stringField.labelText('firstName'), 'First name');
+    t.end();
+});
+
+test('string toHTML', function (t) {
+    t.plan(3);
+    t.equal(
         stringField.toHTML('fieldname'),
         '<div class="field">' +
             '<label for="id_fieldname">Fieldname</label>' +
@@ -182,16 +195,16 @@ exports['string toHTML'] = function (test) {
     );
     var f = fields.string();
     f.widget.toHTML = function (name, field) {
-        test.equals(name, 'fieldname');
-        test.equals(field, f);
-        test.done();
+        t.equal(name, 'fieldname');
+        t.equal(field, f);
+        t.end();
     };
     f.toHTML('fieldname');
-};
+});
 
-exports['string toHTML with CSS classes'] = function (test) {
-    test.expect(1);
-    test.equals(
+test('string toHTML with CSS classes', function (t) {
+    t.plan(1);
+    t.equal(
         fields.string({
             cssClasses: {
                 field: ['custom-field-class1', 'custom-field-class2'],
@@ -203,198 +216,198 @@ exports['string toHTML with CSS classes'] = function (test) {
             '<input type="text" name="fieldname" id="id_fieldname" />' +
         '</div>'
     );
-    test.done();
-};
+    t.end();
+});
 
 testField('number');
 
-exports['number parse'] = function (test) {
+test('number parse', function (t) {
     var field = fields.number();
-    test.ok(isNaN(field.parse()));
-    test.ok(isNaN(field.parse(null)));
-    test.equals(field.parse(0), 0);
-    test.ok(isNaN(field.parse('')));
-    test.equals(field.parse('123'), 123);
-    test.done();
-};
+    t.ok(isNaN(field.parse()));
+    t.ok(isNaN(field.parse(null)));
+    t.equal(field.parse(0), 0);
+    t.ok(isNaN(field.parse('')));
+    t.equal(field.parse('123'), 123);
+    t.end();
+});
 
-exports['number toHTML'] = function (test) {
-    test.equals(
+test('number toHTML', function (t) {
+    t.equal(
         fields.number().toHTML('fieldname'),
         '<div class="field">' +
             '<label for="id_fieldname">Fieldname</label>' +
             '<input type="text" name="fieldname" id="id_fieldname" />' +
         '</div>'
     );
-    test.done();
-};
+    t.end();
+});
 
 testField('boolean');
 
-exports['boolean parse'] = function (test) {
+test('boolean parse', function (t) {
     var field = fields.boolean();
-    test.equals(field.parse(), false);
-    test.equals(field.parse(null), false);
-    test.equals(field.parse(0), false);
-    test.equals(field.parse(''), false);
-    test.equals(field.parse('on'), true);
-    test.equals(field.parse('true'), true);
-    test.done();
-};
+    t.equal(field.parse(), false);
+    t.equal(field.parse(null), false);
+    t.equal(field.parse(0), false);
+    t.equal(field.parse(''), false);
+    t.equal(field.parse('on'), true);
+    t.equal(field.parse('true'), true);
+    t.end();
+});
 
-exports['boolean toHTML'] = function (test) {
-    test.equals(
+test('boolean toHTML', function (t) {
+    t.equal(
         fields.boolean().toHTML('fieldname'),
         '<div class="field">' +
             '<label for="id_fieldname">Fieldname</label>' +
             '<input type="checkbox" name="fieldname" id="id_fieldname" value="on" />' +
         '</div>'
     );
-    test.done();
-};
+    t.end();
+});
 
 testField('email');
 
-exports['email parse'] = function (test) {
-    test.equals(
+test('email parse', function (t) {
+    t.equal(
         fields.email().parse().toString(),
         stringField.parse().toString()
     );
-    test.done();
-};
+    t.end();
+});
 
-exports['email toHTML'] = function (test) {
-    test.equals(
+test('email toHTML', function (t) {
+    t.equal(
         fields.email().toHTML().toString(),
         stringHTML.replace(/type="text"/, 'type="email"')
     );
-    test.done();
-};
+    t.end();
+});
 
-exports['email validators'] = function (test) {
-    test.equals(
+test('email validators', function (t) {
+    t.equal(
         fields.email().validators[0].toString(),
         forms.validators.email().toString()
     );
     var f = fields.email({validators: [fn1, fn2]});
-    test.equals(
+    t.equal(
         f.validators[0].toString(),
         forms.validators.email().toString()
     );
-    test.same(f.validators.slice(1), [fn1, fn2]);
-    test.done();
-};
+    t.deepEqual(f.validators.slice(1), [fn1, fn2]);
+    t.end();
+});
 
 testField('tel');
 
-exports['tel toHTML'] = function (test) {
-    test.equals(
+test('tel toHTML', function (t) {
+    t.equal(
         fields.tel().toHTML().toString(),
         stringHTML.replace(/type="text"/, 'type="tel"')
     );
-    test.done();
-};
+    t.end();
+});
 
 testField('password');
 
-exports['password parse'] = function (test) {
-    test.equals(
+test('password parse', function (t) {
+    t.equal(
         fields.password().parse().toString(),
         stringField.parse().toString()
     );
-    test.done();
-};
+    t.end();
+});
 
-exports['password toHTML'] = function (test) {
-    test.equals(
+test('password toHTML', function (t) {
+    t.equal(
         fields.password().toHTML().toString(),
         stringHTML.replace(/type="text"/, 'type="password"')
     );
-    test.done();
-};
+    t.end();
+});
 
 testField('url');
 
-exports['url parse'] = function (test) {
-    test.equals(
+test('url parse', function (t) {
+    t.equal(
         fields.url().parse().toString(),
         stringField.parse().toString()
     );
-    test.done();
-};
+    t.end();
+});
 
-exports['url toHTML'] = function (test) {
-    test.equals(
+test('url toHTML', function (t) {
+    t.equal(
         fields.url().toHTML().toString(),
         stringHTML
     );
-    test.done();
-};
+    t.end();
+});
 
-exports['url validators'] = function (test) {
-    test.equals(
+test('url validators', function (t) {
+    t.equal(
         fields.url().validators[0].toString(),
         forms.validators.url().toString()
     );
     var f = fields.url({validators: [fn1, fn2]});
-    test.equals(
+    t.equal(
         f.validators[0].toString(),
         forms.validators.url().toString()
     );
-    test.same(f.validators.slice(1), [fn1, fn2]);
-    test.done();
-};
+    t.deepEqual(f.validators.slice(1), [fn1, fn2]);
+    t.end();
+});
 
 testField('date');
 
-exports['date parse'] = function (test) {
-    test.equals(
+test('date parse', function (t) {
+    t.equal(
         fields.date().parse().toString(),
         stringField.parse().toString()
     );
-    test.done();
-};
+    t.end();
+});
 
-exports['date toHTML'] = function (test) {
-    test.equals(
+test('date toHTML', function (t) {
+    t.equal(
         fields.date().toHTML().toString(),
         stringHTML
     );
-    test.done();
-};
+    t.end();
+});
 
-exports['date validators'] = function (test) {
-    test.equals(
+test('date validators', function (t) {
+    t.equal(
         fields.date().validators[0].toString(),
         forms.validators.date().toString()
     );
     var f = fields.date({validators: [fn1, fn2]});
-    test.equals(
+    t.equal(
         f.validators[0].toString(),
         forms.validators.date().toString()
     );
-    test.same(f.validators.slice(1), [fn1, fn2]);
-    test.done();
-};
+    t.deepEqual(f.validators.slice(1), [fn1, fn2]);
+    t.end();
+});
 
 testField('array');
 
-exports['array parse'] = function (test) {
+test('array parse', function (t) {
     var field = fields.array();
-    test.same(field.parse(), []);
-    test.same(field.parse(null), [null]);
-    test.same(field.parse(0), [0]);
-    test.same(field.parse(''), ['']);
-    test.same(field.parse('abc'), ['abc']);
-    test.same(field.parse(['one', 'two', 'three']), ['one', 'two', 'three']);
-    test.done();
-};
+    t.deepEqual(field.parse(), []);
+    t.deepEqual(field.parse(null), [null]);
+    t.deepEqual(field.parse(0), [0]);
+    t.deepEqual(field.parse(''), ['']);
+    t.deepEqual(field.parse('abc'), ['abc']);
+    t.deepEqual(field.parse(['one', 'two', 'three']), ['one', 'two', 'three']);
+    t.end();
+});
 
-exports['array toHTML'] = function (test) {
-    test.equals(
+test('array toHTML', function (t) {
+    t.equal(
         fields.array().toHTML().toString(),
         stringHTML
     );
-    test.done();
-};
+    t.end();
+});
 

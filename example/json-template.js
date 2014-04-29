@@ -12,8 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// $Id$
-
 //
 // JavaScript implementation of json-template.
 //
@@ -29,28 +27,25 @@ var repr = repr || function() {};
 var jsontemplate = function() {
 
 
-// Regex escaping for common metacharacters (note that JavaScript needs 2 \\ --
-// no raw strings!
-var META_ESCAPE = {
-  '{': '\\{',
-  '}': '\\}',
-  '{{': '\\{\\{',
-  '}}': '\\}\\}',
-  '[': '\\[',
-  ']': '\\]'
-};
-
-function _MakeTokenRegex(meta_left, meta_right) {
-  // TODO: check errors
-  return new RegExp(
-      '(' +
-      META_ESCAPE[meta_left] +
-      '.+?' +
-      META_ESCAPE[meta_right] +
-      '\n?)', 'g');  // global for use with .exec()
+// Regex escaping for metacharacters
+function EscapeMeta(meta) {
+  return meta.replace(/([\{\}\(\)\[\]\|\^\$\-\+\?])/g, '\\$1');
 }
 
-// 
+var token_re_cache = {};
+
+function _MakeTokenRegex(meta_left, meta_right) {
+  var key = meta_left + meta_right;
+  var regex = token_re_cache[key];
+  if (regex === undefined) {
+    var str = '(' + EscapeMeta(meta_left) + '.*?' + EscapeMeta(meta_right) +
+              '\n?)';
+    regex = new RegExp(str, 'g');
+  }
+  return regex;
+}
+
+//
 // Formatters
 //
 
@@ -75,36 +70,155 @@ function ToString(s) {
   return s.toString();
 }
 
+// Formatter to pluralize words
+function _Pluralize(value, unused_context, args) {
+  var s, p;
+  switch (args.length) {
+    case 0:
+      s = ''; p = 's';
+      break;
+    case 1:
+      s = ''; p = args[0];
+      break;
+    case 2:
+      s = args[0]; p = args[1];
+      break;
+    default:
+      // Should have been checked at compile time
+      throw {
+        name: 'EvaluationError', message: 'pluralize got too many args'
+      };
+  }
+  return (value > 1) ? p : s;
+}
+
+function _Cycle(value, unused_context, args) {
+  // Cycle between various values on consecutive integers.
+  // @index starts from 1, so use 1-based indexing.
+  return args[(value - 1) % args.length];
+}
+
 var DEFAULT_FORMATTERS = {
   'html': HtmlEscape,
   'htmltag': HtmlTagEscape,
   'html-attr-value': HtmlTagEscape,
   'str': ToString,
-  'raw': function(x) {return x;}
+  'raw': function(x) { return x; },
+  'AbsUrl': function(value, context) {
+    // TODO: Normalize leading/trailing slashes
+    return context.get('base-url') + '/' + value;
+  },
+  'plain-url': function(x) {
+    return '<a href="' + HtmlTagEscape(x) + '">' + HtmlEscape(x) + '</a>' ;
+  }
 };
 
+var DEFAULT_PREDICATES = {
+  'singular?': function(x) { return  x == 1; },
+  'plural?': function(x) { return x > 1; },
+  'Debug?': function(unused, context) {
+    try {
+      return context.get('debug');
+    } catch(err) {
+      if (err.name == 'UndefinedVariable') {
+        return false;
+      } else {
+        throw err;
+      }
+    }
+  }
+};
+
+var FunctionRegistry = function() {
+  return {
+    lookup: function(user_str) {
+      return [null, null];
+    }
+  };
+};
+
+var SimpleRegistry = function(obj) {
+  return {
+    lookup: function(user_str) {
+      var func = obj[user_str] || null;
+      return [func, null];
+    }
+  };
+};
+
+var CallableRegistry = function(callable) {
+  return {
+    lookup: function(user_str) {
+      var func = callable(user_str);
+      return [func, null];
+    }
+  };
+};
+
+// Default formatters which can't be expressed in DEFAULT_FORMATTERS
+var PrefixRegistry = function(functions) {
+  return {
+    lookup: function(user_str) {
+      for (var i = 0; i < functions.length; i++) {
+        var name = functions[i].name, func = functions[i].func;
+        if (user_str.slice(0, name.length) == name) {
+          // Delimiter is usually a space, but could be something else
+          var args;
+          var splitchar = user_str.charAt(name.length);
+          if (splitchar === '') {
+            args = [];  // No arguments
+          } else {
+            args = user_str.split(splitchar).slice(1);
+          }
+          return [func, args];
+        }
+      }
+      return [null, null];  // No formatter
+    }
+  };
+};
+
+var ChainedRegistry = function(registries) {
+  return {
+    lookup: function(user_str) {
+      for (var i=0; i<registries.length; i++) {
+        var result = registries[i].lookup(user_str);
+        if (result[0]) {
+          return result;
+        }
+      }
+      return [null, null];  // Nothing found
+    }
+  };
+};
 
 //
 // Template implementation
 //
 
-function _ScopedContext(context, undefined_str) {
+// Context wraps a data dictionary and makes it "walkable".
+function Context(context, undefined_str) {
   // The stack contains:
   //   The current context (an object).
   //   An iteration index.  -1 means we're NOT iterating.
   var stack = [{context: context, index: -1}];
 
   return {
-    PushSection: function(name) {
+    pushName: function(name) {
       if (name === undefined || name === null) {
         return null;
       }
-      var new_context = stack[stack.length-1].context[name] || null;
+      var new_context;
+      if (name == '@') {
+        new_context = stack[stack.length-1].context;
+      } else {
+        new_context = stack[stack.length-1].context[name] || null;
+      }
       stack.push({context: new_context, index: -1});
       return new_context;
     },
 
-    Pop: function() {
+    pop: function() {
       stack.pop();
     },
 
@@ -130,58 +244,47 @@ function _ScopedContext(context, undefined_str) {
       return true;  // OK, we mutated the stack
     },
 
-    _Undefined: function(name) {
-      if (undefined_str === undefined) {
-        throw {
-          name: 'UndefinedVariable', message: name + ' is not defined'
-        };
-      } else {
-        return undefined_str;
-      }
+    _Undefined: function() {
+      return (undefined_str === undefined) ? undefined : undefined_str;
     },
 
     _LookUpStack: function(name) {
       var i = stack.length - 1;
       while (true) {
         var frame = stack[i];
-        if (name == '$index') {
-          if (frame.index == -1) {  // undefined value
-            i--;
-          } else {
-            return frame.index - 1;
+        if (name == '@index') {
+          if (frame.index != -1) {  // -1 is undefined
+            return frame.index;
           }
         } else {
           var context = frame.context;
-          if (typeof context !== 'object') {
-            i--;
-          } else {
+          if (typeof context === 'object') {
             var value = context[name];
-            if (value === undefined) {
-              i--;
-            } else {
+            if (value !== undefined) {
               return value;
             }
           }
         }
-
+        i--;
         if (i <= -1) {
           return this._Undefined(name);
         }
       }
     },
 
-    Lookup: function(name) {
+    get: function(name) {
       if (name == '@') {
         return stack[stack.length-1].context;
       }
-      var parts = name.split('.');
-      var value = this._LookUpStack(parts[0]);
-      if (parts.length > 1) {
-        for (var i=1; i<parts.length; i++) {
-          value = value[parts[i]];
-          if (value === undefined) {
-            return this._Undefined(parts[i]);
-          }
+      var parts = name.split('.'),
+          value = this._LookUpStack(parts[0]);  // First lookup is special
+      if (value === undefined) {
+        return this._Undefined();
+      }
+      for (var i=1; i<parts.length; i++) {
+        value = value[parts[i]];
+        if (value === undefined) {
+          return this._Undefined();
         }
       }
       return value;
@@ -191,29 +294,83 @@ function _ScopedContext(context, undefined_str) {
 }
 
 
-function _Section(section_name) {
-  var current_clause = [];
-  var statements = {'default': current_clause};
+// Crockford's "functional inheritance" pattern
 
-  return {
-    section_name: section_name, // public attribute
+var _AbstractSection = function(spec) {
+  var that = {};
+  that.current_clause = [];
 
-    Statements: function(clause) {
-      clause = clause || 'default';
-      return statements[clause] || [];
-    },
-
-    NewClause: function(clause_name) {
-      var new_clause = [];
-      statements[clause_name] = new_clause;
-      current_clause = new_clause;
-    },
-
-    Append: function(statement) {
-      current_clause.push(statement);
-    }
+  that.Append = function(statement) {
+    that.current_clause.push(statement);
   };
-}
+
+  that.AlternatesWith = function() {
+    throw {
+      name: 'TemplateSyntaxError',
+      message:
+          '{.alternates with} can only appear with in {.repeated section ...}'
+    };
+  };
+
+  that.NewOrClause = function(pred) {
+    throw { name: 'NotImplemented' };  // "Abstract"
+  };
+
+  return that;
+};
+
+var _Section = function(spec) {
+  var that = _AbstractSection(spec);
+  that.statements = {'default': that.current_clause};
+
+  that.section_name = spec.section_name;
+
+  that.Statements = function(clause) {
+    clause = clause || 'default';
+    return that.statements[clause] || [];
+  };
+
+  that.NewOrClause = function(pred) {
+    if (pred) {
+      throw {
+        name: 'TemplateSyntaxError',
+        message: '{.or} clause only takes a predicate inside predicate blocks'
+      };
+    }
+    that.current_clause = [];
+    that.statements['or'] = that.current_clause;
+  };
+
+  return that;
+};
+
+// Repeated section is like section, but it supports {.alternates with}
+var _RepeatedSection = function(spec) {
+  var that = _Section(spec);
+
+  that.AlternatesWith = function() {
+    that.current_clause = [];
+    that.statements['alternate'] = that.current_clause;
+  };
+
+  return that;
+};
+
+// Represents a sequence of predicate clauses.
+var _PredicateSection = function(spec) {
+  var that = _AbstractSection(spec);
+  // Array of func, statements
+  that.clauses = [];
+
+  that.NewOrClause = function(pred) {
+    // {.or} always executes if reached, so use identity func with no args
+    pred = pred || [function(x) { return true; }, null];
+    that.current_clause = [];
+    that.clauses.push([pred, that.current_clause]);
+  };
+
+  return that;
+};
 
 
 function _Execute(statements, context, callback) {
@@ -230,25 +387,30 @@ function _Execute(statements, context, callback) {
   }
 }
 
-
 function _DoSubstitute(statement, context, callback) {
-  var value;
-  value = context.Lookup(statement.name);
+  var value = context.get(statement.name);
+  if (value === undefined) {
+    throw {
+      name: 'UndefinedVariable', message: statement.name + ' is not defined'
+    };
+  }
 
   // Format values
   for (var i=0; i<statement.formatters.length; i++) {
-    value = statement.formatters[i](value);
+    var pair = statement.formatters[i];
+    var formatter = pair[0];
+    var args = pair[1];
+    value = formatter(value, context, args);
   }
 
   callback(value);
 }
 
-
 // for [section foo]
 function _DoSection(args, context, callback) {
 
   var block = args;
-  var value = context.PushSection(block.section_name);
+  var value = context.pushName(block.section_name);
   var do_section = false;
 
   // "truthy" values should have their sections executed.
@@ -262,36 +424,47 @@ function _DoSection(args, context, callback) {
 
   if (do_section) {
     _Execute(block.Statements(), context, callback);
-    context.Pop();
+    context.pop();
   } else {  // Empty list, None, False, etc.
-    context.Pop();
+    context.pop();
     _Execute(block.Statements('or'), context, callback);
+  }
+}
+
+// {.pred1?} A {.or pred2?} B ... {.or} Z {.end}
+function _DoPredicates(args, context, callback) {
+  // Here we execute the first clause that evaluates to true, and then stop.
+  var block = args;
+  var value = context.get('@');
+  for (var i=0; i<block.clauses.length; i++) {
+    var clause = block.clauses[i];
+    var predicate = clause[0][0];
+    var pred_args = clause[0][1];
+    var statements = clause[1];
+
+    var do_clause = predicate(value, context, pred_args);
+    if (do_clause) {
+      _Execute(statements, context, callback);
+      break;
+    }
   }
 }
 
 
 function _DoRepeatedSection(args, context, callback) {
-  var block = args;
-  var pushed;
+  var block = args,
+      items = context.pushName(block.section_name),
+      pushed = true;
 
-  if (block.section_name == '@') {
-    // If the name is @, we stay in the enclosing context, but assume it's a
-    // list, and repeat this block many times.
-    items = context.Lookup('@');
+  if (items && items.length > 0) {
     // TODO: check that items is an array; apparently this is hard in JavaScript
     //if type(items) is not list:
     //  raise EvaluationError('Expected a list; got %s' % type(items))
-    pushed = false;
-  } else {
-    items = context.PushSection(block.section_name);
-    pushed = true;
-  }
 
-  if (items && items.length > 0) {
     // Execute the statements in the block for every item in the list.
     // Execute the alternate block on every iteration except the last.  Each
     // item could be an atom (string, integer, etc.) or a dictionary.
-    
+
     var last_index = items.length - 1;
     var statements = block.Statements();
     var alt_statements = block.Statements('alternate');
@@ -306,20 +479,54 @@ function _DoRepeatedSection(args, context, callback) {
     _Execute(block.Statements('or'), context, callback);
   }
 
-  if (pushed) {
-    context.Pop();
-  }
+  context.pop();
 }
 
 
 var _SECTION_RE = /(repeated)?\s*(section)\s+(\S+)?/;
+var _OR_RE = /or(?:\s+(.+))?/;
+var _IF_RE = /if(?:\s+(.+))?/;
 
+
+// Turn a object literal, function, or Registry into a Registry
+function MakeRegistry(obj) {
+  if (!obj) {
+    // if null/undefined, use a totally empty FunctionRegistry
+    return new FunctionRegistry();
+  } else if (typeof obj === 'function') {
+    return new CallableRegistry(obj);
+  } else if (obj.lookup !== undefined) {
+    // TODO: Is this a good pattern?  There is a namespace conflict where get
+    // could be either a formatter or a method on a FunctionRegistry.
+    // instanceof might be more robust.
+    return obj;
+  } else if (typeof obj === 'object') {
+    return new SimpleRegistry(obj);
+  }
+}
 
 // TODO: The compile function could be in a different module, in case we want to
 // compile on the server side.
 function _Compile(template_str, options) {
-  var more_formatters = options.more_formatters ||
-                        function (x) { return null; };
+  var more_formatters = MakeRegistry(options.more_formatters);
+
+  // default formatters with arguments
+  var default_formatters = PrefixRegistry([
+      {name: 'pluralize', func: _Pluralize},
+      {name: 'cycle', func: _Cycle}
+      ]);
+  var all_formatters = new ChainedRegistry([
+      more_formatters,
+      SimpleRegistry(DEFAULT_FORMATTERS),
+      default_formatters
+      ]);
+
+  var more_predicates = MakeRegistry(options.more_predicates);
+
+  // TODO: Add defaults
+  var all_predicates = new ChainedRegistry([
+      more_predicates, SimpleRegistry(DEFAULT_PREDICATES)
+      ]);
 
   // We want to allow an explicit null value for default_formatter, which means
   // that an error is raised if no formatter is specified.
@@ -331,15 +538,25 @@ function _Compile(template_str, options) {
   }
 
   function GetFormatter(format_str) {
-    var formatter = more_formatters(format_str) ||
-                    DEFAULT_FORMATTERS[format_str];
-    if (formatter === undefined) {
+    var pair = all_formatters.lookup(format_str);
+    if (!pair[0]) {
       throw {
         name: 'BadFormatter',
         message: format_str + ' is not a valid formatter'
       };
     }
-    return formatter;
+    return pair;
+  }
+
+  function GetPredicate(pred_str) {
+    var pair = all_predicates.lookup(pred_str);
+    if (!pair[0]) {
+      throw {
+        name: 'BadPredicate',
+        message: pred_str + ' is not a valid predicate'
+      };
+    }
+    return pair;
   }
 
   var format_char = options.format_char || '|';
@@ -362,7 +579,7 @@ function _Compile(template_str, options) {
   var meta_right = meta.substring(n/2, n);
 
   var token_re = _MakeTokenRegex(meta_left, meta_right);
-  var current_block = _Section();
+  var current_block = _Section({});
   var stack = [current_block];
 
   var strip_num = meta_left.length;  // assume they're the same length
@@ -413,27 +630,60 @@ function _Compile(template_str, options) {
         continue;
       }
 
-      var section_match = token.match(_SECTION_RE);
+      var new_block, func;
 
+      var section_match = token.match(_SECTION_RE);
       if (section_match) {
         var repeated = section_match[1];
         var section_name = section_match[3];
-        var func = repeated ? _DoRepeatedSection : _DoSection;
 
-        var new_block = _Section(section_name);
+        if (repeated) {
+          func = _DoRepeatedSection;
+          new_block = _RepeatedSection({section_name: section_name});
+        } else {
+          func = _DoSection;
+          new_block = _Section({section_name: section_name});
+        }
         current_block.Append([func, new_block]);
         stack.push(new_block);
         current_block = new_block;
         continue;
       }
 
-      if (token == 'alternates with') {
-        current_block.NewClause('alternate');
+      var pred_str, pred;
+
+      // Check {.or pred?} before {.pred?}
+      var or_match = token.match(_OR_RE);
+      if (or_match) {
+        pred_str = or_match[1];
+        pred = pred_str ? GetPredicate(pred_str) : null;
+        current_block.NewOrClause(pred);
         continue;
       }
 
-      if (token == 'or') {
-        current_block.NewClause('or');
+      // Match either {.pred?} or {.if pred?}
+      var matched = false;
+
+      var if_match = token.match(_IF_RE);
+      if (if_match) {
+        pred_str = if_match[1];
+        matched = true;
+      } else if (token.charAt(token.length-1) == '?') {
+        pred_str = token;
+        matched = true;
+      }
+      if (matched) {
+        pred = pred_str ? GetPredicate(pred_str) : null;
+        new_block = _PredicateSection();
+        new_block.NewOrClause(pred);
+        current_block.Append([_DoPredicates, new_block]);
+        stack.push(new_block);
+        current_block = new_block;
+        continue;
+      }
+
+      if (token == 'alternates with') {
+        current_block.AlternatesWith();
         continue;
       }
 
@@ -463,8 +713,7 @@ function _Compile(template_str, options) {
             message: 'This template requires explicit formatters.'
           };
       }
-      // If no formatter is specified, the default is the 'str' formatter,
-      // which the user can define however they desire.
+      // If no formatter is specified, use the default.
       formatters = [GetFormatter(default_formatter)];
       name = token;
     } else {
@@ -474,8 +723,7 @@ function _Compile(template_str, options) {
       }
       name = parts[0];
     }
-    current_block.Append(
-        [_DoSubstitute, { name: name, formatters: formatters}]);
+    current_block.Append([_DoSubstitute, {name: name, formatters: formatters}]);
     if (had_newline) {
       current_block.Append('\n');
     }
@@ -508,9 +756,13 @@ function Template(template_str, options) {
   this._program = _Compile(template_str, this._options);
 }
 
-Template.prototype.render = function(data_dict, callback) {
-  // options.undefined_str can either be a string or undefined
-  var context = _ScopedContext(data_dict, this._options.undefined_str);
+Template.prototype.render = function(context, callback) {
+  // If it has a .get() method already, assume it's already a context object we
+  // can use.
+  if (typeof context.get !== 'function') {
+    // options.undefined_str can either be a string or undefined
+    context = Context(context, this._options.undefined_str);
+  }
   _Execute(this._program.Statements(), context, callback);
 };
 
@@ -520,14 +772,82 @@ Template.prototype.expand = function(data_dict) {
   return tokens.join('');
 };
 
+// fromString is a construction method that allows metadata to be written at the
+// beginning of the template string.  See Python's FromFile for a detailed
+// description of the format.
+//
+// The argument 'options' takes precedence over the options in the template, and
+// can be used for non-serializable options like template formatters.
+
+var OPTION_RE = /^([a-zA-Z\-]+):\s*(.*)/;
+var OPTION_NAMES = [
+    'meta', 'format-char', 'default-formatter', 'undefined-str'];
+// Use this "linear search" instead of Array.indexOf, which is nonstandard
+var OPTION_NAMES_RE = new RegExp(OPTION_NAMES.join('|'));
+
+function fromString(s, options) {
+  var parsed = {},
+      begin = 0, end = 0,
+      parsedAny = false;
+
+  while (true) {
+    var parsedOption = false;
+    end = s.indexOf('\n', begin);
+    if (end == -1) {
+      break;
+    }
+    var line = s.slice(begin, end);
+    begin = end+1;
+    var match = line.match(OPTION_RE);
+    if (match !== null) {
+      var name = match[1].toLowerCase(), value = match[2];
+      if (name.match(OPTION_NAMES_RE)) {
+        name = name.replace('-', '_');
+        value = value.replace(/^\s+/, '').replace(/\s+$/, '');
+        if (name == 'default_formatter' && value.toLowerCase() == 'none') {
+          value = null;
+        }
+        parsed[name] = value;
+        parsedOption = true;
+        parsedAny = true;
+      }
+    }
+    if (!parsedOption) {
+      break;
+    }
+  }
+  // TODO: This doesn't enforce the blank line between options and template, but
+  // that might be more trouble than it's worth
+  var body = parsedAny ? s.slice(begin) : s;
+
+  for (var o in options) {
+    parsed[o] = options[o];
+  }
+  return Template(body, parsed);
+}
+
+// Public function to combine a template string and data directly.  Use this
+// when you don't care about the speed of compiling.
+function expand(template_str, data, options) {
+  var t = Template(template_str, options);
+  return t.expand(data);
+}
+
 
 // We just export one name for now, the Template "class".
 // We need HtmlEscape in the browser tests, so might as well export it.
 
-return {Template: Template, HtmlEscape: HtmlEscape};
+return {
+    Template: Template, HtmlEscape: HtmlEscape,
+    FunctionRegistry: FunctionRegistry, SimpleRegistry: SimpleRegistry,
+    CallableRegistry: CallableRegistry, ChainedRegistry: ChainedRegistry,
+    fromString: fromString, expand: expand, Context: Context,
+    // Private but exposed for testing
+    _Section: _Section
+    };
 
 }();
 
-// commonjs
+// Make it a CommonJS module
 for (var key in jsontemplate) exports[key] = jsontemplate[key];
 

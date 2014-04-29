@@ -1,15 +1,16 @@
 /*jslint node: true */
 'use strict';
 var forms = require('../lib/forms');
+var test = require('tape');
 
 var test_input = function (type) {
-    return function (test) {
-        test.equals(
+    return function (t) {
+        t.equal(
             forms.widgets[type]().toHTML('field1'),
             '<input type="' + type + '" name="field1" id="id_field1" />'
         );
         var w = forms.widgets[type]({classes: ['test1', 'test2', 'test3']});
-        test.equals(
+        t.equal(
             w.toHTML('field2', {id: 'form2_field2'}),
             '<input type="' + type + '" name="field2" id="form2_field2" class="test1 test2 test3" />'
         );
@@ -18,93 +19,91 @@ var test_input = function (type) {
         if (type === 'password') {
             expectedHTML = '<input type="' + type + '" name="field1" id="id_field1" />';
         }
-        test.equals(forms.widgets[type]().toHTML('field1', {value: 'some value'}), expectedHTML);
-        test.equals(forms.widgets[type]().type, type);
+        t.equal(forms.widgets[type]().toHTML('field1', {value: 'some value'}), expectedHTML);
+        t.equal(forms.widgets[type]().type, type);
 
         var expectedValues = { password: null };
         var expectedValue = typeof expectedValues[type] !== 'undefined' ? expectedValues[type] : 'hello';
-        test.equals(forms.widgets[type]().formatValue('hello'), expectedValue);
+        t.equal(forms.widgets[type]().formatValue('hello'), expectedValue);
 
-        test.strictEqual(forms.widgets[type]().formatValue(false), null);
-        test.done();
+        t.strictEqual(forms.widgets[type]().formatValue(false), null);
+        t.end();
     };
 };
 
-exports.text = test_input('text');
-exports.email = test_input('email');
-exports.password = test_input('password');
-exports.hidden = test_input('hidden');
-exports.color = test_input('color');
-exports.tel = test_input('tel');
+test('text', test_input('text'));
+test('email', test_input('email'));
+test('number', test_input('number'));
+test('password', test_input('password'));
+test('hidden', test_input('hidden'));
+test('color', test_input('color'));
+test('tel', test_input('tel'));
 
-exports.date = function (test) {
+test('date', function (t) {
     var w = forms.widgets.date();
-    test.equals(w.formatValue(new Date(Date.UTC(2013, 2, 1))), '2013-03-01');
-    test.equals(w.formatValue('2013-03-02'), '2013-03-02');
-    test.strictEqual(w.formatValue('invalid'), null);
+    t.equal(w.formatValue(new Date(Date.UTC(2013, 2, 1))), '2013-03-01');
+    t.equal(w.formatValue('2013-03-02'), '2013-03-02');
+    t.strictEqual(w.formatValue('invalid'), null);
 
-    test.equals(w.type, 'date');
+    t.equal(w.type, 'date');
 
-    test.equals(
+    t.equal(
         w.toHTML('field1'),
         '<input type="date" name="field1" id="id_field1" />'
     );
 
-    test.equals(
+    t.equal(
         w.toHTML('field1', {value: '2013-03-03'}),
         '<input type="date" name="field1" id="id_field1" value="2013-03-03" />'
     );
 
 
-    test.done();
-};
+    t.end();
+});
 
-exports.dateTimeLocal = function (test) {
+test('datetimeLocal', function (t) {
 
-    var w = forms.widgets.dateTimeLocal();
-    test.equals(w.formatValue(new Date(Date.UTC(2013, 2, 1))), '2013-03-01T00:00:00.000');
-    test.equals(w.formatValue('2013-03-02'), '2013-03-02T00:00:00.000');
-    test.equals(w.formatValue('2013-03-02T01:01:00.000'), '2013-03-02T01:01:00.000');
-    test.strictEqual(w.formatValue('invalid'), null);
-
-    test.equals(
+    var w = forms.widgets.datetimeLocal();
+    t.equal(w.formatValue(new Date(Date.UTC(2013, 2, 1))), '2013-03-01T00:00:00.000');
+    t.equal(w.formatValue('2013-03-02'), '2013-03-02T00:00:00.000');
+    t.equal(w.formatValue('2013-03-02T01:01:00.000'), '2013-03-02T01:01:00.000');
+    t.strictEqual(w.formatValue('invalid'), null);
+    t.equal(
         w.toHTML('field1'),
         '<input type="datetime-local" name="field1" id="id_field1" />'
     );
-
-    test.equals(
+    t.equal(
         w.toHTML('field1', {value: '2013-03-03'}),
         '<input type="datetime-local" name="field1" id="id_field1" value="2013-03-03T00:00:00.000" />'
     );
+    t.end();
 
-    test.done();
+});
 
-};
-
-exports.checkbox = function (test) {
-    test.equals(
+test('checkbox', function (t) {
+    t.equal(
         forms.widgets.checkbox().toHTML('field1'),
         '<input type="checkbox" name="field1" id="id_field1" value="on" />'
     );
     var w = forms.widgets.checkbox({classes: ['test1', 'test2', 'test3']});
-    test.equals(
+    t.equal(
         w.toHTML('field2', {id: 'form2_field2'}),
         '<input type="checkbox" name="field2" id="form2_field2" value="on" class="test1 test2 test3" />'
     );
-    test.equals(
+    t.equal(
         forms.widgets.checkbox().toHTML('field', {value: true}),
         '<input type="checkbox" name="field" id="id_field" checked="checked" value="on" />'
     );
-    test.equals(
+    t.equal(
         forms.widgets.checkbox().toHTML('field', {value: false}),
         '<input type="checkbox" name="field" id="id_field" value="on" />'
     );
-    test.equals(forms.widgets.checkbox().type, 'checkbox');
-    test.done();
-};
+    t.equal(forms.widgets.checkbox().type, 'checkbox');
+    t.end();
+});
 
-exports.select = function (test) {
-    test.equals(
+test('select', function (t) {
+    t.equal(
         forms.widgets.select().toHTML('name', {
             choices: {
                 val1: 'text1',
@@ -116,7 +115,7 @@ exports.select = function (test) {
             '<option value="val2">text2</option>' +
         '</select>'
     );
-    test.equals(
+    t.equal(
         forms.widgets.select({classes: ['one', 'two']}).toHTML('name', {
             choices: {
                 val1: 'text1',
@@ -130,16 +129,16 @@ exports.select = function (test) {
             '<option value="val2" selected="selected">text2</option>' +
         '</select>'
     );
-    test.equals(forms.widgets.select().type, 'select');
-    test.done();
-};
+    t.equal(forms.widgets.select().type, 'select');
+    t.end();
+});
 
-exports.textarea = function (test) {
-    test.equals(
+test('textarea', function (t) {
+    t.equal(
         forms.widgets.textarea().toHTML('name', {}),
         '<textarea name="name" id="id_name"></textarea>'
     );
-    test.equals(
+    t.equal(
         forms.widgets.textarea({
             classes: ['one', 'two'],
             rows: 20,
@@ -147,17 +146,17 @@ exports.textarea = function (test) {
         }).toHTML('name', {id: 'someid', value: 'value'}),
         '<textarea name="name" id="someid" rows="20" cols="80" class="one two">value</textarea>'
     );
-    test.equals(forms.widgets.textarea().type, 'textarea');
-    test.done();
-};
+    t.equal(forms.widgets.textarea().type, 'textarea');
+    t.end();
+});
 
-exports.multipleCheckbox = function (test) {
+test('multipleCheckbox', function (t) {
     var w = forms.widgets.multipleCheckbox(),
         field = {
             choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
             value: 'two'
         };
-    test.equals(
+    t.equal(
         w.toHTML('name', field),
         '<input type="checkbox" name="name" id="id_name_one" value="one" />' +
         '<label for="id_name_one">Item one</label>' +
@@ -166,17 +165,17 @@ exports.multipleCheckbox = function (test) {
         '<input type="checkbox" name="name" id="id_name_three" value="three" />' +
         '<label for="id_name_three">Item three</label>'
     );
-    test.equals(forms.widgets.multipleCheckbox().type, 'multipleCheckbox');
-    test.done();
-};
+    t.equal(forms.widgets.multipleCheckbox().type, 'multipleCheckbox');
+    t.end();
+});
 
-exports['multipleCheckbox multiple selected'] = function (test) {
+test('multipleCheckbox multiple selected', function (t) {
     var w = forms.widgets.multipleCheckbox(),
         field = {
             choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
             value: ['two', 'three']
         };
-    test.equals(
+    t.equal(
         w.toHTML('name', field),
         '<input type="checkbox" name="name" id="id_name_one" value="one" />' +
         '<label for="id_name_one">Item one</label>' +
@@ -185,17 +184,17 @@ exports['multipleCheckbox multiple selected'] = function (test) {
         '<input type="checkbox" name="name" id="id_name_three" value="three" checked="checked" />' +
         '<label for="id_name_three">Item three</label>'
     );
-    test.equals(forms.widgets.multipleCheckbox().type, 'multipleCheckbox');
-    test.done();
-};
+    t.equal(forms.widgets.multipleCheckbox().type, 'multipleCheckbox');
+    t.end();
+});
 
-exports.multipleRadio = function (test) {
+test('multipleRadio', function (t) {
     var w = forms.widgets.multipleRadio(),
         field = {
             choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
             value: 'two'
         };
-    test.equals(
+    t.equal(
         w.toHTML('name', field),
         '<input type="radio" name="name" id="id_name_one" value="one" />' +
         '<label for="id_name_one">Item one</label>' +
@@ -204,17 +203,17 @@ exports.multipleRadio = function (test) {
         '<input type="radio" name="name" id="id_name_three" value="three" />' +
         '<label for="id_name_three">Item three</label>'
     );
-    test.equals(forms.widgets.multipleRadio().type, 'multipleRadio');
-    test.done();
-};
+    t.equal(forms.widgets.multipleRadio().type, 'multipleRadio');
+    t.end();
+});
 
-exports['multipleRadio multiple selected'] = function (test) {
+test('multipleRadio multiple selected', function (t) {
     var w = forms.widgets.multipleRadio(),
         field = {
             choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
             value: ['two', 'three']
         };
-    test.equals(
+    t.equal(
         w.toHTML('name', field),
         '<input type="radio" name="name" id="id_name_one" value="one" />' +
         '<label for="id_name_one">Item one</label>' +
@@ -223,12 +222,12 @@ exports['multipleRadio multiple selected'] = function (test) {
         '<input type="radio" name="name" id="id_name_three" value="three" checked="checked" />' +
         '<label for="id_name_three">Item three</label>'
     );
-    test.equals(forms.widgets.multipleRadio().type, 'multipleRadio');
-    test.done();
-};
+    t.equal(forms.widgets.multipleRadio().type, 'multipleRadio');
+    t.end();
+});
 
-exports.multipleSelect = function (test) {
-    test.equals(
+test('multipleSelect', function (t) {
+    t.equal(
         forms.widgets.multipleSelect().toHTML('name', {choices: {
             val1: 'text1',
             val2: 'text2'
@@ -238,7 +237,7 @@ exports.multipleSelect = function (test) {
             '<option value="val2">text2</option>' +
         '</select>'
     );
-    test.equals(
+    t.equal(
         forms.widgets.multipleSelect({classes: ['one', 'two']}).toHTML('name', {
             choices: {
                 val1: 'text1',
@@ -254,19 +253,19 @@ exports.multipleSelect = function (test) {
             '<option value="val3" selected="selected">text3</option>' +
         '</select>'
     );
-    test.equals(forms.widgets.multipleSelect().type, 'multipleSelect');
-    test.done();
-};
+    t.equal(forms.widgets.multipleSelect().type, 'multipleSelect');
+    t.end();
+});
 
-exports['optional text input'] = function (test) {
-    test.equals(
+test('optional text input', function (t) {
+    t.equal(
         forms.widgets.text({
             placeholder: 'Enter some comment',
             'data-trigger': 'focus'
         }).toHTML('field1'),
         '<input type="text" name="field1" id="id_field1" placeholder="Enter some comment" data-trigger="focus" />'
     );
-    test.equals(
+    t.equal(
         forms.widgets.text({
             classes: ['one', 'two'],
             placeholder: 'Enter some comment',
@@ -275,14 +274,14 @@ exports['optional text input'] = function (test) {
         }).toHTML('field1'),
         '<input type="text" name="field1" id="id_field1" class="one two" placeholder="Enter some comment" data-trigger="focus" aria-required="false" />'
     );
-    test.equals(
+    t.equal(
         forms.widgets.text({
             placeholder: 'Enter some comment',
             unknown: 'foo'
         }).toHTML('field1'),
         '<input type="text" name="field1" id="id_field1" placeholder="Enter some comment" />'
     );
-    test.equals(
+    t.equal(
         forms.widgets.text({
             min: 5,
             max: 10,
@@ -291,50 +290,61 @@ exports['optional text input'] = function (test) {
         }).toHTML('field1'),
         '<input type="text" name="field1" id="id_field1" min="5" max="10" autocomplete="on" />'
     );
-    test.equals(
+    t.equal(
         forms.widgets.text({
             placeholder: 'Enter "some" comment'
         }).toHTML('field1'),
         '<input type="text" name="field1" id="id_field1" placeholder="Enter &quot;some&quot; comment" />'
     );
-    test.done();
-};
+    t.equal(
+        forms.widgets.text({
+            tabindex: 1
+        }).toHTML('field1'),
+        '<input type="text" name="field1" id="id_field1" tabindex="1" />'
+    );
+    t.end();
+});
 
-exports['optional data attribute regex test'] = function (test) {
+test('optional data attribute regex test', function (t) {
     var re = forms.widgets.text().getDataRegExp();
-    test.equals(re.test('data-'), false);
-    test.equals(re.test('data-input'), true);
-    test.equals(re.test('idata-input'), false);
-    test.equals(re.test('data-input1'), false);
-    test.equals(re.test('data_input'), false);
-    test.done();
-};
+    t.equal(re.test('data-'), false);
+    t.equal(re.test('data-input'), true);
+    t.equal(re.test('idata-input'), false);
+    t.equal(re.test('data-input1'), false);
+    t.equal(re.test('data_input'), false);
+    t.equal(re.test('data--'), false);
+    t.equal(re.test('data-foo-bar'), true);
+    t.end();
+});
 
-exports.label = function (test) {
-    test.equals(
+test('label', function (t) {
+    t.equal(
         forms.widgets.label({
             classes: ['foo', 'bar', 'quux'],
             content: 'Foobar'
         }).toHTML('field1'),
         '<label for="field1" class="foo bar quux">Foobar</label>'
     );
-    test.equals(
+    t.equal(
         forms.widgets.label({
             classes: [],
             content: 'Foobar'
         }).toHTML('field1'),
         '<label for="field1">Foobar</label>'
     );
-    test.done();
-};
+    t.end();
+});
 
-exports['dynamic widget attributes'] = function(test) {
+test('dynamic widget attributes', function (t) {
+    var keys = Object.keys(forms.widgets);
+    t.plan(keys.length);
     var re = /autocomplete="no"/;
-    Object.keys(forms.widgets).forEach(function(name) {
+    keys.forEach(function (name) {
         var w = forms.widgets[name]();
         w.attrs = {autocomplete: 'no'};
         var html = w.toHTML('test', {choices: {foo: 'bar'}});
-        test.equals(re.test(html), true);
+        t.equal(re.test(html), true);
     });
-    test.done();
-};
+    t.end();
+});
+
