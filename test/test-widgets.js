@@ -61,6 +61,25 @@ test('date', function (t) {
     t.end();
 });
 
+test('datetimeLocal', function (t) {
+
+    var w = forms.widgets.datetimeLocal();
+    t.equal(w.formatValue(new Date(Date.UTC(2013, 2, 1))), '2013-03-01T00:00:00.000');
+    t.equal(w.formatValue('2013-03-02'), '2013-03-02T00:00:00.000');
+    t.equal(w.formatValue('2013-03-02T01:01:00.000'), '2013-03-02T01:01:00.000');
+    t.strictEqual(w.formatValue('invalid'), null);
+    t.equal(
+        w.toHTML('field1'),
+        '<input type="datetime-local" name="field1" id="id_field1" />'
+    );
+    t.equal(
+        w.toHTML('field1', {value: '2013-03-03'}),
+        '<input type="datetime-local" name="field1" id="id_field1" value="2013-03-03T00:00:00.000" />'
+    );
+    t.end();
+
+});
+
 test('checkbox', function (t) {
     t.equal(
         forms.widgets.checkbox().toHTML('field1'),
