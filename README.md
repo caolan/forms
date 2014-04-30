@@ -190,6 +190,7 @@ components following the same API.
 * color
 * tel
 * date
+* datetimeLocal
 * checkbox
 * select
 * textarea
@@ -215,6 +216,7 @@ components following the same API.
 * email
 * url
 * date
+* datetimeLocal
 * alphanumeric
 * digits
 * integer

@@ -222,6 +222,22 @@ test('date', function (t) {
     t.end();
 });
 
+test('datetimeLocal', function (t) {
+    validators.datetimeLocal('datetimeLocal input must contain a valid datetime.')('form', { data: '02/28/2012' }, function (err) {
+        t.equal(err, 'datetimeLocal input must contain a valid datetime.');
+        validators.datetimeLocal()('form', { data: '2012-02-28T01:01:00.000' }, function (invalidDateError) {
+            t.equal(invalidDateError, undefined);
+        });
+    });
+    validators.datetimeLocal()('form', { data: '2012.02.30' }, function (err) {
+        t.equal(err, 'Inputs of type "datetimeLocal" must be valid datetimes in the format "yyyy-mm-ddT-hh:mm:ss.000"');
+        validators.datetimeLocal()('form', { data: '2012-02-30T01:01:00.000' }, function (invalidDateError) {
+            t.equal(invalidDateError, undefined);
+        });
+    });
+    t.end();
+});
+
 test('minlength', function (t) {
     t.plan(4);
     validators.minlength(5, 'Enter at least %s characters.')('form', { data: '1234' }, function (tooShortError) {
