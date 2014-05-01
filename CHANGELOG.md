@@ -1,3 +1,8 @@
+0.5.0 / 2014-05-01
+==================
+  * Added new form-level validatePastFirstErrorOption. When true, all fields will validate, instead of stopping at the first error.
+  * Internal refactoring for improved HTML tag generation
+
 0.4.1 / 2014-04-24
 ==================
   * Updating dependencies
