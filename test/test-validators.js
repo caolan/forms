@@ -180,35 +180,35 @@ test('email', function (t) {
 
 test('url', function (t) {
     t.plan(4);
-	validators.url(false, 'URL was invalid.')('form', {data: 'asdf.com'}, function (err) {
-		t.equal(err, 'URL was invalid.');
-		validators.url()('form', {data: 'http://asdf.com'}, function (err) {
-			t.equal(err, undefined);
-		});
-	});
-	validators.url(true)('form', {data: 'localhost/test.html'}, function (err) {
-		t.equal(err, 'Please enter a valid URL.');
-		validators.url(true)('form', {data: 'http://localhost/test.html'}, function (err) {
-			t.equal(err, undefined);
-		});
-	});
+    validators.url(false, 'URL was invalid.')('form', {data: 'asdf.com'}, function (err) {
+        t.equal(err, 'URL was invalid.');
+        validators.url()('form', {data: 'http://asdf.com'}, function (err) {
+            t.equal(err, undefined);
+        });
+    });
+    validators.url(true)('form', {data: 'localhost/test.html'}, function (err) {
+        t.equal(err, 'Please enter a valid URL.');
+        validators.url(true)('form', {data: 'http://localhost/test.html'}, function (err) {
+            t.equal(err, undefined);
+        });
+    });
     t.end();
 });
 
 test('date', function (t) {
     t.plan(4);
-	validators.date('Date input must contain a valid date.')('form', {data: '02/28/2012'}, function (err) {
-		t.equal(err, 'Date input must contain a valid date.');
-		validators.date()('form', {data: '2012-02-28'}, function (err) {
-			t.equal(err, undefined);
-		});
-	});
-	validators.date()('form', {data: '2012.02.30'}, function (err) {
-		t.equal(err, 'Inputs of type "date" must be valid dates in the format "yyyy-mm-dd"');
-		validators.date()('form', {data: '2012-02-30'}, function (err) {
-			t.equal(err, undefined);
-		});
-	});
+    validators.date('Date input must contain a valid date.')('form', {data: '02/28/2012'}, function (err) {
+        t.equal(err, 'Date input must contain a valid date.');
+        validators.date()('form', {data: '2012-02-28'}, function (err) {
+            t.equal(err, undefined);
+        });
+    });
+    validators.date()('form', {data: '2012.02.30'}, function (err) {
+        t.equal(err, 'Inputs of type "date" must be valid dates in the format "yyyy-mm-dd"');
+        validators.date()('form', {data: '2012-02-30'}, function (err) {
+            t.equal(err, undefined);
+        });
+    });
     t.end();
 });
 
@@ -236,18 +236,18 @@ test('maxlength', function (t) {
 
 test('rangelength', function (t) {
     t.plan(4);
-	validators.rangelength(2, 4, 'Enter between %s and %s characters.')('form', {data: '12345'}, function (err) {
-		t.equal(err, 'Enter between 2 and 4 characters.');
-	});
-	validators.rangelength(2, 4)('form', {data: '1'}, function (err) {
-		t.equal(err, 'Please enter a value between 2 and 4 characters long.');
-	});
-	validators.rangelength(2, 4)('form', {data: '12'}, function (err) {
-		t.equal(err, undefined);
-	});
-	validators.rangelength(2, 4)('form', {data: '1234'}, function (err) {
-		t.equal(err, undefined);
-	});
+    validators.rangelength(2, 4, 'Enter between %s and %s characters.')('form', {data: '12345'}, function (err) {
+        t.equal(err, 'Enter between 2 and 4 characters.');
+    });
+    validators.rangelength(2, 4)('form', {data: '1'}, function (err) {
+        t.equal(err, 'Please enter a value between 2 and 4 characters long.');
+    });
+    validators.rangelength(2, 4)('form', {data: '12'}, function (err) {
+        t.equal(err, undefined);
+    });
+    validators.rangelength(2, 4)('form', {data: '1234'}, function (err) {
+        t.equal(err, undefined);
+    });
     t.end();
 });
 

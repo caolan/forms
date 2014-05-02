@@ -3,7 +3,7 @@
     "description": "An easy way to create, parse, and validate forms",
     "main": "./index",
     "author": "Caolan McMahon",
-    "version": "0.4.1",
+    "version": "0.5.0",
     "repository": {
         "type": "git",
         "url": "https://github.com/caolan/forms.git"
@@ -18,7 +18,7 @@
         "coverage-quiet": "covert --quiet test/*.js"
     },
     "dependencies": {
-        "async": "~0.7.0",
+        "async": "~0.8.0",
         "qs": "~0.6.5",
         "formidable": "~1.0.14",
         "is": "~0.3.0"

@@ -207,6 +207,13 @@ you will not need to use directly.
 Converts a form definition (an object literal containing field objects) into a
 form object.
 
+#### forms.create(fields, options)
+Forms can be created with an optional "options" object as well.
+#### Supported options:
+* `validatePastFirstError`: `true`, otherwise assumes `false`
+ * If `false`, the first validation error will halt form validation.
+ * If `true`, all fields will be validated.
+
 
 ### Form object
 
