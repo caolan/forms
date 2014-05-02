@@ -333,7 +333,7 @@ fails, the resulting message is stored in the field's error attribute.
 #### Attributes
 
 * classes - Custom classes to add to the rendered widget
-* choicesClasses - Custom classes to add to the choices label on multipleRadio and multipleCheckbox widgets
+* labelClasses - Custom classes to add to the choices label on multipleRadio and multipleCheckbox widgets
 * type - A string representing the widget type, e.g. 'text' or 'checkbox'
 
 #### toHTML(name, field)
