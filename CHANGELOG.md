@@ -1,3 +1,7 @@
+0.6.0 / 2014-05-03
+==================
+ * Add fieldsetClasses, legendClasses, and labelClasses
+
 0.5.0 / 2014-05-01
 ==================
   * Added new form-level validatePastFirstErrorOption. When true, all fields will validate, instead of stopping at the first error.
