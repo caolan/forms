@@ -83,7 +83,7 @@ var testWrap = function (tag) {
             fieldname: forms.fields.string({
                 choices: {one: 'item one'},
                 widget: forms.widgets.multipleCheckbox(),
-                cssClasses: {label: ['test1', 'test2']},
+                legendClasses: ['test1', 'test2'],
                 fieldsetClasses: ['test3', 'test4']
             })
         });
@@ -105,7 +105,7 @@ var testWrap = function (tag) {
             fieldname: forms.fields.string({
                 choices: {one: 'item one'},
                 widget: forms.widgets.multipleRadio(),
-                cssClasses: {label: ['test1', 'test2']},
+                legendClasses: ['test1', 'test2'],
                 fieldsetClasses: ['test3', 'test4']
             })
         });
