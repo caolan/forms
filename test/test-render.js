@@ -82,14 +82,16 @@ var testWrap = function (tag) {
         var f = forms.create({
             fieldname: forms.fields.string({
                 choices: {one: 'item one'},
-                widget: forms.widgets.multipleCheckbox()
+                widget: forms.widgets.multipleCheckbox(),
+                cssClasses: {label: ['test1', 'test2']},
+                fieldsetClasses: ['test3', 'test4']
             })
         });
         t.equal(
             f.toHTML(forms.render[tag]),
             '<' + tag + ' class="field">' +
-                '<fieldset>' +
-                    '<legend>Fieldname</legend>' +
+                '<fieldset class="test3 test4">' +
+                    '<legend class="test1 test2">Fieldname</legend>' +
                     '<input type="checkbox" name="fieldname" id="id_fieldname_one" value="one" />' +
                     '<label for="id_fieldname_one">item one</label>' +
                 '</fieldset>' +
@@ -102,14 +104,16 @@ var testWrap = function (tag) {
         var f = forms.create({
             fieldname: forms.fields.string({
                 choices: {one: 'item one'},
-                widget: forms.widgets.multipleRadio()
+                widget: forms.widgets.multipleRadio(),
+                cssClasses: {label: ['test1', 'test2']},
+                fieldsetClasses: ['test3', 'test4']
             })
         });
         t.equal(
             f.toHTML(forms.render[tag]),
             '<' + tag + ' class="field">' +
-                '<fieldset>' +
-                    '<legend>Fieldname</legend>' +
+                '<fieldset class="test3 test4">' +
+                    '<legend class="test1 test2">Fieldname</legend>' +
                     '<input type="radio" name="fieldname" id="id_fieldname_one" value="one" />' +
                     '<label for="id_fieldname_one">item one</label>' +
                 '</fieldset>' +

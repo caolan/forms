@@ -272,6 +272,7 @@ for highly customised markup.
 * choices - A list of options, used for multiple choice fields
 * cssClasses - A list of CSS classes for label and field wrapper
 * errorAfterField - if true, the error message will be displayed after the field, rather than before.
+* fieldsetClasses - for multipleRadio and multipleCheckbox widgets, set classes for the fieldset sub-wrapper
 
 #### field.parse(rawdata)
 
@@ -332,6 +333,7 @@ fails, the resulting message is stored in the field's error attribute.
 #### Attributes
 
 * classes - Custom classes to add to the rendered widget
+* labelClasses - Custom classes to add to the choices label on multipleRadio and multipleCheckbox widgets
 * type - A string representing the widget type, e.g. 'text' or 'checkbox'
 
 #### toHTML(name, field)
