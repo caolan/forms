@@ -122,13 +122,17 @@ For integrating with Twitter bootstrap 3 (horizontal form), this is what you nee
         })
     });
 
-    var bootstrap_field = function (name, object) {
-        var label = object.labelHTML(name);
-        var error = object.error ? '<p class="form-error-tooltip">' + object.error + '</p>' : '';
-        var widget = '<div class="controls col col-lg-9">' + object.widget.toHTML(name, object) + error + '</div>';
-        return '<div class="field row control-group ' + (error !== '' ? 'has-error' : '')  + '">' + label + widget + '</div>';
-    }
-
+    var bootstrapField = function (name, object) {
+        
+        object.widget.classes = object.widget.classes || [];
+        object.widget.classes.push('form-control');
+    
+        var label = '<label for="id_'+name+'">'+object.labelHTML(name)+'</label>';
+        var error = object.error ? '<div class="alert alert-error">' + object.error + '</div>' : '';
+        var widget = object.widget.toHTML(name, object);
+        return '<div class="form-group">' + label + widget + error +'</div>';
+    };
+    
 And while rendering it:
 
     form.toHTML(function (name, object) { return bootstrap_field(name, object); });
