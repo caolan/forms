@@ -96,8 +96,9 @@ test('select', function (t) {
             '<option value="val2">text2</option>' +
         '</select>'
     );
+    var widget = forms.widgets.select({classes: ['one', 'two']});
     t.equal(
-        forms.widgets.select({classes: ['one', 'two']}).toHTML('name', {
+        widget.toHTML('name', {
             choices: {
                 val1: 'text1',
                 val2: 'text2'
@@ -110,7 +111,24 @@ test('select', function (t) {
             '<option value="val2" selected="selected">text2</option>' +
         '</select>'
     );
-    t.equal(forms.widgets.select().type, 'select');
+    t.equal(widget.type, 'select');
+
+    t.test('stringifies values', function (st) {
+        var html = widget.toHTML('name', {
+            choices: {
+                1: 'one',
+                2: 'two'
+            },
+            id: 'someid',
+            value: 2
+        });
+        var expectedHTML = '<select name="name" id="someid" class="one two">' +
+            '<option value="1">one</option>' +
+            '<option value="2" selected="selected">two</option>' +
+        '</select>';
+        st.equal(html, expectedHTML);
+        st.end();
+    });
     t.end();
 });
 
@@ -146,7 +164,43 @@ test('multipleCheckbox', function (t) {
         '<input type="checkbox" name="name" id="id_name_three" value="three" />' +
         '<label for="id_name_three">Item three</label>'
     );
-    t.equal(forms.widgets.multipleCheckbox().type, 'multipleCheckbox');
+    t.equal(w.type, 'multipleCheckbox');
+
+    t.test('stringifies values', function (st) {
+        st.test('single bound value', function (t2) {
+            var field = {
+                choices: { 1: 'one', 2: 'two', 3: 'three' },
+                value: 2
+            };
+            var html = w.toHTML('name', field);
+            var expectedHTML = '<input type="checkbox" name="name" id="id_name_1" value="1" />' +
+                '<label for="id_name_1">one</label>' +
+                '<input type="checkbox" name="name" id="id_name_2" value="2" checked="checked" />' +
+                '<label for="id_name_2">two</label>' +
+                '<input type="checkbox" name="name" id="id_name_3" value="3" />' +
+                '<label for="id_name_3">three</label>';
+            t2.equal(html, expectedHTML);
+            t2.end();
+        });
+
+        st.test('multiple bound values', function (t2) {
+            var field = {
+                choices: { 1: 'one', 2: 'two', 3: 'three' },
+                value: [1, 2]
+            };
+            var html = w.toHTML('name', field);
+            var expectedHTML = '<input type="checkbox" name="name" id="id_name_1" value="1" checked="checked" />' +
+                '<label for="id_name_1">one</label>' +
+                '<input type="checkbox" name="name" id="id_name_2" value="2" checked="checked" />' +
+                '<label for="id_name_2">two</label>' +
+                '<input type="checkbox" name="name" id="id_name_3" value="3" />' +
+                '<label for="id_name_3">three</label>';
+            t2.equal(html, expectedHTML);
+            t2.end();
+        });
+
+        st.end();
+    });
 
     t.test('label classes', function (st) {
         var w = forms.widgets.multipleCheckbox({labelClasses: ['test1', 'test2', 'test3']});
@@ -200,6 +254,42 @@ test('multipleRadio', function (t) {
         '<label for="id_name_three">Item three</label>'
     );
     t.equal(forms.widgets.multipleRadio().type, 'multipleRadio');
+
+    t.test('stringifies values', function (st) {
+        st.test('single bound value', function (t2) {
+            var field = {
+                choices: { 1: 'one', 2: 'two', 3: 'three' },
+                value: 2
+            };
+            var html = w.toHTML('name', field);
+            var expectedHTML = '<input type="radio" name="name" id="id_name_1" value="1" />' +
+                '<label for="id_name_1">one</label>' +
+                '<input type="radio" name="name" id="id_name_2" value="2" checked="checked" />' +
+                '<label for="id_name_2">two</label>' +
+                '<input type="radio" name="name" id="id_name_3" value="3" />' +
+                '<label for="id_name_3">three</label>';
+            t2.equal(html, expectedHTML);
+            t2.end();
+        });
+
+        st.test('multiple bound values', function (t2) {
+            var field = {
+                choices: { 1: 'one', 2: 'two', 3: 'three' },
+                value: [2, 3]
+            };
+            var html = w.toHTML('name', field);
+            var expectedHTML = '<input type="radio" name="name" id="id_name_1" value="1" />' +
+                '<label for="id_name_1">one</label>' +
+                '<input type="radio" name="name" id="id_name_2" value="2" checked="checked" />' +
+                '<label for="id_name_2">two</label>' +
+                '<input type="radio" name="name" id="id_name_3" value="3" checked="checked" />' +
+                '<label for="id_name_3">three</label>';
+            t2.equal(html, expectedHTML);
+            t2.end();
+        });
+
+        st.end();
+    });
 
     t.test('label classes', function (st) {
         var w = forms.widgets.multipleRadio({labelClasses: ['test1', 'test2', 'test3']});
@@ -265,6 +355,51 @@ test('multipleSelect', function (t) {
         '</select>'
     );
     t.equal(forms.widgets.multipleSelect().type, 'multipleSelect');
+
+    t.test('stringifies values', function (st) {
+        var widget = forms.widgets.multipleSelect({classes: ['one', 'two']});
+
+        st.test('single bound values', function (t2) {
+            var html = widget.toHTML('name', {
+                choices: {
+                    1: 'text1',
+                    2: 'text2',
+                    3: 'text3'
+                },
+                id: 'someid',
+                value: 2
+            });
+            var expectedHTML = '<select multiple="multiple" name="name" id="someid" class="one two">' +
+                '<option value="1">text1</option>' +
+                '<option value="2" selected="selected">text2</option>' +
+                '<option value="3">text3</option>' +
+            '</select>';
+            t2.equal(html, expectedHTML);
+            t2.end();
+        });
+
+        st.test('multiple bound values', function (t2) {
+            var html = widget.toHTML('name', {
+                choices: {
+                    1: 'text1',
+                    2: 'text2',
+                    3: 'text3'
+                },
+                id: 'someid',
+                value: [2, 3]
+            });
+            var expectedHTML = '<select multiple="multiple" name="name" id="someid" class="one two">' +
+                '<option value="1">text1</option>' +
+                '<option value="2" selected="selected">text2</option>' +
+                '<option value="3" selected="selected">text3</option>' +
+            '</select>';
+            t2.equal(html, expectedHTML);
+            t2.end();
+        });
+
+        st.end();
+    });
+
     t.end();
 });
 
