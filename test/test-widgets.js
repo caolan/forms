@@ -141,9 +141,10 @@ test('textarea', function (t) {
         forms.widgets.textarea({
             classes: ['one', 'two'],
             rows: 20,
-            cols: 80
+            cols: 80,
+            placeholder: 'hi!'
         }).toHTML('name', {id: 'someid', value: 'value'}),
-        '<textarea name="name" id="someid" rows="20" cols="80" class="one two">value</textarea>'
+        '<textarea name="name" id="someid" rows="20" cols="80" placeholder="hi!" class="one two">value</textarea>'
     );
     t.equal(forms.widgets.textarea().type, 'textarea');
     t.end();
