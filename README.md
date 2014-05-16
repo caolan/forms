@@ -123,7 +123,6 @@ For integrating with Twitter bootstrap 3 (horizontal form), this is what you nee
     });
 
     var bootstrapField = function (name, object) {
-
         object.widget.classes = object.widget.classes || [];
         object.widget.classes.push('form-control');
 
@@ -217,6 +216,23 @@ Forms can be created with an optional "options" object as well.
 * `validatePastFirstError`: `true`, otherwise assumes `false`
  * If `false`, the first validation error will halt form validation.
  * If `true`, all fields will be validated.
+* `remoteValidator`: function that returns an object of validation, eg by making the http request. If it is defined fields validation will be ignored. An example:
+
+    ```
+    var remoteValidator = function(data, next) {
+            var response = {
+                field1: {
+                    error: 'validation error 1',
+                    value: 'wrongInput1'
+                },
+                field2: {
+                    error: 'validation error 2',
+                    value: 'wrongInput2'
+                }
+            };
+            next(response);
+        }
+    ```
 
 
 ### Form object

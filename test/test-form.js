@@ -151,6 +151,92 @@ test('validate invalid data', function (t) {
     });
 });
 
+test('validate valid data with remote validator', function (t) {
+    t.plan(2);
+    var fields = {
+        field1: forms.fields.string(),
+        field2: forms.fields.string()
+    };
+
+    var options = {
+        remoteValidator: function(data, next) {
+            var response = {
+                field1: {
+                    error: '',
+                    value: 'field1 value'
+                },
+                field2: {
+                    error: '',
+                    value: 'field2 value'
+                }
+            };
+            next(response);
+        }
+    };
+
+    var f = forms.create(fields, options);
+
+    f.bind({field1: '1', field2: '2'}).validate(function (err, f) {
+        t.equal(f.isValid(), false);
+        t.equal(
+            f.toHTML(),
+            '<div class="field">' +
+                '<label for="id_field1">Field1</label>' +
+                '<input type="text" name="field1" id="id_field1" value="field1 value" />' +
+            '</div>' +
+            '<div class="field">' +
+                '<label for="id_field2">Field2</label>' +
+                '<input type="text" name="field2" id="id_field2" value="field2 value" />' +
+            '</div>'
+        );
+        t.end();
+    });
+});
+
+test('validate invalid data with remote validator', function (t) {
+    t.plan(2);
+    var fields = {
+        field1: forms.fields.string(),
+        field2: forms.fields.string()
+    };
+
+    var options = {
+        remoteValidator: function(data, next) {
+            var response = {
+                field1: {
+                    error: 'validation error 1',
+                    value: 'wrongInput1'
+                },
+                field2: {
+                    error: 'validation error 2',
+                    value: 'wrongInput2'
+                }
+            };
+            next(response);
+        }
+    };
+
+    var f = forms.create(fields, options);
+
+    f.bind({field1: '1', field2: '2'}).validate(function (err, f) {
+        t.equal(f.isValid(), false);
+        t.equal(
+            f.toHTML(),
+            '<div class="field error">' +
+                '<p class="error_msg">validation error 1</p>' +
+                '<label for="id_field1">Field1</label>' +
+                '<input type="text" name="field1" id="id_field1" value="wrongInput1" />' +
+            '</div>' +
+            '<div class="field error">' +
+                '<p class="error_msg">validation error 2</p>' +
+                '<label for="id_field2">Field2</label>' +
+                '<input type="text" name="field2" id="id_field2" value="wrongInput2" />' +
+            '</div>'
+        );
+        t.end();
+    });
+});
+
 test('handle empty', function (t) {
     t.plan(3);
     var f = forms.create({field1: forms.fields.string()});
@@ -444,4 +530,3 @@ test('div bound error', function (t) {
         t.end();
     });
 });
-
