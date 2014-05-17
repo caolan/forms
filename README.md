@@ -216,19 +216,19 @@ Forms can be created with an optional "options" object as well.
 * `validatePastFirstError`: `true`, otherwise assumes `false`
  * If `false`, the first validation error will halt form validation.
  * If `true`, all fields will be validated.
-* `remoteValidator`: function that returns an object of validation, eg by making the http request. If it is defined fields validation will be ignored. An example:
+* `remoteValidator`: function that returns an object of validation, eg by making the http request. An example:
 
     ```
     var remoteValidator = function(data, next) {
         var error = null;
         var response = {
             field1: {
-                error: 'validation error 1',
-                value: 'wrongInput1'
+                error: 'validation message',
+                value: 'invalid value'
             },
             field2: {
-                error: 'validation error 2',
-                value: 'wrongInput2'
+                error: null,
+                value: 'valid value'
             }
         };
 

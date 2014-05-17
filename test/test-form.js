@@ -163,11 +163,11 @@ test('validate valid data with remote validator', function (t) {
             setTimeout(function() {
                 var response = {
                     field1: {
-                        error: '',
+                        error: null,
                         value: 'field1 value'
                     },
                     field2: {
-                        error: '',
+                        error: null,
                         value: 'field2 value'
                     }
                 };
@@ -179,7 +179,7 @@ test('validate valid data with remote validator', function (t) {
     var f = forms.create(fields, options);
 
     f.bind({field1: '1', field2: '2'}).validate(function (err, f) {
-        t.equal(f.isValid(), false);
+        t.equal(f.isValid(), true);
         t.equal(
             f.toHTML(),
             '<div class="field">' +
