@@ -160,17 +160,19 @@ test('validate valid data with remote validator', function (t) {
 
     var options = {
         remoteValidator: function(data, next) {
-            var response = {
-                field1: {
-                    error: '',
-                    value: 'field1 value'
-                },
-                field2: {
-                    error: '',
-                    value: 'field2 value'
-                }
-            };
-            next(response);
+            setTimeout(function() {
+                var response = {
+                    field1: {
+                        error: '',
+                        value: 'field1 value'
+                    },
+                    field2: {
+                        error: '',
+                        value: 'field2 value'
+                    }
+                };
+                next(null, response);
+            }, 100);
         }
     };
 
@@ -202,17 +204,19 @@ test('validate invalid data with remote validator', function (t) {
 
     var options = {
         remoteValidator: function(data, next) {
-            var response = {
-                field1: {
-                    error: 'validation error 1',
-                    value: 'wrongInput1'
-                },
-                field2: {
-                    error: 'validation error 2',
-                    value: 'wrongInput2'
-                }
-            };
-            next(response);
+            setTimeout(function() {
+                var response = {
+                    field1: {
+                        error: 'validation error 1',
+                        value: 'wrongInput1'
+                    },
+                    field2: {
+                        error: 'validation error 2',
+                        value: 'wrongInput2'
+                    }
+                };
+                next(null, response);
+            }, 100);
         }
     };
 
