@@ -220,18 +220,20 @@ Forms can be created with an optional "options" object as well.
 
     ```
     var remoteValidator = function(data, next) {
-            var response = {
-                field1: {
-                    error: 'validation error 1',
-                    value: 'wrongInput1'
-                },
-                field2: {
-                    error: 'validation error 2',
-                    value: 'wrongInput2'
-                }
-            };
-            next(response);
-        }
+        var error = null;
+        var response = {
+            field1: {
+                error: 'validation error 1',
+                value: 'wrongInput1'
+            },
+            field2: {
+                error: 'validation error 2',
+                value: 'wrongInput2'
+            }
+        };
+
+        next(err, response);
+    };
     ```
 
 
@@ -385,4 +387,3 @@ containing a HTML representation of the field.
 [7]: https://nodei.co/npm/forms.png?downloads=true&stars=true
 [8]: https://npmjs.org/package/forms
 [9]: http://vb.teelaun.ch/caolan/forms.svg
-
