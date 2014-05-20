@@ -1,3 +1,8 @@
+0.7.0 / 2014-05-20
+==================
+ * Properly compare using string values in select, multipleSelect, multipleCheckbox, and multipleRadio
+ * Add "placeholder" to textarea elements
+
 0.6.0 / 2014-05-03
 ==================
  * Add fieldsetClasses, legendClasses, and labelClasses
