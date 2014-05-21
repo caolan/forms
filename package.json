@@ -12,7 +12,7 @@
         "url": "https://github.com/caolan/forms/issues"
     },
     "scripts": {
-        "test": "tape test/*.js",
+        "test": "npm run lint && tape test/*.js",
         "test-browser": "testling",
         "coverage": "covert test/*.js",
         "coverage-quiet": "covert --quiet test/*.js",
