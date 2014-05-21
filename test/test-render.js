@@ -138,6 +138,22 @@ var testWrap = function (tag) {
         t.end();
     });
 
+    test(tag + ' label no id', function (t) {
+        var f = forms.create({
+            fieldname: forms.fields.string({
+                id: false
+            })
+        });
+        t.equal(
+            f.toHTML(forms.render[tag]),
+            '<' + tag + ' class="field">' +
+                '<label>Fieldname</label>' +
+                '<input type="text" name="fieldname" />' +
+            '</' + tag + '>'
+        );
+        t.end();
+    });
+
     test(tag + ' hidden label', function (t) {
         var f = forms.create({
             fieldname: forms.fields.string({
