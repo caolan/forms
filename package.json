@@ -15,7 +15,8 @@
         "test": "tape test/*.js",
         "test-browser": "testling",
         "coverage": "covert test/*.js",
-        "coverage-quiet": "covert --quiet test/*.js"
+        "coverage-quiet": "covert --quiet test/*.js",
+        "lint": "jscs test/*.js lib/*.js example/simple.js example/complex.js"
     },
     "dependencies": {
         "async": "~0.8.0",
@@ -26,7 +27,8 @@
     "devDependencies": {
         "tape": "~2.12.3",
         "testling": "~1.6.1",
-        "covert": "~0.4.0"
+        "covert": "~0.4.0",
+        "jscs": "~1.4.5"
     },
     "licenses": [
         {
