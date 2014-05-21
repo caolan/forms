@@ -338,7 +338,7 @@ test('validation stops on first error', function (t) {
     });
 
     f.handle({ field1: 'test' }, {
-        error: function(form) {
+        error: function (form) {
             t.equal(form.fields.field1.error, undefined);
             t.equal(form.fields.field2.error, 'field2 is required.');
             t.equal(form.fields.field3.error, undefined);
@@ -358,7 +358,7 @@ test('validates past first error with validatePastFirstError option', function (
     });
 
     f.handle({ field1: 'test' }, {
-        error: function(form) {
+        error: function (form) {
             t.equal(form.fields.field1.error, undefined);
             t.equal(form.fields.field2.error, 'field2 is required.');
             t.equal(form.fields.field3.error, 'field3 is required.');
