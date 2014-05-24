@@ -253,6 +253,54 @@ test('handle empty object', function (t) {
     t.end();
 });
 
+test('handle sends callbacks', function (t) {
+    t.plan(9);
+    var f = forms.create({field1: forms.fields.string()});
+
+    f.bind = function (raw_data) {
+        f.isValid = function () { return true; };
+        return f;
+    };
+    f.validate = function (callback) {
+        callback(null, f);
+    };
+    f.handle({}, {
+        empty: function testing(form, callbacks) {
+            t.equal(Object.keys(callbacks).length, 1);
+            t.equal(typeof callbacks.empty, 'function');
+        }
+    });
+    f.handle({field1: 'test'}, {
+        success: function testing(form, callbacks) {
+            t.equal(Object.keys(callbacks).length, 1);
+            t.equal(typeof callbacks.success, 'function');
+        }
+    });
+
+    f.bind = function (raw_data) {
+        f.isValid = function () { return false; };
+        return f;
+    };
+    f.handle({field1: 'test'}, {
+        success: function yay() {},
+        error: function nay(form, callbacks) {
+            t.equal(Object.keys(callbacks).length, 2);
+            t.equal(typeof callbacks.success, 'function');
+            t.equal(typeof callbacks.error, 'function');
+        }
+    });
+
+    f.handle({field1: 'test'}, {
+        other: function testing(form, callbacks) {
+            t.equal(Object.keys(callbacks).length, 1);
+            t.equal(typeof callbacks.other, 'function');
+        }
+    });
+
+    t.end();
+});
+
+
 test('handle missing multi-form section', function (t) {
     t.plan(1);
     var f = forms.create({
