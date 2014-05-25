@@ -160,8 +160,8 @@ test('validate valid data with form validator', function (t) {
 
     var options = {
         validators: [
-            function(form, next) {
-                setTimeout(function() {
+            function (form, next) {
+                setTimeout(function () {
                     form.fields.field1.value = 'field1 value';
                     form.fields.field1.error = null;
                     form.fields.field2.value = 'field2 value';
@@ -201,8 +201,8 @@ test('validate invalid data with form validator', function (t) {
 
     var options = {
         validators: [
-            function(form, next) {
-                setTimeout(function() {
+            function (form, next) {
+                setTimeout(function () {
                     form.fields.field1.value = 'wrongInput1';
                     form.fields.field1.error = 'validation error 1';
                     form.fields.field2.value = 'wrongInput2';

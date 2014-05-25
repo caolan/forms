@@ -436,7 +436,7 @@ test('async', function (t) {
             }
         };
 
-        var asyncFunction = function(data, next) {
+        var asyncFunction = function (data, next) {
             var err = null;
             var response = {
                 field1: {
