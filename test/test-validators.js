@@ -427,3 +427,42 @@ test('digits', function (t) {
     t.end();
 });
 
+test('async', function (t) {
+    t.test('validator should process response to form object properly', function (st) {
+        var data = {
+            fields: {
+                field1: {data: 'invalid value'},
+                field2: {data: 'valid value'}
+            }
+        };
+
+        var asyncFunction = function(data, next) {
+            var err = null;
+            var response = {
+                field1: {
+                    error: 'validation message',
+                    value: 'invalid value'
+                },
+                field2: {
+                    error: null,
+                    value: 'valid value'
+                }
+            };
+
+            next(err, response);
+        };
+
+        var v = validators.async(asyncFunction);
+        st.plan(4);
+        v(data, function (err, form) {
+            st.equal(form.fields.field1.error, 'validation message');
+            st.equal(form.fields.field1.value, 'invalid value');
+            st.equal(form.fields.field2.error, null);
+            st.equal(form.fields.field2.value, 'valid value');
+
+            st.end();
+        });
+    });
+
+    t.end();
+});

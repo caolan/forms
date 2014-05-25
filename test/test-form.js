@@ -151,7 +151,7 @@ test('validate invalid data', function (t) {
     });
 });
 
-test('validate valid data with remote validator', function (t) {
+test('validate valid data with form validator', function (t) {
     t.plan(2);
     var fields = {
         field1: forms.fields.string(),
@@ -159,21 +159,18 @@ test('validate valid data with remote validator', function (t) {
     };
 
     var options = {
-        remoteValidator: function(data, next) {
-            setTimeout(function() {
-                var response = {
-                    field1: {
-                        error: null,
-                        value: 'field1 value'
-                    },
-                    field2: {
-                        error: null,
-                        value: 'field2 value'
-                    }
-                };
-                next(null, response);
-            }, 100);
-        }
+        validators: [
+            function(form, next) {
+                setTimeout(function() {
+                    form.fields.field1.value = 'field1 value';
+                    form.fields.field1.error = null;
+                    form.fields.field2.value = 'field2 value';
+                    form.fields.field2.error = null;
+
+                    next(null, form);
+                }, 100);
+            }
+        ]
     };
 
     var f = forms.create(fields, options);
@@ -195,7 +192,7 @@ test('validate valid data with remote validator', function (t) {
     });
 });
 
-test('validate invalid data with remote validator', function (t) {
+test('validate invalid data with form validator', function (t) {
     t.plan(2);
     var fields = {
         field1: forms.fields.string(),
@@ -203,21 +200,18 @@ test('validate invalid data with remote validator', function (t) {
     };
 
     var options = {
-        remoteValidator: function(data, next) {
-            setTimeout(function() {
-                var response = {
-                    field1: {
-                        error: 'validation error 1',
-                        value: 'wrongInput1'
-                    },
-                    field2: {
-                        error: 'validation error 2',
-                        value: 'wrongInput2'
-                    }
-                };
-                next(null, response);
-            }, 100);
-        }
+        validators: [
+            function(form, next) {
+                setTimeout(function() {
+                    form.fields.field1.value = 'wrongInput1';
+                    form.fields.field1.error = 'validation error 1';
+                    form.fields.field2.value = 'wrongInput2';
+                    form.fields.field2.error = 'validation error 2';
+
+                    next(null, form);
+                }, 100);
+            }
+        ]
     };
 
     var f = forms.create(fields, options);

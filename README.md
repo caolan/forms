@@ -172,7 +172,7 @@ components following the same API.
 * multipleSelect
 * label
 
-### Validators
+### Field validators
 
 * matchField
 * matchValue
@@ -192,6 +192,10 @@ components following the same API.
 * alphanumeric
 * digits
 * integer
+
+### Form validators
+
+* async
 
 ### Renderers
 
@@ -216,24 +220,40 @@ Forms can be created with an optional "options" object as well.
 * `validatePastFirstError`: `true`, otherwise assumes `false`
  * If `false`, the first validation error will halt form validation.
  * If `true`, all fields will be validated.
-* `remoteValidator`: function that returns an object of validation, eg by making the http request. An example:
+* `validators`: form validators. An example:
 
     ```
-    var remoteValidator = function(data, next) {
-        var error = null;
-        var response = {
-            field1: {
-                error: 'validation message',
-                value: 'invalid value'
-            },
-            field2: {
-                error: null,
-                value: 'valid value'
-            }
-        };
+    var forms = require('forms'),
+        fields = forms.fields,
+        validators = forms.validators;
 
-        next(err, response);
+    var options = {
+        validators = [
+            validators.async(function(data, next) {
+
+                // eg. post request.
+
+                var err = null;
+                var response = {
+                    username: {
+                        error: 'User with that name already exists.',
+                        value: 'qwe'
+                    },
+                    password: {
+                        error: 'Password is to short.',
+                        value: 123
+                    }
+                };
+
+                next(err, response);
+            })
+        ]
     };
+
+    var reg_form = forms.create({
+        username: fields.string(),
+        password: fields.password()
+    }, options);
     ```
 
 
@@ -365,7 +385,7 @@ Returns a string containing a HTML representation of the widget for the given
 field.
 
 
-### Validator
+### Field Validator
 
 A function that accepts a bound form, bound field and a callback as arguments.
 It should apply a test to the field to assert its validity. Once processing
