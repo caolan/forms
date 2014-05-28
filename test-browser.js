@@ -8,4 +8,3 @@
      // require('./test/test-validators'); // disabled until this unicode fix is merged: https://github.com/substack/testling/pull/35
      require('./test/test-widgets');
 }());
-
