@@ -19,13 +19,13 @@
         "lint": "jscs test/*.js lib/*.js example/simple.js example/complex.js"
     },
     "dependencies": {
-        "async": "~0.8.0",
+        "async": "~0.9.0",
         "qs": "~0.6.5",
         "formidable": "~1.0.14",
         "is": "~0.3.0"
     },
     "devDependencies": {
-        "tape": "~2.12.3",
+        "tape": "~2.13.1",
         "testling": "~1.6.1",
         "covert": "~0.4.0",
         "jscs": "~1.4.5"
