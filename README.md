@@ -127,7 +127,7 @@ For integrating with Twitter bootstrap 3 (horizontal form), this is what you nee
         object.widget.classes = object.widget.classes || [];
         object.widget.classes.push('form-control');
 
-        var label = '<label for="id_' + name + '">' + object.labelHTML(name) + '</label>';
+        var label = object.labelHTML(name);
         var error = object.error ? '<div class="alert alert-error">' + object.error + '</div>' : '';
         var widget = object.widget.toHTML(name, object);
         return '<div class="form-group">' + label + widget + error + '</div>';
