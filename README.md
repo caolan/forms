@@ -27,9 +27,10 @@ bug reports, or advice. Especially on the following key areas:
 ### [Contributors](https://github.com/caolan/forms/contributors)
 
 * [ljharb](https://github.com/ljharb)
+* [ivanquirino](https://github.com/ivanquirino)
 * [richardngn](https://github.com/richardngn)
 * [caulagi](https://github.com/caulagi)
-* [luddep](http://github.com/luddep)
+* …and 27 more
 
 ## Example
 
