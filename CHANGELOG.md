@@ -1,3 +1,12 @@
+0.8.1 / 2014-07-24
+==================
+* Fix/add support for empty <option> value attributes (#137)
+
+0.8.0 / 2014-07-23 (mispublished and unpublished)
+==================
+* Fix inability to disable ID attribute (#128)
+* Add support for callback chaining (#129)
+
 0.7.0 / 2014-05-20
 ==================
  * Properly compare using string values in select, multipleSelect, multipleCheckbox, and multipleRadio
