@@ -1,3 +1,7 @@
+0.8.2 / 2014-07-30
+==================
+* Add `hideError` option to disable automatic error rendering (#138)
+
 0.8.1 / 2014-07-24
 ==================
 * Fix/add support for empty <option> value attributes (#137)
