@@ -27,7 +27,7 @@
     "devDependencies": {
         "tape": "~2.14.0",
         "testling": "~1.7.0",
-        "covert": "~0.4.0",
+        "covert": "~1.0.0",
         "jscs": "~1.5.2"
     },
     "licenses": [
