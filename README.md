@@ -124,7 +124,6 @@ For integrating with Twitter bootstrap 3 (horizontal form), this is what you nee
     });
 
     var bootstrapField = function (name, object) {
-
         object.widget.classes = object.widget.classes || [];
         object.widget.classes.push('form-control');
 
@@ -174,7 +173,7 @@ components following the same API.
 * multipleSelect
 * label
 
-### Validators
+### Field validators
 
 * matchField
 * matchValue
@@ -194,6 +193,10 @@ components following the same API.
 * alphanumeric
 * digits
 * integer
+
+### Form validators
+
+* async
 
 ### Renderers
 
@@ -218,6 +221,41 @@ Forms can be created with an optional "options" object as well.
 * `validatePastFirstError`: `true`, otherwise assumes `false`
  * If `false`, the first validation error will halt form validation.
  * If `true`, all fields will be validated.
+* `validators`: form validators. An example:
+
+    ```
+    var forms = require('forms'),
+        fields = forms.fields,
+        validators = forms.validators;
+
+    var options = {
+        validators = [
+            validators.async(function(data, next) {
+
+                // eg. post request.
+
+                var err = null;
+                var response = {
+                    username: {
+                        error: 'User with that name already exists.',
+                        value: 'qwe'
+                    },
+                    password: {
+                        error: 'Password is to short.',
+                        value: 123
+                    }
+                };
+
+                next(err, response);
+            })
+        ]
+    };
+
+    var reg_form = forms.create({
+        username: fields.string(),
+        password: fields.password()
+    }, options);
+    ```
 
 
 ### Form object
@@ -349,7 +387,7 @@ Returns a string containing a HTML representation of the widget for the given
 field.
 
 
-### Validator
+### Field Validator
 
 A function that accepts a bound form, bound field and a callback as arguments.
 It should apply a test to the field to assert its validity. Once processing
@@ -371,4 +409,3 @@ containing a HTML representation of the field.
 [7]: https://nodei.co/npm/forms.png?downloads=true&stars=true
 [8]: https://npmjs.org/package/forms
 [9]: http://vb.teelaun.ch/caolan/forms.svg
-
