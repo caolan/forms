@@ -39,9 +39,9 @@ bug reports, or advice. Especially on the following key areas:
 Creating an example registration form:
 
 ```javascript
-var forms = require('forms'),
-    fields = forms.fields,
-    validators = forms.validators;
+var forms = require('forms');
+var fields = forms.fields;
+var validators = forms.validators;
 
 var reg_form = forms.create({
     username: fields.string({ required: true }),
@@ -88,7 +88,6 @@ Handling a request:
 
 ```javascript
 function myView(req, res) {
-
     reg_form.handle(req, {
         success: function (form) {
             // there is a request and the form is valid
@@ -102,7 +101,6 @@ function myView(req, res) {
             // there was no form data in the request
         }
     });
-
 }
 ```
 
@@ -110,7 +108,7 @@ That's it! For more detailed / working examples look in the example folder.
 An example server using the form above can be run by doing:
 
 ```shell
-    $ node example/simple.js
+$ node example/simple.js
 ```
 
 ### Bootstrap compatible output
@@ -119,14 +117,13 @@ For integrating with Twitter bootstrap 3 (horizontal form), this is what you nee
 ```javascript
 var my_form = forms.create({
     title: fields.string({
-    required: true,
-    widget: widgets.text({ classes: ['input-with-feedback'] }),
-    errorAfterField: true,
-    cssClasses: {
-        label: ['control-label col col-lg-3']
-    }
+        required: true,
+        widget: widgets.text({ classes: ['input-with-feedback'] }),
+        errorAfterField: true,
+        cssClasses: {
+            label: ['control-label col col-lg-3']
+        }
     }),
-
     description: fields.string({
         errorAfterField: true,
         widget: widgets.text({ classes: ['input-with-feedback'] }),
@@ -137,13 +134,13 @@ var my_form = forms.create({
 });
 
 var bootstrapField = function (name, object) {
-  object.widget.classes = object.widget.classes || [];
-  object.widget.classes.push('form-control');
+    object.widget.classes = object.widget.classes || [];
+    object.widget.classes.push('form-control');
 
-  var label = object.labelHTML(name);
-  var error = object.error ? '<div class="alert alert-error">' + object.error + '</div>' : '';
-  var widget = object.widget.toHTML(name, object);
-  return '<div class="form-group">' + label + widget + error + '</div>';
+    var label = object.labelHTML(name);
+    var error = object.error ? '<div class="alert alert-error">' + object.error + '</div>' : '';
+    var widget = object.widget.toHTML(name, object);
+    return '<div class="form-group">' + label + widget + error + '</div>';
 };
 ```
 
@@ -224,6 +221,7 @@ A more detailed look at the methods and attributes available. Most of these
 you will not need to use directly.
 
 ### forms.create(fields)
+
 Converts a form definition (an object literal containing field objects) into a
 form object.
 
