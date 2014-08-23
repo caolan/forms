@@ -8,7 +8,9 @@ Constructing a good form by hand is a lot of work. Popular frameworks like
 Ruby on Rails and Django contain code to make this process less painful.
 This module is an attempt to provide the same sort of helpers for node.js.
 
-    npm install forms
+```shell
+$ npm install forms
+```
 
 ## Contribute
 
@@ -30,113 +32,126 @@ bug reports, or advice. Especially on the following key areas:
 * [ivanquirino](https://github.com/ivanquirino)
 * [richardngn](https://github.com/richardngn)
 * [caulagi](https://github.com/caulagi)
-* …and 27 more
+* …and [many more](https://github.com/caolan/forms/graphs/contributors)
 
 ## Example
 
 Creating an example registration form:
 
-    var forms = require('forms'),
-        fields = forms.fields,
-        validators = forms.validators;
+```javascript
+var forms = require('forms'),
+    fields = forms.fields,
+    validators = forms.validators;
 
-    var reg_form = forms.create({
-        username: fields.string({ required: true }),
-        password: fields.password({ required: validators.required('You definitely want a password') }),
-        confirm:  fields.password({
-            required: validators.required('don\'t you know your own password?'),
-            validators: [validators.matchField('password')]
-        }),
-        email: fields.email()
-    });
+var reg_form = forms.create({
+    username: fields.string({ required: true }),
+    password: fields.password({ required: validators.required('You definitely want a password') }),
+    confirm:  fields.password({
+        required: validators.required('don\'t you know your own password?'),
+        validators: [validators.matchField('password')]
+    }),
+    email: fields.email()
+});
+```
 
 Rendering a HTML representation of the form:
 
-    reg_form.toHTML();
+```javascript
+reg_form.toHTML();
+```
 
 Would produce:
 
-    <div class="field required">
-        <label for="id_username">Username</label>
-        <input type="text" name="username" id="id_username" value="test" />
-    </div>
-    <div class="field required">
-        <label for="id_password">Password</label>
-        <input type="password" name="password" id="id_password" value="test" />
-    </div>
-    <div class="field required">
-        <label for="id_confirm">Confirm</label>
-        <input type="password" name="confirm" id="id_confirm" value="test" />
-    </div>
-    <div class="field">
-        <label for="id_email">Email</label>
-        <input type="text" name="email" id="id_email" />
-    </div>
+```html
+<div class="field required">
+    <label for="id_username">Username</label>
+    <input type="text" name="username" id="id_username" value="test" />
+</div>
+<div class="field required">
+    <label for="id_password">Password</label>
+    <input type="password" name="password" id="id_password" value="test" />
+</div>
+<div class="field required">
+    <label for="id_confirm">Confirm</label>
+    <input type="password" name="confirm" id="id_confirm" value="test" />
+</div>
+<div class="field">
+    <label for="id_email">Email</label>
+    <input type="text" name="email" id="id_email" />
+</div>
+```
 
 You'll notice you have to provide your own form tags and submit button, its
 more flexible this way ;)
 
 Handling a request:
 
-    function myView(req, res) {
+```javascript
+function myView(req, res) {
 
-        reg_form.handle(req, {
-            success: function (form) {
-                // there is a request and the form is valid
-                // form.data contains the submitted data
-            },
-            error: function (form) {
-                // the data in the request didn't validate,
-                // calling form.toHTML() again will render the error messages
-            },
-            empty: function (form) {
-                // there was no form data in the request
-            }
-        });
+    reg_form.handle(req, {
+        success: function (form) {
+            // there is a request and the form is valid
+            // form.data contains the submitted data
+        },
+        error: function (form) {
+            // the data in the request didn't validate,
+            // calling form.toHTML() again will render the error messages
+        },
+        empty: function (form) {
+            // there was no form data in the request
+        }
+    });
 
-    }
+}
+```
 
 That's it! For more detailed / working examples look in the example folder.
 An example server using the form above can be run by doing:
 
-    node example/simple.js
+```shell
+    $ node example/simple.js
+```
 
 ### Bootstrap compatible output
 For integrating with Twitter bootstrap 3 (horizontal form), this is what you need to do:
 
-    var my_form = forms.create({
-            title: fields.string({
-            required: true,
-            widget: widgets.text({ classes: ['input-with-feedback'] }),
-            errorAfterField: true,
-            cssClasses: {
-                label: ['control-label col col-lg-3']
-            }
-        }),
+```javascript
+var my_form = forms.create({
+    title: fields.string({
+    required: true,
+    widget: widgets.text({ classes: ['input-with-feedback'] }),
+    errorAfterField: true,
+    cssClasses: {
+        label: ['control-label col col-lg-3']
+    }
+    }),
 
-        description: fields.string({
-            errorAfterField: true,
-            widget: widgets.text({ classes: ['input-with-feedback'] }),
-            cssClasses: {
-                label: ['control-label col col-lg-3']
-            }
-        })
-    });
+    description: fields.string({
+        errorAfterField: true,
+        widget: widgets.text({ classes: ['input-with-feedback'] }),
+        cssClasses: {
+            label: ['control-label col col-lg-3']
+        }
+    })
+});
 
-    var bootstrapField = function (name, object) {
+var bootstrapField = function (name, object) {
+  object.widget.classes = object.widget.classes || [];
+  object.widget.classes.push('form-control');
 
-        object.widget.classes = object.widget.classes || [];
-        object.widget.classes.push('form-control');
-
-        var label = object.labelHTML(name);
-        var error = object.error ? '<div class="alert alert-error">' + object.error + '</div>' : '';
-        var widget = object.widget.toHTML(name, object);
-        return '<div class="form-group">' + label + widget + error + '</div>';
-    };
+  var label = object.labelHTML(name);
+  var error = object.error ? '<div class="alert alert-error">' + object.error + '</div>' : '';
+  var widget = object.widget.toHTML(name, object);
+  return '<div class="form-group">' + label + widget + error + '</div>';
+};
+```
 
 And while rendering it:
 
-    form.toHTML(bootstrapField);
+```javascript
+form.toHTML(bootstrapField);
+```
 
 ## Available types
 
@@ -213,27 +228,33 @@ Converts a form definition (an object literal containing field objects) into a
 form object.
 
 #### forms.create(fields, options)
+
 Forms can be created with an optional "options" object as well.
+
 #### Supported options:
+
 * `validatePastFirstError`: `true`, otherwise assumes `false`
- * If `false`, the first validation error will halt form validation.
- * If `true`, all fields will be validated.
+  * If `false`, the first validation error will halt form validation.
+  * If `true`, all fields will be validated.
 
 
 ### Form object
 
 #### Attributes
 
-* fields - Object literal containing the field objects passed to the create
+* ``fields`` - Object literal containing the field objects passed to the create
   function
 
 #### form.handle(req, callbacks)
+
 Inspects a request or object literal and binds any data to the correct fields.
 
 #### form.bind(data)
+
 Binds data to correct fields, returning a new bound form object.
 
 #### form.toHTML(iterator)
+
 Runs toHTML on each field returning the result. If an iterator is specified,
 it is called for each field with the field name and object as its arguments,
 the iterator's results are concatenated to create the HTML output, allowing
@@ -246,19 +267,22 @@ Contains the same methods as the unbound form, plus:
 
 #### Attributes
 
-* data - Object containing all the parsed data keyed by field name
-* fields - Object literal containing the field objects passed to the create
+* ``data`` - Object containing all the parsed data keyed by field name
+* ``fields`` - Object literal containing the field objects passed to the create
   function
 
 #### form.validate(callback)
+
 Calls validate on each field in the bound form and returns the resulting form
 object to the callback.
 
 #### form.isValid()
+
 Checks all fields for an error attribute. Returns false if any exist, otherwise
 returns true.
 
 #### form.toHTML(iterator)
+
 Runs toHTML on each field returning the result. If an iterator is specified,
 it is called for each field with the field name and object as its arguments,
 the iterator's results are concatenated to create the HTML output, allowing
@@ -269,17 +293,16 @@ for highly customised markup.
 
 #### Attributes
 
-* label - Optional label text which overrides the default
-* required - Boolean describing whether the field is mandatory
-* validators - An array of functions which validate the field data
-* widget - A widget object to use when rendering the field
-* id - An optional id to override the default
-* choices - A list of options, used for multiple choice fields
-* cssClasses - A list of CSS classes for label and field wrapper
-* hideError - if true, errors won't be rendered automatically
-* errorAfterField - if true, the error message will be displayed after the field, rather than before
-* fieldsetClasses - for widgets with a fieldset (multipleRadio and multipleCheckbox), set classes for the fieldset
-* legendClasses - for widgets with a fieldset (multipleRadio and multipleCheckbox), set classes for the fieldset's legend
+* ``label`` - Optional label text which overrides the default
+* ``required`` - Boolean describing whether the field is mandatory
+* ``validators`` - An array of functions which validate the field data
+* ``widget`` - A widget object to use when rendering the field
+* ``id`` - An optional id to override the default
+* ``choices`` - A list of options, used for multiple choice fields
+* ``cssClasses`` - A list of CSS classes for label and field wrapper
+* ``errorAfterField`` - if true, the error message will be displayed after the field, rather than before.
+* ``fieldsetClasses`` - for widgets with a fieldset (multipleRadio and multipleCheckbox), set classes for the fieldset
+* ``legendClasses`` - for widgets with a fieldset (multipleRadio and multipleCheckbox), set classes for the fieldset's legend
 
 #### field.parse(rawdata)
 
@@ -324,9 +347,9 @@ _same as field object, but with a few extensions_
 
 #### Attributes
 
-* value - The raw value from the request data
-* data - The request data coerced to the correct format for this field
-* error - An error message if the field fails validation
+* ``value`` - The raw value from the request data
+* ``data`` - The request data coerced to the correct format for this field
+* ``error`` - An error message if the field fails validation
 
 #### validate(callback)
 
@@ -339,9 +362,9 @@ fails, the resulting message is stored in the field's error attribute.
 
 #### Attributes
 
-* classes - Custom classes to add to the rendered widget
-* labelClasses - Custom classes to add to the choices label when applicable (multipleRadio and multipleCheckbox)
-* type - A string representing the widget type, e.g. 'text' or 'checkbox'
+* ``classes`` - Custom classes to add to the rendered widget
+* ``labelClasses`` - Custom classes to add to the choices label when applicable (multipleRadio and multipleCheckbox)
+* ``type`` - A string representing the widget type, e.g. 'text' or 'checkbox'
 
 #### toHTML(name, field)
 
