@@ -384,11 +384,11 @@ valid or with an error message if the field is invalid.
 A function which accepts a name and field as arguments and returns a string
 containing a HTML representation of the field.
 
-[1]: https://travis-ci.org/caolan/forms.png
+[1]: https://travis-ci.org/caolan/forms.svg
 [2]: https://travis-ci.org/caolan/forms
-[3]: https://david-dm.org/caolan/forms.png
+[3]: https://david-dm.org/caolan/forms.svg
 [4]: https://david-dm.org/caolan/forms
-[5]: https://david-dm.org/caolan/forms/dev-status.png
+[5]: https://david-dm.org/caolan/forms/dev-status.svg
 [6]: https://david-dm.org/caolan/forms#info=devDependencies
 [7]: https://nodei.co/npm/forms.png?downloads=true&stars=true
 [8]: https://npmjs.org/package/forms
