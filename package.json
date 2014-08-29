@@ -21,7 +21,7 @@
     "dependencies": {
         "async": "~0.9.0",
         "qs": "~2.2.1",
-        "formidable": "~1.0.14",
+        "formidable": "~1.0.15",
         "is": "~2.0.0"
     },
     "devDependencies": {
