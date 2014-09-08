@@ -1,4 +1,4 @@
-# Forms <sup>[![Version Badge][9]][npm-url]</sup>
+# Forms <sup>[![Version Badge][npm-version-svg]][npm-url]</sup>
 
 [![Build Status][travis-svg]][travis-url]
 [![dependency status][deps-svg]][deps-url]
@@ -396,7 +396,7 @@ containing a HTML representation of the field.
 [dev-deps-url]: https://david-dm.org/caolan/forms#info=devDependencies
 [7]: https://nodei.co/npm/forms.png?downloads=true&stars=true
 [npm-url]: https://npmjs.org/package/forms
-[9]: http://vb.teelaun.ch/caolan/forms.svg
+[npm-version-svg]: http://vb.teelaun.ch/caolan/forms.svg
 [license-image]: http://img.shields.io/npm/l/forms.svg
 [license-url]: LICENSE
 [downloads-image]: http://img.shields.io/npm/dm/forms.svg
