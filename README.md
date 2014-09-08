@@ -1,6 +1,6 @@
 # Forms <sup>[![Version Badge][9]][8]</sup>
 
-[![Build Status][1]][2]
+[![Build Status][travis-svg]][travis-url]
 [![dependency status][3]][4]
 [![dev dependency status][5]][6]
 [![License][license-image]][license-url]
@@ -388,8 +388,8 @@ valid or with an error message if the field is invalid.
 A function which accepts a name and field as arguments and returns a string
 containing a HTML representation of the field.
 
-[1]: https://travis-ci.org/caolan/forms.svg
-[2]: https://travis-ci.org/caolan/forms
+[travis-svg]: https://travis-ci.org/caolan/forms.svg
+[travis-url]: https://travis-ci.org/caolan/forms
 [3]: https://david-dm.org/caolan/forms.svg
 [4]: https://david-dm.org/caolan/forms
 [5]: https://david-dm.org/caolan/forms/dev-status.svg
