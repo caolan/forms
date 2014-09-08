@@ -1,4 +1,4 @@
-# Forms <sup>[![Version Badge][9]][8]</sup>
+# Forms <sup>[![Version Badge][9]][npm-url]</sup>
 
 [![Build Status][travis-svg]][travis-url]
 [![dependency status][deps-svg]][deps-url]
@@ -6,7 +6,7 @@
 [![License][license-image]][license-url]
 [![Downloads][downloads-image]][downloads-url]
 
-[![npm badge][7]][8]
+[![npm badge][7]][npm-url]
 
 Constructing a good form by hand is a lot of work. Popular frameworks like
 Ruby on Rails and Django contain code to make this process less painful.
@@ -395,7 +395,7 @@ containing a HTML representation of the field.
 [dev-deps-svg]: https://david-dm.org/caolan/forms/dev-status.svg
 [dev-deps-url]: https://david-dm.org/caolan/forms#info=devDependencies
 [7]: https://nodei.co/npm/forms.png?downloads=true&stars=true
-[8]: https://npmjs.org/package/forms
+[npm-url]: https://npmjs.org/package/forms
 [9]: http://vb.teelaun.ch/caolan/forms.svg
 [license-image]: http://img.shields.io/npm/l/forms.svg
 [license-url]: LICENSE
