@@ -1,8 +1,8 @@
 # Forms <sup>[![Version Badge][9]][8]</sup>
 
 [![Build Status][travis-svg]][travis-url]
-[![dependency status][3]][4]
-[![dev dependency status][5]][6]
+[![dependency status][deps-svg]][deps-url]
+[![dev dependency status][dev-deps-svg]][dev-deps-url]
 [![License][license-image]][license-url]
 [![Downloads][downloads-image]][downloads-url]
 
@@ -390,10 +390,10 @@ containing a HTML representation of the field.
 
 [travis-svg]: https://travis-ci.org/caolan/forms.svg
 [travis-url]: https://travis-ci.org/caolan/forms
-[3]: https://david-dm.org/caolan/forms.svg
-[4]: https://david-dm.org/caolan/forms
-[5]: https://david-dm.org/caolan/forms/dev-status.svg
-[6]: https://david-dm.org/caolan/forms#info=devDependencies
+[deps-svg]: https://david-dm.org/caolan/forms.svg
+[deps-url]: https://david-dm.org/caolan/forms
+[dev-deps-svg]: https://david-dm.org/caolan/forms/dev-status.svg
+[dev-deps-url]: https://david-dm.org/caolan/forms#info=devDependencies
 [7]: https://nodei.co/npm/forms.png?downloads=true&stars=true
 [8]: https://npmjs.org/package/forms
 [9]: http://vb.teelaun.ch/caolan/forms.svg
