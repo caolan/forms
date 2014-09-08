@@ -394,7 +394,7 @@ containing a HTML representation of the field.
 [deps-url]: https://david-dm.org/caolan/forms
 [dev-deps-svg]: https://david-dm.org/caolan/forms/dev-status.svg
 [dev-deps-url]: https://david-dm.org/caolan/forms#info=devDependencies
-[7]: https://nodei.co/npm/forms.png?downloads=true&stars=true
+[npm-badge-png]: https://nodei.co/npm/forms.png?downloads=true&stars=true
 [npm-url]: https://npmjs.org/package/forms
 [npm-version-svg]: http://vb.teelaun.ch/caolan/forms.svg
 [license-image]: http://img.shields.io/npm/l/forms.svg
