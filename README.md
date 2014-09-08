@@ -1,6 +1,10 @@
 # Forms <sup>[![Version Badge][9]][8]</sup>
 
-[![Build Status][1]][2] [![dependency status][3]][4] [![dev dependency status][5]][6]
+[![Build Status][1]][2]
+[![dependency status][3]][4]
+[![dev dependency status][5]][6]
+[![License][license-image]][license-url]
+[![Downloads][downloads-image]][downloads-url]
 
 [![npm badge][7]][8]
 
@@ -393,4 +397,8 @@ containing a HTML representation of the field.
 [7]: https://nodei.co/npm/forms.png?downloads=true&stars=true
 [8]: https://npmjs.org/package/forms
 [9]: http://vb.teelaun.ch/caolan/forms.svg
+[license-image]: http://img.shields.io/npm/l/forms.svg
+[license-url]: LICENSE
+[downloads-image]: http://img.shields.io/npm/dm/forms.svg
+[downloads-url]: http://npm-stat.com/charts.html?package=forms
 
