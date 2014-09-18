@@ -28,7 +28,7 @@
         "tape": "~3.0.0",
         "testling": "~1.7.0",
         "covert": "~1.0.0",
-        "jscs": "~1.6.1"
+        "jscs": "~1.6.2"
     },
     "license": "MIT",
     "licenses": [
