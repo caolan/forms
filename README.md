@@ -6,7 +6,7 @@
 [![License][license-image]][license-url]
 [![Downloads][downloads-image]][downloads-url]
 
-[![npm badge][7]][npm-url]
+[![npm badge][npm-badge-png]][npm-url]
 
 Constructing a good form by hand is a lot of work. Popular frameworks like
 Ruby on Rails and Django contain code to make this process less painful.
