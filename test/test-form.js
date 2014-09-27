@@ -304,10 +304,10 @@ test('handle sends callbacks', function (t) {
 test('handle missing multi-form section', function (t) {
     t.plan(1);
     var f = forms.create({
-        section1: {field1: forms.fields.string()},
-        section2: {field1: forms.fields.string()}
+        section1: { field1: forms.fields.string() },
+        section2: { field1: forms.fields.string() }
     });
-    f.bind({section1: {field1: "string"}});
+    f.bind({section1: { field1: 'string' }});
     t.ok(true, 'Form handled missing section ok.');
 });
 
