@@ -519,7 +519,7 @@ test('custom attributes', function (t) {
     );
     t.equal(
         forms.widgets.select({
-            'data-test': 'foo',
+            'data-test': 'foo'
         }).toHTML('name', {
             choices: {
                 val1: 'text1',
@@ -533,7 +533,7 @@ test('custom attributes', function (t) {
     );
     t.equal(
         forms.widgets.multipleSelect({
-            'data-test': 'foo',
+            'data-test': 'foo'
         }).toHTML('name', {
             choices: {
                 val1: 'text1',
