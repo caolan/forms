@@ -1,15 +1,47 @@
+0.10.0 / 2014-09-24
+===================
+  * Updating `testling`, `qs`, `jscs`, `tape`
+  * Cleaning up URLs in README
+  * Adding license and downloads badges.
+  * Adding a single "license" field to package.json
+
+0.9.6 / 2014-09-03
+==================
+  * Updating `is`, `jscs`, `qs`, `jscs`
+
+0.9.5 / 2014-08-29
+==================
+  * Updating `formidable`, `qs`, `jscs`
+
+0.9.4 / 2014-08-28
+==================
+  * Updating `qs`
+
+0.9.2 / 2014-08-25
+==================
+  * Updating `is`, `covert`, `tape`
+  * Clean up README (#139); use SVG badges instead of PNG
+
+0.9.1 / 2014-08-07
+==================
+  * Updating `qs` and `tape`
+
+0.9.0 / 2014-07-30
+==================
+  * Add option to disable automatic error rendering (#138)
+
 0.8.2 / 2014-07-30
 ==================
-* Add `hideError` option to disable automatic error rendering (#138)
+  * Add `hideError` option to disable automatic error rendering (#138)
 
 0.8.1 / 2014-07-24
 ==================
-* Fix/add support for empty <option> value attributes (#137)
+  * Fix/add support for empty <option> value attributes (#137)
 
 0.8.0 / 2014-07-23 (mispublished and unpublished)
 ==================
-* Fix inability to disable ID attribute (#128)
-* Add support for callback chaining (#129)
+  * Fix inability to disable ID attribute (#128)
+  * Add support for callback chaining (#129)
 
 0.7.0 / 2014-05-20
 ==================
