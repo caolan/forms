@@ -1,3 +1,8 @@
+1.0.0 / 2014-09-29
+===================
+  * v1.0.0 - it's time.
+  * Update CHANGELOG
+
 0.10.0 / 2014-09-24
 ===================
   * Updating `testling`, `qs`, `jscs`, `tape`
