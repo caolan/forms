@@ -2,7 +2,7 @@
     "use strict";
 
      require('./test/test-fields');
-     // require('./test/test-form'); // disabled until server-specific tests are split out
+     require('./test/test-form'); // disabled until server-specific tests are split out
      require('./test/test-forms');
      require('./test/test-render');
      require('./test/test-tag');

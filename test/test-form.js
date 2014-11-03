@@ -99,9 +99,10 @@ test('validate valid data', function (t) {
     t.plan(2);
     var f = forms.create({
         field1: forms.fields.string(),
-        field2: forms.fields.string()
+        field2: forms.fields.string(),
+        field3: forms.fields.string(),
     });
-    f.bind({field1: '1', field2: '2'}).validate(function (err, f) {
+    f.bind({field1: '1', field2: '2', field3: 0}).validate(function (err, f) {
         t.true(f.isValid());
         t.equal(
             f.toHTML(),
@@ -112,6 +113,10 @@ test('validate valid data', function (t) {
             '<div class="field">' +
                 '<label for="id_field2">Field2</label>' +
                 '<input type="text" name="field2" id="id_field2" value="2" />' +
+            '</div>' +
+            '<div class="field">' +
+                '<label for="id_field3">Field3</label>' +
+                '<input type="text" name="field3" id="id_field3" value="0" />' +
             '</div>'
         );
         t.end();
