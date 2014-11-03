@@ -38,6 +38,7 @@ test('password', test_input('password'));
 test('hidden', test_input('hidden'));
 test('color', test_input('color'));
 test('tel', test_input('tel'));
+test('file', test_input('file'));
 
 test('date', function (t) {
     var w = forms.widgets.date();
