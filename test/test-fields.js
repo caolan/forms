@@ -165,6 +165,8 @@ var testField = function (field) {
 
 testField('string');
 
+testField('file');
+
 test('string parse', function (t) {
     t.plan(5);
     t.equal(stringField.parse(), '');
