@@ -1,6 +1,12 @@
+1.1.0 / 2014-12-16
+===================
+  * Use label text instead of field name consistently in error messages
+  * Fix support of zero values in inputs (#147)
+  * Update `qs`, `is`, `object.assign`, `tape`, `covert`, `jscs`
+
 1.0.0 / 2014-09-29
 ===================
-  * v1.0.0 - it's time.
+  * v1.0.0 - it’s time.
   * Update CHANGELOG
 
 0.10.0 / 2014-09-24
@@ -85,18 +91,18 @@
   * Add plan statements, and using the "t" convention inside tests.
   * Adding a matchValue validator.
     Relates to [#82](https://github.com/caolan/forms/issues/82).
-  * Removing the express example, primarily because it doesn't work with express 3. Also, the dependency stuff is weird.
+  * Removing the express example, primarily because it doesn’t work with express 3. Also, the dependency stuff is weird.
     This should go in a separate repo rather than living inside `forms`.
     Closes [#93](https://github.com/caolan/forms/issues/93). Relates to [#105](https://github.com/caolan/forms/issues/105).
   * Merge pull request [#99](https://github.com/caolan/forms/issues/99) from Flaise/master
     Made `%s` string formatting tokens optional in field validator error messages.
-  * Oops! Make sure we're running all tests
+  * Oops! Make sure we’re running all tests
   * Made `%s` string formatting tokens optional in field validator error messages.
   * Add number widget.
     From [#83](https://github.com/caolan/forms/issues/83).
   * Pass an enctype in the simple example
   * Updating json-template.
-    Note: it can't be installed from npm because the package.json is invalid.
+    Note: it can’t be installed from npm because the package.json is invalid.
   * Merge pull request [#101](https://github.com/caolan/forms/issues/101) from caolan/use_tape_for_tests
     Use tape for tests
   * Converting tests over to tape instead of nodeunit.
@@ -132,7 +138,7 @@
   * Rearranging badges
   * Adding npm badge and version svg.
   * Updating browserify.
-  * Merge branch 'required_validator'. Closes [#81](https://github.com/caolan/forms/issues/81).
+  * Merge branch "required_validator". Closes [#81](https://github.com/caolan/forms/issues/81).
   * Use String() instead of the toString prototype method.
   * When the "required" option is true, use the default "required" validator. Otherwise, use the passed-in validator.
   * Adding a "required" validator.
@@ -151,7 +157,7 @@
   * Adding dev dependency badge.
   * Rearranging dependencies.
   * s/\t/    /g
-  * Merge branch 'nested_fields_merge' - merges [#77](https://github.com/caolan/forms/issues/77), fixes [#11](https://github.com/caolan/forms/issues/11)
+  * Merge branch "nested_fields_merge" - merges [#77](https://github.com/caolan/forms/issues/77), fixes [#11](https://github.com/caolan/forms/issues/11)
   * Using arguments.length to shift arguments.
   * Adding spacing.
   * Reverting this line.
@@ -181,6 +187,6 @@
   * Adding requiresFieldIfEmpty validator.
   * If any field validator functions have a forceValidation property set, validate even when empty.
   * take object literals as nested fields
-  * Adding ES5's String#trim
+  * Adding ES5’s String#trim
   * Removing an extra space
   * compatibility
