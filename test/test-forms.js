@@ -22,3 +22,28 @@ test('create', function (t) {
     t.end();
 });
 
+test('nested validation errors', function (t) {
+    var form = forms.create({
+        userDetails: {
+            username: forms.fields.string({ required: true }),
+            password: forms.fields.password({ required: true })
+        }
+    });
+
+    t.test('with subobject specified', function (st) {
+        st.plan(2);
+        form.handle({ userDetails: {} }, {
+            success: function (f) {
+                st.fail('Unexpected success callback');
+                st.notOk(f.isValid(), 'Form should not be valid');
+            },
+            other: function (f) {
+                st.equal(f.fields.userDetails.fields.username.error, 'Username is required.', 'validation failure on username field');
+                st.notOk(f.isValid(), 'Form should not be valid');
+            }
+        });
+    });
+
+    t.end();
+});
+
