@@ -1,3 +1,8 @@
+1.1.1 / 2015-01-06
+===================
+  * Fix validation error bug with nested fields. (#153)
+  * Update `formidable`, `jscs`
+
 1.1.0 / 2014-12-16
 ===================
   * Use label text instead of field name consistently in error messages
