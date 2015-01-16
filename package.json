@@ -26,10 +26,10 @@
         "object.assign": "~1.1.1"
     },
     "devDependencies": {
-        "tape": "~3.0.3",
+        "tape": "~3.2.0",
         "testling": "~1.7.1",
         "covert": "1.0.0",
-        "jscs": "~1.9.0"
+        "jscs": "~1.10.0"
     },
     "license": "MIT",
     "licenses": [
