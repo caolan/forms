@@ -29,7 +29,7 @@
         "tape": "~3.5.0",
         "testling": "~1.7.1",
         "covert": "1.0.0",
-        "jscs": "~1.11.0"
+        "jscs": "~1.11.1"
     },
     "license": "MIT",
     "licenses": [
