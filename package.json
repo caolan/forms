@@ -19,17 +19,17 @@
         "lint": "jscs test/*.js lib/*.js example/simple.js example/complex.js"
     },
     "dependencies": {
-        "async": "~0.9.0",
-        "qs": "~2.3.3",
-        "formidable": "~1.0.16",
-        "is": "~2.2.1",
-        "object.assign": "~1.1.1"
+        "async": "^0.9.0",
+        "qs": "^2.3.3",
+        "formidable": "^1.0.16",
+        "is": "^2.2.1",
+        "object.assign": "^1.1.1"
     },
     "devDependencies": {
-        "tape": "~3.5.0",
-        "testling": "~1.7.1",
-        "covert": "1.0.0",
-        "jscs": "~1.11.1"
+        "tape": "^3.5.0",
+        "testling": "^1.7.1",
+        "covert": "^1.0.1",
+        "jscs": "^1.11.3"
     },
     "license": "MIT",
     "licenses": [
