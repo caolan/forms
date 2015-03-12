@@ -21,8 +21,8 @@
     "dependencies": {
         "async": "^0.9.0",
         "qs": "^2.3.3",
-        "formidable": "^1.0.16",
-        "is": "^2.2.1",
+        "formidable": "^1.0.17",
+        "is": "^3.0.1",
         "object.assign": "^1.1.1"
     },
     "devDependencies": {
