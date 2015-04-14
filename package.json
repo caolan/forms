@@ -23,10 +23,10 @@
         "qs": "^2.4.1",
         "formidable": "^1.0.17",
         "is": "^3.0.1",
-        "object.assign": "^1.1.1"
+        "object.assign": "^2.0.1"
     },
     "devDependencies": {
-        "tape": "^3.5.0",
+        "tape": "^4.0.0",
         "testling": "^1.7.1",
         "covert": "^1.0.1",
         "jscs": "^1.11.3"
