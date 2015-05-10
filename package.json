@@ -20,7 +20,7 @@
     },
     "dependencies": {
         "async": "^0.9.0",
-        "qs": "^2.4.1",
+        "qs": "^2.4.2",
         "formidable": "^1.0.17",
         "is": "^3.0.1",
         "object.assign": "^2.0.1"
@@ -28,8 +28,8 @@
     "devDependencies": {
         "tape": "^4.0.0",
         "testling": "^1.7.1",
-        "covert": "^1.0.1",
-        "jscs": "^1.11.3"
+        "covert": "^1.1.0",
+        "jscs": "^1.13.1"
     },
     "license": "MIT",
     "licenses": [

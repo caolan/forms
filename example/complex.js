@@ -23,7 +23,7 @@ var inputWithOptionalAttributes = forms.widgets.text({
 });
 
 var form = forms.create({
-    name:  fields.string({
+    name: fields.string({
         required: validators.required('%s is required, silly!')
     }),
     email: fields.email({required: true, label: 'Email Address'}),
@@ -46,13 +46,15 @@ var form = forms.create({
             three: 'option three'
         },
         widget: widgets.select(),
-        validators: [function (form, field, callback) {
-            if (field.data === 'two') {
-                callback('two?! are you crazy?!');
-            } else {
-                callback();
+        validators: [
+            function (form, field, callback) {
+                if (field.data === 'two') {
+                    callback('two?! are you crazy?!');
+                } else {
+                    callback();
+                }
             }
-        }]
+        ]
     }),
     more_options: fields.array({
         choices: {one: 'item 1', two: 'item 2', three: 'item 3'},

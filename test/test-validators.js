@@ -1,5 +1,6 @@
 /*jslint node: true */
 'use strict';
+
 var validators = require('../lib/forms').validators;
 var async = require('async');
 var test = require('tape');
@@ -31,7 +32,7 @@ test('matchValue', function (t) {
     };
 
     t.test('passes when matching the value', function (st) {
-        var getter = function () { return 'one'; }
+        var getter = function () { return 'one'; };
         var v = validators.matchValue(getter, 'name: %s | value: %s');
         st.plan(1);
         v(data, data.fields.field1, function (err) {
@@ -41,7 +42,7 @@ test('matchValue', function (t) {
     });
 
     t.test('fails when not matching the value', function (st) {
-        var getter = function () { return 'NOPE FAILURE'; }
+        var getter = function () { return 'NOPE FAILURE'; };
         var v = validators.matchValue(getter, 'name: %s | value: %s');
         st.plan(1);
         v(data, data.fields.field1, function (err) {

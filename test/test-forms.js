@@ -1,5 +1,6 @@
 /*jslint node: true */
 'use strict';
+
 var forms = require('../lib/forms');
 var test = require('tape');
 

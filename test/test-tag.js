@@ -1,5 +1,6 @@
 /*jslint node: true */
 'use strict';
+
 var test = require('tape');
 var tag = require('../lib/tag');
 var forms = require('../');
