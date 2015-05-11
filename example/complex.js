@@ -17,10 +17,12 @@ var template = jsontemplate.Template(
     fs.readFileSync(__dirname + '/page.jsont').toString()
 );
 
+/*
 var inputWithOptionalAttributes = forms.widgets.text({
     placeholder: 'Where do you "work"?',
     'data-toggle': 'focus'
 });
+*/
 
 var form = forms.create({
     name: fields.string({

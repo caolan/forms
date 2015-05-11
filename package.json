@@ -16,7 +16,9 @@
         "test-browser": "testling",
         "coverage": "covert test/*.js",
         "coverage-quiet": "covert --quiet test/*.js",
-        "lint": "jscs test/*.js lib/*.js example/simple.js example/complex.js"
+        "lint": "npm run jscs && npm run eslint",
+        "eslint": "eslint test/*.js lib/*.js example/simple.js example/complex.js",
+        "jscs": "jscs test/*.js lib/*.js example/simple.js example/complex.js"
     },
     "dependencies": {
         "async": "^0.9.0",
@@ -29,7 +31,8 @@
         "tape": "^4.0.0",
         "testling": "^1.7.1",
         "covert": "^1.1.0",
-        "jscs": "^1.13.1"
+        "jscs": "^1.13.1",
+        "eslint": "^0.21.0"
     },
     "license": "MIT",
     "licenses": [
