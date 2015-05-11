@@ -566,12 +566,12 @@ test('custom attributes', function (t) {
     var w2 = forms.widgets.multipleRadio({
         'data-test': 'foo'
     });
-    var field = {
+    var field2 = {
         choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
         value: 'two'
     };
     t.equal(
-        w2.toHTML('name', field),
+        w2.toHTML('name', field2),
         '<input type="radio" name="name" id="id_name_one" value="one" data-test="foo" />' +
         '<label for="id_name_one">Item one</label>' +
         '<input type="radio" name="name" id="id_name_two" value="two" checked="checked" data-test="foo" />' +

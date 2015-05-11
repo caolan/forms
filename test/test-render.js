@@ -78,7 +78,7 @@ var testWrap = function (tag) {
         });
 
         // Error rendering disabled
-        var f = forms.create({
+        var f2 = forms.create({
             field_name: forms.fields.string({
                 hideError: true,
                 validators: [function (form, field, callback) {
@@ -93,7 +93,7 @@ var testWrap = function (tag) {
                 }]
             })
         });
-        f.bind({field_name: 'val', field_name_error_after: 'foo'}).validate(function (err, f) {
+        f2.bind({field_name: 'val', field_name_error_after: 'foo'}).validate(function (err, f) {
             t.equal(
                 f.toHTML(forms.render[tag]),
                 '<' + tag + ' class="field error">' +
@@ -297,7 +297,7 @@ test('table bound error', function (t) {
     });
 
     // Error rendering disabled
-    var f = forms.create({
+    var f2 = forms.create({
         field_name: forms.fields.string({
             hideError: true,
             validators: [function (form, field, callback) {
@@ -312,7 +312,7 @@ test('table bound error', function (t) {
             }]
         })
     });
-    f.bind({field_name: 'val', field_name_error_after: 'foo'}).validate(function (err, f) {
+    f2.bind({field_name: 'val', field_name_error_after: 'foo'}).validate(function (err, f) {
         t.equal(
             f.toHTML(forms.render.table),
             '<tr class="field error">' +
