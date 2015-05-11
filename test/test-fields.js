@@ -38,7 +38,7 @@ var testField = function (field) {
             label: 'test label',
             validators: [
                 function (form, field, callback) {
-                    t.ok(false, 'validators should not be called');
+                    t.fail('validators should not be called');
                 }
             ]
         });
@@ -96,7 +96,7 @@ var testField = function (field) {
                 callback('error one');
             },
             function (form, field, callback) {
-                t.ok(false, 'second validator should not be called');
+                t.fail('second validator should not be called');
                 callback('error two');
             }
         ];
@@ -114,7 +114,7 @@ var testField = function (field) {
         t.plan(1);
         var f = fields[field]({
             validators: [function (form, field, callback) {
-                t.ok(false, 'validators should not be called');
+                t.fail('validators should not be called');
                 callback('some error');
             }]
         });
