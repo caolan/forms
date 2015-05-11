@@ -2,7 +2,6 @@
 'use strict';
 
 var validators = require('../lib/forms').validators;
-var async = require('async');
 var test = require('tape');
 
 test('matchField', function (t) {
@@ -362,7 +361,6 @@ test('nonFormatMessage3', function (t) {
         });
     });
 });
-
 
 test('integer', function (t) {
     var v = validators.integer();

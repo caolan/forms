@@ -5,12 +5,10 @@ var http = require('http'),
     util = require('util'),
     fs = require('fs'),
     forms = require('../lib/forms'),
-    jsontemplate = require('./json-template'),
-    parse = require('url').parse;
+    jsontemplate = require('./json-template');
 
 var fields = forms.fields,
-    validators = forms.validators,
-    widgets = forms.widgets;
+    validators = forms.validators;
 
 // template for the example page
 var template = jsontemplate.Template(

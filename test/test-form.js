@@ -179,7 +179,7 @@ test('handle empty', function (t) {
         }
     });
     f.handle(null, {
-        other: function (form) {
+        other: function () {
             t.ok(true, 'other called');
         }
     });
@@ -190,7 +190,7 @@ test('handle success', function (t) {
     t.plan(7);
     var f = forms.create({field1: forms.fields.string()}),
         call_order = [];
-    f.bind = function (raw_data) {
+    f.bind = function () {
         call_order.push('bind');
         t.ok(true, 'bind called');
         f.isValid = function () { return true; };
@@ -201,22 +201,22 @@ test('handle success', function (t) {
         callback(null, f);
     };
     f.handle({field1: 'test'}, {
-        empty: function (form) {
+        empty: function () {
             t.fail('empty should not be called');
         },
         success: function (form) {
             t.ok(true, 'success called');
             t.equal(form, f);
         },
-        error: function (form) {
+        error: function () {
             t.fail('error should not be called');
         },
-        other: function (form) {
+        other: function () {
             t.fail('other should not be called');
         }
     });
     f.handle({field1: 'test'}, {
-        other: function (form) {
+        other: function () {
             t.ok(true, 'other called');
             t.end();
         }
@@ -226,7 +226,7 @@ test('handle success', function (t) {
 test('handle empty object', function (t) {
     t.plan(3);
     var f = forms.create({field1: forms.fields.string()});
-    f.bind = function (raw_data, callback) {
+    f.bind = function () {
         t.ok(true, 'bind called');
         f.fields.field1.error = 'some error';
         f.isValid = function () { return false; };
@@ -241,18 +241,18 @@ test('handle empty object', function (t) {
             t.ok(true, 'empty called');
             t.equal(form, f);
         },
-        success: function (form) {
+        success: function () {
             t.fail('success should not be called');
         },
-        error: function (form) {
+        error: function () {
             t.fail('error should not be called');
         },
-        other: function (form) {
+        other: function () {
             t.fail('other should not be called');
         }
     });
     f.handle({}, {
-        other: function (form) {
+        other: function () {
             t.ok(true, 'other called');
         }
     });
@@ -263,7 +263,7 @@ test('handle sends callbacks', function (t) {
     t.plan(9);
     var f = forms.create({field1: forms.fields.string()});
 
-    f.bind = function (raw_data) {
+    f.bind = function () {
         f.isValid = function () { return true; };
         return f;
     };
@@ -283,7 +283,7 @@ test('handle sends callbacks', function (t) {
         }
     });
 
-    f.bind = function (raw_data) {
+    f.bind = function () {
         f.isValid = function () { return false; };
         return f;
     };
@@ -306,7 +306,6 @@ test('handle sends callbacks', function (t) {
     t.end();
 });
 
-
 test('handle missing multi-form section', function (t) {
     t.plan(1);
     var f = forms.create({
@@ -320,7 +319,7 @@ test('handle missing multi-form section', function (t) {
 test('handle error', function (t) {
     t.plan(5);
     var f = forms.create({field1: forms.fields.string()});
-    f.bind = function (raw_data, callback) {
+    f.bind = function () {
         t.ok(true, 'bind called');
         f.fields.field1.error = 'some error';
         f.isValid = function () { return false; };
@@ -331,22 +330,22 @@ test('handle error', function (t) {
         callback(null, f);
     };
     f.handle({foo: 'bar'}, {
-        empty: function (form) {
+        empty: function () {
             t.fail('empty should not be called');
         },
-        success: function (form) {
+        success: function () {
             t.fail('success should not be called');
         },
         error: function (form) {
             t.ok(true, 'error called');
             t.equal(form, f);
         },
-        other: function (form) {
+        other: function () {
             t.fail('other should not be called');
         }
     });
     f.handle({}, {
-        other: function (form) {
+        other: function () {
             t.ok(true, 'other called');
         }
     });

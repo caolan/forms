@@ -58,7 +58,6 @@ test('date', function (t) {
         '<input type="date" name="field1" id="id_field1" value="2013-03-03" />'
     );
 
-
     t.end();
 });
 
@@ -564,7 +563,7 @@ test('custom attributes', function (t) {
         '<label for="id_name_three">Item three</label>'
     );
 
-    var w = forms.widgets.multipleRadio({
+    var w2 = forms.widgets.multipleRadio({
         'data-test': 'foo'
     });
     var field = {
@@ -572,7 +571,7 @@ test('custom attributes', function (t) {
         value: 'two'
     };
     t.equal(
-        w.toHTML('name', field),
+        w2.toHTML('name', field),
         '<input type="radio" name="name" id="id_name_one" value="one" data-test="foo" />' +
         '<label for="id_name_one">Item one</label>' +
         '<input type="radio" name="name" id="id_name_two" value="two" checked="checked" data-test="foo" />' +

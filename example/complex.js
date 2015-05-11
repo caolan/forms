@@ -79,13 +79,13 @@ var form = forms.create({
     }
 });
 
-
 http.createServer(function (req, res) {
     form.handle(req, {
         success: function (form) {
-            var req_data = require('url').parse(req.url, 1).query;
+            var req_data = parse(req.url, 1).query;
             res.writeHead(200, {'Content-Type': 'text/html'});
             res.write('<h1>Success!</h1>');
+            res.write('<h2>' + util.inspect(req_data) + '</h2>');
             res.end('<pre>' + util.inspect(form.data) + '</pre>');
         },
         other: function (form) {

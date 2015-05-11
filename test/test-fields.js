@@ -2,6 +2,7 @@
 'use strict';
 
 var forms = require('../lib/forms');
+var util = require('util');
 var is = require('is');
 var fields = forms.fields;
 var stringField = fields.string();
@@ -38,7 +39,7 @@ var testField = function (field) {
         var f = fields[field]({
             label: 'test label',
             validators: [
-                function (form, field, callback) {
+                function () {
                     t.fail('validators should not be called');
                 }
             ]
@@ -103,7 +104,7 @@ var testField = function (field) {
         ];
 
         f.parse = function (data) {
-            return 'some data parsed';
+            return 'some data parsed: ' + util.inspect(data);
         };
         f.bind('some data').validate('form', function (err, bound) {
             t.equal(bound.error, 'error one');
@@ -120,7 +121,7 @@ var testField = function (field) {
             }]
         });
         f.parse = function (data) {
-            return;
+            return util.inspect(data);
         };
         f.bind().validate('form', function (err, bound) {
             t.equal(bound.error, undefined);
