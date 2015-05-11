@@ -104,7 +104,7 @@ test('validate valid data', function (t) {
         field3: forms.fields.string()
     });
     f.bind({field1: '1', field2: '2', field3: 0}).validate(function (err, f) {
-        t.true(f.isValid());
+        t.ok(f.isValid());
         t.equal(
             f.toHTML(),
             '<div class="field">' +

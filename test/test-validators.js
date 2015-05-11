@@ -54,7 +54,7 @@ test('matchValue', function (t) {
         var nonFunctions = [undefined, null, 42, /a/g, 'foo', [], {}];
         st.plan(nonFunctions.length);
         nonFunctions.forEach(function (nonFunction) {
-            st.throws(function () { validators.matchValue(nonFunction); }, TypeError, nonFunction + ' is not a function');
+            st['throws'](function () { validators.matchValue(nonFunction); }, TypeError, nonFunction + ' is not a function');
         });
         st.end();
     });
