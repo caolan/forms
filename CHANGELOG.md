@@ -1,3 +1,13 @@
+1.1.2 / 2015-05-30
+===================
+  * Code cleanup: Avoid ES3 syntax errors, just in case.
+  * Code cleanup: Avoid reusing variables.
+  * Code cleanup: Remove or use unused variables.
+  * Code cleanup: Avoid reassigning function params, for performance
+  * Test up to `io.js` `v2.1`, and latest `node`
+  * Add `npm run eslint`
+  * Update `tape`, `jscs`, `is`, `formidable`, `qs`, `object.assign`, `covert`, `async`
+
 1.1.1 / 2015-01-06
 ===================
   * Fix validation error bug with nested fields. (#153)
