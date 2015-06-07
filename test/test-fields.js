@@ -21,14 +21,14 @@ var testField = function (field) {
             label: 'test label',
             validators: [fn1],
             widget: 'some widget',
-            choices: {one: 'option one', two: 'option two'}
+            choices: { one: 'option one', two: 'option two' }
         });
 
         t.equal(f.required, true);
         t.equal(f.label, 'test label');
         t.equal(f.validators[f.validators.length - 1], fn1);
         t.equal(f.widget, 'some widget');
-        t.deepEqual(f.choices, {one: 'option one', two: 'option two'});
+        t.deepEqual(f.choices, { one: 'option one', two: 'option two' });
         t.equal(f.validate, undefined);
         t.end();
     });
@@ -61,7 +61,7 @@ var testField = function (field) {
     test(field + ' validate', function (t) {
         t.plan(10);
 
-        var f = fields[field]({label: 'test label'});
+        var f = fields[field]({ label: 'test label' });
         f.validators = [
             function (form, field, callback) {
                 t.equal(field.data, 'some data parsed');
@@ -137,7 +137,7 @@ var testField = function (field) {
             t.equal(f.value, undefined);
             t.equal(f.error, 'This field is required.');
         });
-        var f2 = fields[field]({required: true});
+        var f2 = fields[field]({ required: true });
         f2.parse = function (val) { return val; };
         f2.validators = [];
         f2.bind('val').validate('form', function (err, f2) {

@@ -32,7 +32,7 @@
         "testling": "^1.7.1",
         "covert": "^1.1.0",
         "jscs": "^1.13.1",
-        "eslint": "^0.21.2"
+        "eslint": "^0.22.1"
     },
     "license": "MIT",
     "licenses": [
