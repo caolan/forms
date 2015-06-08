@@ -21,7 +21,7 @@
         "jscs": "jscs test/*.js lib/*.js example/simple.js example/complex.js"
     },
     "dependencies": {
-        "async": "~1.0.0",
+        "async": "^1.2.1",
         "qs": "^3.1.0",
         "formidable": "^1.0.17",
         "is": "^3.0.1",
