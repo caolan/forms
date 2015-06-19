@@ -1,4 +1,3 @@
-/*jslint node: true */
 'use strict';
 
 var validators = require('../lib/forms').validators;

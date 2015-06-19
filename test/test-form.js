@@ -1,4 +1,3 @@
-/*jslint node: true */
 'use strict';
 
 var forms = require('../lib/forms');
@@ -187,11 +186,11 @@ test('handle empty', function (t) {
 });
 
 test('handle success', function (t) {
-    t.plan(7);
-    var f = forms.create({field1: forms.fields.string()}),
-        call_order = [];
+    t.plan(8);
+    var f = forms.create({field1: forms.fields.string()});
+    var callOrder = [];
     f.bind = function () {
-        call_order.push('bind');
+        callOrder.push('bind');
         t.ok(true, 'bind called');
         f.isValid = function () { return true; };
         return f;
@@ -218,6 +217,7 @@ test('handle success', function (t) {
     f.handle({field1: 'test'}, {
         other: function () {
             t.ok(true, 'other called');
+            t.equal(callOrder.length, 2);
             t.end();
         }
     });
