@@ -12,13 +12,14 @@
         "url": "https://github.com/caolan/forms/issues"
     },
     "scripts": {
-        "test": "npm run lint && tape test/*.js",
+        "test": "npm run lint && tape test/*.js && npm run security",
         "test-browser": "testling",
         "coverage": "covert test/*.js",
         "coverage-quiet": "covert --quiet test/*.js",
         "lint": "npm run jscs && npm run eslint",
         "eslint": "eslint test/*.js lib/*.js example/simple.js example/complex.js",
-        "jscs": "jscs test/*.js lib/*.js example/simple.js example/complex.js"
+        "jscs": "jscs test/*.js lib/*.js example/simple.js example/complex.js",
+        "security": "nsp package"
     },
     "dependencies": {
         "async": "^1.3.0",
@@ -32,7 +33,8 @@
         "testling": "^1.7.1",
         "covert": "^1.1.0",
         "jscs": "^1.13.1",
-        "eslint": "^0.24.0"
+        "eslint": "^0.24.0",
+        "nsp": "^1.0.3"
     },
     "license": "MIT",
     "licenses": [
