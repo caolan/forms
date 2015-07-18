@@ -138,8 +138,10 @@ var my_form = forms.create({
 });
 
 var bootstrapField = function (name, object) {
-    object.widget.classes = object.widget.classes || [];
-    object.widget.classes.push('form-control');
+    if (!Array.isArray(object.widget.classes)) { object.widget.classes = []; }
+    if (object.widget.classes.indexOf('form-control') === -1) {
+        object.widget.classes.push('form-control');
+    }
 
     var label = object.labelHTML(name);
     var error = object.error ? '<div class="alert alert-error help-block">' + object.error + '</div>' : '';
