@@ -10,7 +10,7 @@ test('bind', function (t) {
     var form = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string({
-            validators: [function (form, field, callback) {
+            validators: [function (formObject, field, callback) {
                 t.fail('validators should not be called');
                 callback(new Error('validation error'));
             }]
@@ -71,7 +71,7 @@ test('validate', function (t) {
     var form = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string({
-            validators: [function (form, field, callback) {
+            validators: [function (formObject, field, callback) {
                 t.equal(field.data, 'data two');
                 t.equal(field.value, 'data two');
                 callback('validation error');
@@ -97,12 +97,12 @@ test('validate', function (t) {
 
 test('validate valid data', function (t) {
     t.plan(2);
-    var f = forms.create({
+    var form = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string(),
         field3: forms.fields.string()
     });
-    f.bind({field1: '1', field2: '2', field3: 0}).validate(function (err, f) {
+    form.bind({ field1: '1', field2: '2', field3: 0 }).validate(function (err, f) {
         t.ok(f.isValid());
         t.equal(
             f.toHTML(),
@@ -125,7 +125,7 @@ test('validate valid data', function (t) {
 
 test('validate invalid data', function (t) {
     t.plan(2);
-    var f = forms.create({
+    var formObject = forms.create({
         field1: forms.fields.string({
             validators: [function (form, field, callback) {
                 callback('validation error 1');
@@ -137,7 +137,7 @@ test('validate invalid data', function (t) {
             }]
         })
     });
-    f.bind({field1: '1', field2: '2'}).validate(function (err, f) {
+    formObject.bind({ field1: '1', field2: '2' }).validate(function (err, f) {
         t.equal(f.isValid(), false);
         t.equal(
             f.toHTML(),
@@ -462,8 +462,8 @@ test('div required', function (t) {
 
 test('div bound', function (t) {
     t.plan(1);
-    var f = forms.create({name: forms.fields.string()});
-    f.bind({name: 'val'}).validate(function (err, f) {
+    var form = forms.create({name: forms.fields.string()});
+    form.bind({name: 'val'}).validate(function (err, f) {
         t.equal(
             f.toHTML(),
             '<div class="field">' +
@@ -477,14 +477,14 @@ test('div bound', function (t) {
 
 test('div bound error', function (t) {
     t.plan(1);
-    var f = forms.create({
+    var formObject = forms.create({
         field_name: forms.fields.string({
             validators: [function (form, field, callback) {
                 callback('validation error');
             }]
         })
     });
-    f.bind({field_name: 'val'}).validate(function (err, f) {
+    formObject.bind({ field_name: 'val' }).validate(function (err, f) {
         t.equal(
             f.toHTML(),
             '<div class="field error">' +

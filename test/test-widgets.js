@@ -151,20 +151,38 @@ test('textarea', function (t) {
 
 test('multipleCheckbox', function (t) {
     var w = forms.widgets.multipleCheckbox();
-    var field = {
-        choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
-        value: 'two'
-    };
-    t.equal(
-        w.toHTML('name', field),
-        '<input type="checkbox" name="name" id="id_name_one" value="one" />' +
-        '<label for="id_name_one">Item one</label>' +
-        '<input type="checkbox" name="name" id="id_name_two" value="two" checked="checked" />' +
-        '<label for="id_name_two">Item two</label>' +
-        '<input type="checkbox" name="name" id="id_name_three" value="three" />' +
-        '<label for="id_name_three">Item three</label>'
-    );
-    t.equal(w.type, 'multipleCheckbox');
+    t.test('basic functionality', function (st) {
+        var field = {
+            choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
+            value: 'two'
+        };
+        st.equal(
+            w.toHTML('name', field),
+            '<input type="checkbox" name="name" id="id_name_one" value="one" />' +
+            '<label for="id_name_one">Item one</label>' +
+            '<input type="checkbox" name="name" id="id_name_two" value="two" checked="checked" />' +
+            '<label for="id_name_two">Item two</label>' +
+            '<input type="checkbox" name="name" id="id_name_three" value="three" />' +
+            '<label for="id_name_three">Item three</label>'
+        );
+        st.equal(w.type, 'multipleCheckbox');
+
+        st.test('label classes', function (st2) {
+            var widget = forms.widgets.multipleCheckbox({ labelClasses: ['test1', 'test2', 'test3'] });
+            st2.equal(
+                widget.toHTML('name', field),
+                '<input type="checkbox" name="name" id="id_name_one" value="one" />' +
+                '<label for="id_name_one" class="test1 test2 test3">Item one</label>' +
+                '<input type="checkbox" name="name" id="id_name_two" value="two" checked="checked" />' +
+                '<label for="id_name_two" class="test1 test2 test3">Item two</label>' +
+                '<input type="checkbox" name="name" id="id_name_three" value="three" />' +
+                '<label for="id_name_three" class="test1 test2 test3">Item three</label>'
+            );
+            st2.end();
+        });
+
+        st.end();
+    });
 
     t.test('stringifies values', function (st) {
         st.test('single bound value', function (t2) {
@@ -202,20 +220,6 @@ test('multipleCheckbox', function (t) {
         st.end();
     });
 
-    t.test('label classes', function (st) {
-        var w = forms.widgets.multipleCheckbox({labelClasses: ['test1', 'test2', 'test3']});
-        t.equal(
-            w.toHTML('name', field),
-            '<input type="checkbox" name="name" id="id_name_one" value="one" />' +
-            '<label for="id_name_one" class="test1 test2 test3">Item one</label>' +
-            '<input type="checkbox" name="name" id="id_name_two" value="two" checked="checked" />' +
-            '<label for="id_name_two" class="test1 test2 test3">Item two</label>' +
-            '<input type="checkbox" name="name" id="id_name_three" value="three" />' +
-            '<label for="id_name_three" class="test1 test2 test3">Item three</label>'
-        );
-        st.end();
-    });
-
     t.end();
 });
 
@@ -239,11 +243,11 @@ test('multipleCheckbox multiple selected', function (t) {
 });
 
 test('multipleRadio', function (t) {
-    var w = forms.widgets.multipleRadio(),
-        field = {
-            choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
-            value: 'two'
-        };
+    var w = forms.widgets.multipleRadio();
+    var field = {
+        choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
+        value: 'two'
+    };
     t.equal(
         w.toHTML('name', field),
         '<input type="radio" name="name" id="id_name_one" value="one" />' +
@@ -257,11 +261,11 @@ test('multipleRadio', function (t) {
 
     t.test('stringifies values', function (st) {
         st.test('single bound value', function (t2) {
-            var field = {
+            var boundValueField = {
                 choices: { 1: 'one', 2: 'two', 3: 'three' },
                 value: 2
             };
-            var html = w.toHTML('name', field);
+            var html = w.toHTML('name', boundValueField);
             var expectedHTML = '<input type="radio" name="name" id="id_name_1" value="1" />' +
                 '<label for="id_name_1">one</label>' +
                 '<input type="radio" name="name" id="id_name_2" value="2" checked="checked" />' +
@@ -273,11 +277,11 @@ test('multipleRadio', function (t) {
         });
 
         st.test('multiple bound values', function (t2) {
-            var field = {
+            var boundValuesField = {
                 choices: { 1: 'one', 2: 'two', 3: 'three' },
                 value: [2, 3]
             };
-            var html = w.toHTML('name', field);
+            var html = w.toHTML('name', boundValuesField);
             var expectedHTML = '<input type="radio" name="name" id="id_name_1" value="1" />' +
                 '<label for="id_name_1">one</label>' +
                 '<input type="radio" name="name" id="id_name_2" value="2" checked="checked" />' +
@@ -292,9 +296,9 @@ test('multipleRadio', function (t) {
     });
 
     t.test('label classes', function (st) {
-        var w = forms.widgets.multipleRadio({labelClasses: ['test1', 'test2', 'test3']});
+        var widget = forms.widgets.multipleRadio({labelClasses: ['test1', 'test2', 'test3']});
         st.equal(
-            w.toHTML('name', field),
+            widget.toHTML('name', field),
             '<input type="radio" name="name" id="id_name_one" value="one" />' +
             '<label for="id_name_one" class="test1 test2 test3">Item one</label>' +
             '<input type="radio" name="name" id="id_name_two" value="two" checked="checked" />' +
@@ -309,11 +313,11 @@ test('multipleRadio', function (t) {
 });
 
 test('multipleRadio multiple selected', function (t) {
-    var w = forms.widgets.multipleRadio(),
-        field = {
-            choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
-            value: ['two', 'three']
-        };
+    var w = forms.widgets.multipleRadio();
+    var field = {
+        choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
+        value: ['two', 'three']
+    };
     t.equal(
         w.toHTML('name', field),
         '<input type="radio" name="name" id="id_name_one" value="one" />' +

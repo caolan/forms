@@ -32,8 +32,8 @@ var testWrap = function (tag) {
 
     test(tag + ' bound', function (t) {
         t.plan(1);
-        var f = forms.create({name: forms.fields.string()});
-        f.bind({name: 'val'}).validate(function (err, f) {
+        var form = forms.create({ name: forms.fields.string() });
+        form.bind({name: 'val'}).validate(function (err, f) {
             t.equal(
                 f.toHTML(forms.render[tag]),
                 '<' + tag + ' class="field">' +
@@ -47,7 +47,7 @@ var testWrap = function (tag) {
 
     test(tag + ' bound error', function (t) {
         t.plan(4);
-        var f = forms.create({
+        var formObject = forms.create({
             field_name: forms.fields.string({
                 validators: [function (form, field, callback) {
                     callback('validation error');
@@ -60,7 +60,7 @@ var testWrap = function (tag) {
                 }]
             })
         });
-        f.bind({field_name: 'val', field_name_error_after: 'foo'}).validate(function (err, f) {
+        formObject.bind({ field_name: 'val', field_name_error_after: 'foo' }).validate(function (err, f) {
             t.equal(
                 f.toHTML(forms.render[tag]),
                 '<' + tag + ' class="field error">' +
@@ -245,8 +245,8 @@ test('table required', function (t) {
 
 test('table bound', function (t) {
     t.plan(1);
-    var f = forms.create({name: forms.fields.string()});
-    f.bind({name: 'val'}).validate(function (err, f) {
+    var form = forms.create({ name: forms.fields.string() });
+    form.bind({name: 'val'}).validate(function (err, f) {
         t.equal(
             f.toHTML(forms.render.table),
             '<tr class="field">' +
@@ -262,7 +262,7 @@ test('table bound', function (t) {
 
 test('table bound error', function (t) {
     t.plan(4);
-    var f = forms.create({
+    var formObject = forms.create({
         field_name: forms.fields.string({
             validators: [function (form, field, callback) {
                 callback('validation error');
@@ -275,7 +275,7 @@ test('table bound error', function (t) {
             }]
         })
     });
-    f.bind({field_name: 'val', field_name_error_after: 'foo'}).validate(function (err, f) {
+    formObject.bind({ field_name: 'val', field_name_error_after: 'foo' }).validate(function (err, f) {
         t.equal(
             f.toHTML(forms.render.table),
             '<tr class="field error">' +

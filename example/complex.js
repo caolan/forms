@@ -23,7 +23,7 @@ var inputWithOptionalAttributes = forms.widgets.text({
 });
 */
 
-var form = forms.create({
+var complexForm = forms.create({
     name: fields.string({
         required: validators.required('%s is required, silly!')
     }),
@@ -81,7 +81,7 @@ var form = forms.create({
 });
 
 http.createServer(function (req, res) {
-    form.handle(req, {
+    complexForm.handle(req, {
         success: function (form) {
             var req_data = parse(req.url, 1).query;
             res.writeHead(200, {'Content-Type': 'text/html'});
@@ -102,4 +102,3 @@ http.createServer(function (req, res) {
 }).listen(8080);
 
 util.puts('Server running at http://127.0.0.1:8080/');
-

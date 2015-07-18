@@ -62,14 +62,14 @@ var testField = function (field) {
 
         var f = fields[field]({ label: 'test label' });
         f.validators = [
-            function (form, field, callback) {
-                t.equal(field.data, 'some data parsed');
-                t.equal(field.value, 'some data');
+            function (form, fieldObject, callback) {
+                t.equal(fieldObject.data, 'some data parsed');
+                t.equal(fieldObject.value, 'some data');
                 callback(null);
             },
-            function (form, field, callback) {
-                t.equal(field.data, 'some data parsed');
-                t.equal(field.value, 'some data');
+            function (form, fieldObject, callback) {
+                t.equal(fieldObject.data, 'some data parsed');
+                t.equal(fieldObject.value, 'some data');
                 callback(new Error('validation error'));
             }
         ];
@@ -93,10 +93,10 @@ var testField = function (field) {
 
         var f = fields[field]();
         f.validators = [
-            function (form, field, callback) {
+            function (form, fieldObject, callback) {
                 callback('error one');
             },
-            function (form, field, callback) {
+            function (form, fieldObject, callback) {
                 t.fail('second validator should not be called');
                 callback('error two');
             }
@@ -114,7 +114,7 @@ var testField = function (field) {
     test(field + ' validate empty', function (t) {
         t.plan(1);
         var f = fields[field]({
-            validators: [function (form, field, callback) {
+            validators: [function (form, fieldObject, callback) {
                 t.fail('validators should not be called');
                 callback('some error');
             }]
@@ -132,17 +132,17 @@ var testField = function (field) {
         t.plan(5);
         var f = fields[field]({required: true});
         f.validators = [];
-        f.bind(undefined).validate('form', function (err, f) {
-            t.equal(f.value, undefined);
-            t.equal(f.error, 'This field is required.');
+        f.bind(undefined).validate('form', function (err, fieldObject) {
+            t.equal(fieldObject.value, undefined);
+            t.equal(fieldObject.error, 'This field is required.');
         });
         var f2 = fields[field]({ required: true });
         f2.parse = function (val) { return val; };
         f2.validators = [];
-        f2.bind('val').validate('form', function (err, f2) {
-            t.equal(f2.value, 'val');
-            t.equal(f2.data, 'val');
-            t.notOk(f2.error);
+        f2.bind('val').validate('form', function (err, fieldObject) {
+            t.equal(fieldObject.value, 'val');
+            t.equal(fieldObject.data, 'val');
+            t.notOk(fieldObject.error);
         });
         t.end();
     });
@@ -155,10 +155,10 @@ var testField = function (field) {
             t.equal(data, 'some data');
             return 'some data parsed';
         };
-        f.bind('some data').validate('form', function (err, f) {
-            t.equal(f.value, 'some data');
-            t.equal(f.data, 'some data parsed');
-            t.notOk(f.error);
+        f.bind('some data').validate('form', function (err, fieldObject) {
+            t.equal(fieldObject.value, 'some data');
+            t.equal(fieldObject.data, 'some data parsed');
+            t.notOk(fieldObject.error);
             t.end();
         });
     });
