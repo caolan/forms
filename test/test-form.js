@@ -20,7 +20,7 @@ test('bind', function (t) {
     t.equal(form.isValid, undefined);
 
     // bound
-    var f = form.bind({field1: 'data one', field2: 'data two'});
+    var f = form.bind({ field1: 'data one', field2: 'data two' });
     t.equal(f.fields.field1.value, 'data one');
     t.equal(f.fields.field1.data, 'data one');
     t.equal(f.fields.field1.error, undefined);
@@ -32,7 +32,7 @@ test('bind', function (t) {
     t.equal(f.bind, undefined);
     t.equal(f.handle, undefined);
 
-    t.deepEqual(f.data, {field1: 'data one', field2: 'data two'});
+    t.deepEqual(f.data, { field1: 'data one', field2: 'data two' });
     t.notEqual(form, f, 'bind returns new form object');
 
     t.end();
@@ -48,7 +48,7 @@ test('bind with missing field in data keeps field in form', function (t) {
     t.equal(form.isValid, undefined);
 
     // bound
-    var f = form.bind({field1: 'data one'});
+    var f = form.bind({ field1: 'data one' });
     t.equal(f.fields.field1.value, 'data one');
     t.equal(f.fields.field1.data, 'data one');
     t.equal(f.fields.field1.error, undefined);
@@ -60,7 +60,7 @@ test('bind with missing field in data keeps field in form', function (t) {
     t.equal(f.bind, undefined);
     t.equal(f.handle, undefined);
 
-    t.deepEqual(f.data, {field1: 'data one', field2: ''});
+    t.deepEqual(f.data, { field1: 'data one', field2: '' });
     t.notEqual(form, f, 'bind returns new form object');
 
     t.end();
@@ -78,7 +78,7 @@ test('validate', function (t) {
             }]
         })
     });
-    var data = {field1: 'data one', field2: 'data two'};
+    var data = { field1: 'data one', field2: 'data two' };
     form.bind(data).validate(function (err, f) {
         t.equal(f.fields.field1.value, 'data one');
         t.equal(f.fields.field1.data, 'data one');
@@ -87,7 +87,7 @@ test('validate', function (t) {
         t.equal(f.fields.field2.data, 'data two');
         t.equal(f.fields.field2.error, 'validation error');
 
-        t.deepEqual(f.data, {field1: 'data one', field2: 'data two'});
+        t.deepEqual(f.data, { field1: 'data one', field2: 'data two' });
         t.notEqual(form, f, 'bind returns new form object');
 
         t.notOk(f.isValid());
@@ -158,7 +158,7 @@ test('validate invalid data', function (t) {
 
 test('handle empty', function (t) {
     t.plan(3);
-    var f = forms.create({field1: forms.fields.string()});
+    var f = forms.create({ field1: forms.fields.string() });
     f.bind = function () {
         t.fail('bind should not be called');
     };
@@ -187,7 +187,7 @@ test('handle empty', function (t) {
 
 test('handle success', function (t) {
     t.plan(8);
-    var f = forms.create({field1: forms.fields.string()});
+    var f = forms.create({ field1: forms.fields.string() });
     var callOrder = [];
     f.bind = function () {
         callOrder.push('bind');
@@ -199,7 +199,7 @@ test('handle success', function (t) {
         t.ok(true, 'validate called');
         callback(null, f);
     };
-    f.handle({field1: 'test'}, {
+    f.handle({ field1: 'test' }, {
         empty: function () {
             t.fail('empty should not be called');
         },
@@ -214,7 +214,7 @@ test('handle success', function (t) {
             t.fail('other should not be called');
         }
     });
-    f.handle({field1: 'test'}, {
+    f.handle({ field1: 'test' }, {
         other: function () {
             t.ok(true, 'other called');
             t.equal(callOrder.length, 2);
@@ -225,7 +225,7 @@ test('handle success', function (t) {
 
 test('handle empty object', function (t) {
     t.plan(3);
-    var f = forms.create({field1: forms.fields.string()});
+    var f = forms.create({ field1: forms.fields.string() });
     f.bind = function () {
         t.ok(true, 'bind called');
         f.fields.field1.error = 'some error';
@@ -261,7 +261,7 @@ test('handle empty object', function (t) {
 
 test('handle sends callbacks', function (t) {
     t.plan(9);
-    var f = forms.create({field1: forms.fields.string()});
+    var f = forms.create({ field1: forms.fields.string() });
 
     f.bind = function () {
         f.isValid = function () { return true; };
@@ -276,7 +276,7 @@ test('handle sends callbacks', function (t) {
             t.equal(typeof callbacks.empty, 'function');
         }
     });
-    f.handle({field1: 'test'}, {
+    f.handle({ field1: 'test' }, {
         success: function testing(form, callbacks) {
             t.equal(Object.keys(callbacks).length, 1);
             t.equal(typeof callbacks.success, 'function');
@@ -287,7 +287,7 @@ test('handle sends callbacks', function (t) {
         f.isValid = function () { return false; };
         return f;
     };
-    f.handle({field1: 'test'}, {
+    f.handle({ field1: 'test' }, {
         success: function yay() {},
         error: function nay(form, callbacks) {
             t.equal(Object.keys(callbacks).length, 2);
@@ -296,7 +296,7 @@ test('handle sends callbacks', function (t) {
         }
     });
 
-    f.handle({field1: 'test'}, {
+    f.handle({ field1: 'test' }, {
         other: function testing(form, callbacks) {
             t.equal(Object.keys(callbacks).length, 1);
             t.equal(typeof callbacks.other, 'function');
@@ -312,13 +312,13 @@ test('handle missing multi-form section', function (t) {
         section1: { field1: forms.fields.string() },
         section2: { field1: forms.fields.string() }
     });
-    f.bind({section1: { field1: 'string' }});
+    f.bind({ section1: { field1: 'string' } });
     t.ok(true, 'Form handled missing section ok.');
 });
 
 test('handle error', function (t) {
     t.plan(5);
-    var f = forms.create({field1: forms.fields.string()});
+    var f = forms.create({ field1: forms.fields.string() });
     f.bind = function () {
         t.ok(true, 'bind called');
         f.fields.field1.error = 'some error';
@@ -329,7 +329,7 @@ test('handle error', function (t) {
         t.ok(true, 'validate called');
         callback(null, f);
     };
-    f.handle({foo: 'bar'}, {
+    f.handle({ foo: 'bar' }, {
         empty: function () {
             t.fail('empty should not be called');
         },
@@ -354,7 +354,7 @@ test('handle error', function (t) {
 
 test('handle ServerRequest GET', function (t) {
     t.plan(1);
-    var f = forms.create({field1: forms.fields.string()}),
+    var f = forms.create({ field1: forms.fields.string() }),
         req = new http.IncomingMessage();
     req.method = 'GET';
     req.url = '/?field1=test';
@@ -368,9 +368,9 @@ test('handle ServerRequest GET', function (t) {
 
 test('handle ServerRequest POST', function (t) {
     t.plan(1);
-    var f = forms.create({field1: forms.fields.string()}),
+    var f = forms.create({ field1: forms.fields.string() }),
         req = new http.IncomingMessage();
-    req.body = {field1: 'test'};
+    req.body = { field1: 'test' };
     req.method = 'POST';
     f.handle(req, {
         success: function (form) {
@@ -422,9 +422,9 @@ test('validates past first error with validatePastFirstError option', function (
 
 test('handle ServerRequest POST with bodyDecoder', function (t) {
     t.plan(1);
-    var f = forms.create({field1: forms.fields.string()}),
+    var f = forms.create({ field1: forms.fields.string() }),
         req = new http.IncomingMessage();
-    req.body = {field1: 'test'};
+    req.body = { field1: 'test' };
     req.method = 'POST';
     f.handle(req, {
         success: function (form) {
@@ -435,7 +435,7 @@ test('handle ServerRequest POST with bodyDecoder', function (t) {
 });
 
 test('div', function (t) {
-    var f = forms.create({fieldname: forms.fields.string()});
+    var f = forms.create({ fieldname: forms.fields.string() });
     t.equal(
         f.toHTML(),
         '<div class="field">' +
@@ -448,7 +448,7 @@ test('div', function (t) {
 
 test('div required', function (t) {
     var f = forms.create({
-        fieldname: forms.fields.string({required: true})
+        fieldname: forms.fields.string({ required: true })
     });
     t.equal(
         f.toHTML(),
@@ -462,8 +462,8 @@ test('div required', function (t) {
 
 test('div bound', function (t) {
     t.plan(1);
-    var form = forms.create({name: forms.fields.string()});
-    form.bind({name: 'val'}).validate(function (err, f) {
+    var form = forms.create({ name: forms.fields.string() });
+    form.bind({ name: 'val' }).validate(function (err, f) {
         t.equal(
             f.toHTML(),
             '<div class="field">' +

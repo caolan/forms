@@ -5,7 +5,7 @@ var test = require('tape');
 
 var testWrap = function (tag) {
     test(tag, function (t) {
-        var f = forms.create({fieldname: forms.fields.string()});
+        var f = forms.create({ fieldname: forms.fields.string() });
         t.equal(
             f.toHTML(forms.render[tag]),
             '<' + tag + ' class="field">' +
@@ -18,7 +18,7 @@ var testWrap = function (tag) {
 
     test(tag + ' required', function (t) {
         var f = forms.create({
-            fieldname: forms.fields.string({required: true})
+            fieldname: forms.fields.string({ required: true })
         });
         t.equal(
             f.toHTML(forms.render[tag]),
@@ -33,7 +33,7 @@ var testWrap = function (tag) {
     test(tag + ' bound', function (t) {
         t.plan(1);
         var form = forms.create({ name: forms.fields.string() });
-        form.bind({name: 'val'}).validate(function (err, f) {
+        form.bind({ name: 'val' }).validate(function (err, f) {
             t.equal(
                 f.toHTML(forms.render[tag]),
                 '<' + tag + ' class="field">' +
@@ -92,7 +92,7 @@ var testWrap = function (tag) {
                 }]
             })
         });
-        f2.bind({field_name: 'val', field_name_error_after: 'foo'}).validate(function (err, f) {
+        f2.bind({ field_name: 'val', field_name_error_after: 'foo' }).validate(function (err, f) {
             t.equal(
                 f.toHTML(forms.render[tag]),
                 '<' + tag + ' class="field error">' +
@@ -120,7 +120,7 @@ var testWrap = function (tag) {
     test(tag + ' multipleCheckbox', function (t) {
         var f = forms.create({
             fieldname: forms.fields.string({
-                choices: {one: 'item one'},
+                choices: { one: 'item one' },
                 widget: forms.widgets.multipleCheckbox(),
                 legendClasses: ['test1', 'test2'],
                 fieldsetClasses: ['test3', 'test4']
@@ -142,7 +142,7 @@ var testWrap = function (tag) {
     test(tag + ' multipleRadio', function (t) {
         var f = forms.create({
             fieldname: forms.fields.string({
-                choices: {one: 'item one'},
+                choices: { one: 'item one' },
                 widget: forms.widgets.multipleRadio(),
                 legendClasses: ['test1', 'test2'],
                 fieldsetClasses: ['test3', 'test4']
@@ -214,7 +214,7 @@ testWrap('p');
 testWrap('li');
 
 test('table', function (t) {
-    var f = forms.create({fieldname: forms.fields.string()});
+    var f = forms.create({ fieldname: forms.fields.string() });
     t.equal(
         f.toHTML(forms.render.table),
         '<tr class="field">' +
@@ -229,7 +229,7 @@ test('table', function (t) {
 
 test('table required', function (t) {
     var f = forms.create({
-        fieldname: forms.fields.string({required: true})
+        fieldname: forms.fields.string({ required: true })
     });
     t.equal(
         f.toHTML(forms.render.table),
@@ -246,7 +246,7 @@ test('table required', function (t) {
 test('table bound', function (t) {
     t.plan(1);
     var form = forms.create({ name: forms.fields.string() });
-    form.bind({name: 'val'}).validate(function (err, f) {
+    form.bind({ name: 'val' }).validate(function (err, f) {
         t.equal(
             f.toHTML(forms.render.table),
             '<tr class="field">' +
@@ -311,7 +311,7 @@ test('table bound error', function (t) {
             }]
         })
     });
-    f2.bind({field_name: 'val', field_name_error_after: 'foo'}).validate(function (err, f) {
+    f2.bind({ field_name: 'val', field_name_error_after: 'foo' }).validate(function (err, f) {
         t.equal(
             f.toHTML(forms.render.table),
             '<tr class="field error">' +

@@ -9,9 +9,9 @@ var test_input = function (type) {
             forms.widgets[type]().toHTML('field1'),
             '<input type="' + type + '" name="field1" id="id_field1" />'
         );
-        var w = forms.widgets[type]({classes: ['test1', 'test2', 'test3']});
+        var w = forms.widgets[type]({ classes: ['test1', 'test2', 'test3'] });
         t.equal(
-            w.toHTML('field2', {id: 'form2_field2'}),
+            w.toHTML('field2', { id: 'form2_field2' }),
             '<input type="' + type + '" name="field2" id="form2_field2" class="test1 test2 test3" />'
         );
 
@@ -19,7 +19,7 @@ var test_input = function (type) {
         if (type === 'password') {
             expectedHTML = '<input type="' + type + '" name="field1" id="id_field1" />';
         }
-        t.equal(forms.widgets[type]().toHTML('field1', {value: 'some value'}), expectedHTML);
+        t.equal(forms.widgets[type]().toHTML('field1', { value: 'some value' }), expectedHTML);
         t.equal(forms.widgets[type]().type, type);
 
         var expectedValues = { password: null };
@@ -53,7 +53,7 @@ test('date', function (t) {
     );
 
     t.equal(
-        w.toHTML('field1', {value: '2013-03-03'}),
+        w.toHTML('field1', { value: '2013-03-03' }),
         '<input type="date" name="field1" id="id_field1" value="2013-03-03" />'
     );
 
@@ -65,17 +65,17 @@ test('checkbox', function (t) {
         forms.widgets.checkbox().toHTML('field1'),
         '<input type="checkbox" name="field1" id="id_field1" value="on" />'
     );
-    var w = forms.widgets.checkbox({classes: ['test1', 'test2', 'test3']});
+    var w = forms.widgets.checkbox({ classes: ['test1', 'test2', 'test3'] });
     t.equal(
-        w.toHTML('field2', {id: 'form2_field2'}),
+        w.toHTML('field2', { id: 'form2_field2' }),
         '<input type="checkbox" name="field2" id="form2_field2" value="on" class="test1 test2 test3" />'
     );
     t.equal(
-        forms.widgets.checkbox().toHTML('field', {value: true}),
+        forms.widgets.checkbox().toHTML('field', { value: true }),
         '<input type="checkbox" name="field" id="id_field" checked="checked" value="on" />'
     );
     t.equal(
-        forms.widgets.checkbox().toHTML('field', {value: false}),
+        forms.widgets.checkbox().toHTML('field', { value: false }),
         '<input type="checkbox" name="field" id="id_field" value="on" />'
     );
     t.equal(forms.widgets.checkbox().type, 'checkbox');
@@ -95,7 +95,7 @@ test('select', function (t) {
             '<option value="val2">text2</option>' +
         '</select>'
     );
-    var widget = forms.widgets.select({classes: ['one', 'two']});
+    var widget = forms.widgets.select({ classes: ['one', 'two'] });
     t.equal(
         widget.toHTML('name', {
             choices: {
@@ -142,7 +142,7 @@ test('textarea', function (t) {
             rows: 20,
             cols: 80,
             placeholder: 'hi!'
-        }).toHTML('name', {id: 'someid', value: 'value'}),
+        }).toHTML('name', { id: 'someid', value: 'value' }),
         '<textarea name="name" id="someid" rows="20" cols="80" class="one two" placeholder="hi!">value</textarea>'
     );
     t.equal(forms.widgets.textarea().type, 'textarea');
@@ -153,7 +153,7 @@ test('multipleCheckbox', function (t) {
     var w = forms.widgets.multipleCheckbox();
     t.test('basic functionality', function (st) {
         var field = {
-            choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
+            choices: { one: 'Item one', two: 'Item two', three: 'Item three' },
             value: 'two'
         };
         st.equal(
@@ -226,7 +226,7 @@ test('multipleCheckbox', function (t) {
 test('multipleCheckbox multiple selected', function (t) {
     var w = forms.widgets.multipleCheckbox(),
         field = {
-            choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
+            choices: { one: 'Item one', two: 'Item two', three: 'Item three' },
             value: ['two', 'three']
         };
     t.equal(
@@ -245,7 +245,7 @@ test('multipleCheckbox multiple selected', function (t) {
 test('multipleRadio', function (t) {
     var w = forms.widgets.multipleRadio();
     var field = {
-        choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
+        choices: { one: 'Item one', two: 'Item two', three: 'Item three' },
         value: 'two'
     };
     t.equal(
@@ -296,7 +296,7 @@ test('multipleRadio', function (t) {
     });
 
     t.test('label classes', function (st) {
-        var widget = forms.widgets.multipleRadio({labelClasses: ['test1', 'test2', 'test3']});
+        var widget = forms.widgets.multipleRadio({ labelClasses: ['test1', 'test2', 'test3'] });
         st.equal(
             widget.toHTML('name', field),
             '<input type="radio" name="name" id="id_name_one" value="one" />' +
@@ -315,7 +315,7 @@ test('multipleRadio', function (t) {
 test('multipleRadio multiple selected', function (t) {
     var w = forms.widgets.multipleRadio();
     var field = {
-        choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
+        choices: { one: 'Item one', two: 'Item two', three: 'Item three' },
         value: ['two', 'three']
     };
     t.equal(
@@ -333,17 +333,19 @@ test('multipleRadio multiple selected', function (t) {
 
 test('multipleSelect', function (t) {
     t.equal(
-        forms.widgets.multipleSelect().toHTML('name', {choices: {
-            val1: 'text1',
-            val2: 'text2'
-        }}),
+        forms.widgets.multipleSelect().toHTML('name', {
+            choices: {
+                val1: 'text1',
+                val2: 'text2'
+            }
+        }),
         '<select multiple="multiple" name="name" id="id_name">' +
             '<option value="val1">text1</option>' +
             '<option value="val2">text2</option>' +
         '</select>'
     );
     t.equal(
-        forms.widgets.multipleSelect({classes: ['one', 'two']}).toHTML('name', {
+        forms.widgets.multipleSelect({ classes: ['one', 'two'] }).toHTML('name', {
             choices: {
                 val1: 'text1',
                 val2: 'text2',
@@ -361,7 +363,7 @@ test('multipleSelect', function (t) {
     t.equal(forms.widgets.multipleSelect().type, 'multipleSelect');
 
     t.test('stringifies values', function (st) {
-        var widget = forms.widgets.multipleSelect({classes: ['one', 'two']});
+        var widget = forms.widgets.multipleSelect({ classes: ['one', 'two'] });
 
         st.test('single bound values', function (t2) {
             var html = widget.toHTML('name', {
@@ -553,7 +555,7 @@ test('custom attributes', function (t) {
         'data-test': 'foo'
     });
     var field = {
-        choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
+        choices: { one: 'Item one', two: 'Item two', three: 'Item three' },
         value: 'two'
     };
     t.equal(
@@ -570,7 +572,7 @@ test('custom attributes', function (t) {
         'data-test': 'foo'
     });
     var field2 = {
-        choices: {one: 'Item one', two: 'Item two', three: 'Item three'},
+        choices: { one: 'Item one', two: 'Item two', three: 'Item three' },
         value: 'two'
     };
     t.equal(
@@ -610,8 +612,8 @@ test('dynamic widget attributes', function (t) {
     var re = /autocomplete="no"/;
     keys.forEach(function (name) {
         var w = forms.widgets[name]();
-        w.attrs = {autocomplete: 'no'};
-        var html = w.toHTML('test', {choices: {foo: 'bar'}});
+        w.attrs = { autocomplete: 'no' };
+        var html = w.toHTML('test', { choices: { foo: 'bar' } });
         t.equal(re.test(html), true);
     });
     t.end();

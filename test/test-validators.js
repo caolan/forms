@@ -7,8 +7,8 @@ test('matchField', function (t) {
     var v = validators.matchField('field1', 'f2 dnm %s'),
         data = {
             fields: {
-                field1: {data: 'one'},
-                field2: {data: 'two'}
+                field1: { data: 'one' },
+                field2: { data: 'two' }
             }
         };
     t.plan(2);
@@ -84,20 +84,20 @@ test('requiresFieldIfEmpty', function (t) {
     t.plan(4);
     var v = validators.requiresFieldIfEmpty('alternate_field', 'field 1: %s field2: %s'),
         empty_fields = {
-            field: {name: 'field', data: ' '},
-            alternate_field: {name: 'alternate_field', data: ''}
+            field: { name: 'field', data: ' ' },
+            alternate_field: { name: 'alternate_field', data: '' }
         },
         filled_fields = {
-            field: {name: 'field', data: 'filled'},
-            alternate_field: {name: 'alternate_field', data: 'also filled'}
+            field: { name: 'field', data: 'filled' },
+            alternate_field: { name: 'alternate_field', data: 'also filled' }
         },
         first_filled = {
-            field: {name: 'field', data: 'filled'},
-            alternate_field: {name: 'alternate_field', data: ''}
+            field: { name: 'field', data: 'filled' },
+            alternate_field: { name: 'alternate_field', data: '' }
         },
         second_filled = {
-            field: {name: 'field', data: ''},
-            alternate_field: {name: 'alternate_field', data: 'filled'}
+            field: { name: 'field', data: '' },
+            alternate_field: { name: 'alternate_field', data: 'filled' }
         };
     v({ fields: empty_fields }, empty_fields.field, function (emptyError) {
         t.equal(emptyError, 'field 1: field field2: alternate_field');
@@ -116,9 +116,9 @@ test('requiresFieldIfEmpty', function (t) {
 
 test('min', function (t) {
     t.plan(2);
-    validators.min(100, 'Value must be greater than or equal to %s.')('form', {data: 50}, function (tooSmallError) {
+    validators.min(100, 'Value must be greater than or equal to %s.')('form', { data: 50 }, function (tooSmallError) {
         t.equal(tooSmallError, 'Value must be greater than or equal to 100.');
-        validators.min(100)('form', {data: 100}, function (err) {
+        validators.min(100)('form', { data: 100 }, function (err) {
             t.equal(err, undefined);
             t.end();
         });
@@ -127,9 +127,9 @@ test('min', function (t) {
 
 test('max', function (t) {
     t.plan(2);
-    validators.max(100, 'Value must be less than or equal to %s.')('form', {data: 150}, function (tooBigError) {
+    validators.max(100, 'Value must be less than or equal to %s.')('form', { data: 150 }, function (tooBigError) {
         t.equal(tooBigError, 'Value must be less than or equal to 100.');
-        validators.max(100)('form', {data: 100}, function (err) {
+        validators.max(100)('form', { data: 100 }, function (err) {
             t.equal(err, undefined);
             t.end();
         });
@@ -138,9 +138,9 @@ test('max', function (t) {
 
 test('range', function (t) {
     t.plan(2);
-    validators.range(10, 20, 'Value must be between %s and %s.')('form', {data: 50}, function (rangeError) {
+    validators.range(10, 20, 'Value must be between %s and %s.')('form', { data: 50 }, function (rangeError) {
         t.equal(rangeError, 'Value must be between 10 and 20.');
-        validators.range(10, 20)('form', {data: 15}, function (err) {
+        validators.range(10, 20)('form', { data: 15 }, function (err) {
             t.equal(err, undefined);
             t.end();
         });
@@ -149,12 +149,12 @@ test('range', function (t) {
 
 test('regexp', function (t) {
     t.plan(3);
-    validators.regexp(/^\d+$/)('form', {data: 'abc123'}, function (invalidError) {
+    validators.regexp(/^\d+$/)('form', { data: 'abc123' }, function (invalidError) {
         t.equal(invalidError, 'Invalid format.');
-        validators.regexp(/^\d+$/)('form', {data: '123'}, function (noError) {
+        validators.regexp(/^\d+$/)('form', { data: '123' }, function (noError) {
             t.equal(noError, undefined);
             var v = validators.regexp('^\\d+$', 'my message');
-            v('form', {data: 'abc123'}, function (err) {
+            v('form', { data: 'abc123' }, function (err) {
                 t.equal(err, 'my message');
                 t.end();
             });
@@ -164,12 +164,12 @@ test('regexp', function (t) {
 
 test('email', function (t) {
     t.plan(3);
-    validators.email('Email was invalid.')('form', {data: 'asdf'}, function (invalidEmailError) {
+    validators.email('Email was invalid.')('form', { data: 'asdf' }, function (invalidEmailError) {
         t.equal(invalidEmailError, 'Email was invalid.');
         var v = validators.email();
-        v('form', {data: 'asdf@asdf.com'}, function (noError) {
+        v('form', { data: 'asdf@asdf.com' }, function (noError) {
             t.equal(noError, undefined);
-            v('form', {data: 'a←+b@f.museum'}, function (err) {
+            v('form', { data: 'a←+b@f.museum' }, function (err) {
                 t.equal(err, undefined);
                 t.end();
             });
@@ -179,15 +179,15 @@ test('email', function (t) {
 
 test('url', function (t) {
     t.plan(4);
-    validators.url(false, 'URL was invalid.')('form', {data: 'asdf.com'}, function (invalidURLError) {
+    validators.url(false, 'URL was invalid.')('form', { data: 'asdf.com' }, function (invalidURLError) {
         t.equal(invalidURLError, 'URL was invalid.');
-        validators.url()('form', {data: 'http://asdf.com'}, function (err) {
+        validators.url()('form', { data: 'http://asdf.com' }, function (err) {
             t.equal(err, undefined);
         });
     });
-    validators.url(true)('form', {data: 'localhost/test.html'}, function (invalidURLError) {
+    validators.url(true)('form', { data: 'localhost/test.html' }, function (invalidURLError) {
         t.equal(invalidURLError, 'Please enter a valid URL.');
-        validators.url(true)('form', {data: 'http://localhost/test.html'}, function (err) {
+        validators.url(true)('form', { data: 'http://localhost/test.html' }, function (err) {
             t.equal(err, undefined);
         });
     });
@@ -196,15 +196,15 @@ test('url', function (t) {
 
 test('date', function (t) {
     t.plan(4);
-    validators.date('Date input must contain a valid date.')('form', {data: '02/28/2012'}, function (invalidDateError) {
+    validators.date('Date input must contain a valid date.')('form', { data: '02/28/2012' }, function (invalidDateError) {
         t.equal(invalidDateError, 'Date input must contain a valid date.');
-        validators.date()('form', {data: '2012-02-28'}, function (err) {
+        validators.date()('form', { data: '2012-02-28' }, function (err) {
             t.equal(err, undefined);
         });
     });
-    validators.date()('form', {data: '2012.02.30'}, function (invalidDateError) {
+    validators.date()('form', { data: '2012.02.30' }, function (invalidDateError) {
         t.equal(invalidDateError, 'Inputs of type "date" must be valid dates in the format "yyyy-mm-dd"');
-        validators.date()('form', {data: '2012-02-30'}, function (err) {
+        validators.date()('form', { data: '2012-02-30' }, function (err) {
             t.equal(err, undefined);
         });
     });
@@ -213,9 +213,9 @@ test('date', function (t) {
 
 test('minlength', function (t) {
     t.plan(2);
-    validators.minlength(5, 'Enter at least %s characters.')('form', {data: '1234'}, function (tooShortError) {
+    validators.minlength(5, 'Enter at least %s characters.')('form', { data: '1234' }, function (tooShortError) {
         t.equal(tooShortError, 'Enter at least 5 characters.');
-        validators.minlength(5)('form', {data: '12345'}, function (err) {
+        validators.minlength(5)('form', { data: '12345' }, function (err) {
             t.equal(err, undefined);
             t.end();
         });
@@ -224,9 +224,9 @@ test('minlength', function (t) {
 
 test('maxlength', function (t) {
     t.plan(2);
-    validators.maxlength(5)('form', {data: '123456'}, function (tooLongError) {
+    validators.maxlength(5)('form', { data: '123456' }, function (tooLongError) {
         t.equal(tooLongError, 'Please enter no more than 5 characters.');
-        validators.maxlength(5)('form', {data: '12345'}, function (err) {
+        validators.maxlength(5)('form', { data: '12345' }, function (err) {
             t.equal(err, undefined);
             t.end();
         });
@@ -235,16 +235,16 @@ test('maxlength', function (t) {
 
 test('rangelength', function (t) {
     t.plan(4);
-    validators.rangelength(2, 4, 'Enter between %s and %s characters.')('form', {data: '12345'}, function (err) {
+    validators.rangelength(2, 4, 'Enter between %s and %s characters.')('form', { data: '12345' }, function (err) {
         t.equal(err, 'Enter between 2 and 4 characters.');
     });
-    validators.rangelength(2, 4)('form', {data: '1'}, function (err) {
+    validators.rangelength(2, 4)('form', { data: '1' }, function (err) {
         t.equal(err, 'Please enter a value between 2 and 4 characters long.');
     });
-    validators.rangelength(2, 4)('form', {data: '12'}, function (err) {
+    validators.rangelength(2, 4)('form', { data: '12' }, function (err) {
         t.equal(err, undefined);
     });
-    validators.rangelength(2, 4)('form', {data: '1234'}, function (err) {
+    validators.rangelength(2, 4)('form', { data: '1234' }, function (err) {
         t.equal(err, undefined);
     });
     t.end();
@@ -323,8 +323,8 @@ test('nonFormatMessage1', function (t) {
     var v = validators.matchField('field1', 'f2 dnm f1'),
         data = {
             fields: {
-                field1: {data: 'one'},
-                field2: {data: 'two'}
+                field1: { data: 'one' },
+                field2: { data: 'two' }
             }
         };
     v(data, data.fields.field2, function (err) {
@@ -340,9 +340,9 @@ test('nonFormatMessage1', function (t) {
 test('nonFormatMessage2', function (t) {
     t.plan(2);
     var v = validators.min(100, '1234567890');
-    v('form', {data: 50}, function (tooSmallError) {
+    v('form', { data: 50 }, function (tooSmallError) {
         t.equals(tooSmallError, '1234567890');
-        validators.min(100)('form', {data: 100}, function (err) {
+        validators.min(100)('form', { data: 100 }, function (err) {
             t.equals(err, undefined);
             t.end();
         });
@@ -352,9 +352,9 @@ test('nonFormatMessage2', function (t) {
 test('nonFormatMessage3', function (t) {
     t.plan(2);
     var v = validators.minlength(5, 'qwertyuiop');
-    v('form', {data: '1234'}, function (tooShortError) {
+    v('form', { data: '1234' }, function (tooShortError) {
         t.equals(tooShortError, 'qwertyuiop');
-        validators.minlength(5)('form', {data: '12345'}, function (err) {
+        validators.minlength(5)('form', { data: '12345' }, function (err) {
             t.equals(err, undefined);
             t.end();
         });

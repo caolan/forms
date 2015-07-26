@@ -130,7 +130,7 @@ var testField = function (field) {
 
     test(field + ' validate required', function (t) {
         t.plan(5);
-        var f = fields[field]({required: true});
+        var f = fields[field]({ required: true });
         f.validators = [];
         f.bind(undefined).validate('form', function (err, fieldObject) {
             t.equal(fieldObject.value, undefined);
@@ -290,7 +290,7 @@ test('email validators', function (t) {
         fields.email().validators[0].toString(),
         forms.validators.email().toString()
     );
-    var f = fields.email({validators: [fn1, fn2]});
+    var f = fields.email({ validators: [fn1, fn2] });
     t.equal(
         f.validators[0].toString(),
         forms.validators.email().toString()
@@ -350,7 +350,7 @@ test('url validators', function (t) {
         fields.url().validators[0].toString(),
         forms.validators.url().toString()
     );
-    var f = fields.url({validators: [fn1, fn2]});
+    var f = fields.url({ validators: [fn1, fn2] });
     t.equal(
         f.validators[0].toString(),
         forms.validators.url().toString()
@@ -382,7 +382,7 @@ test('date validators', function (t) {
         fields.date().validators[0].toString(),
         forms.validators.date().toString()
     );
-    var f = fields.date({validators: [fn1, fn2]});
+    var f = fields.date({ validators: [fn1, fn2] });
     t.equal(
         f.validators[0].toString(),
         forms.validators.date().toString()

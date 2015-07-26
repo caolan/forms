@@ -13,7 +13,6 @@
 		"max-statements": [2, 19],
 		"new-cap": [2, { "capIsNewExceptions": ["Template"] }],
 		"no-extra-parens": [0],
-		"object-curly-spacing": [0, "always"],
 		"operator-linebreak": [2, "after"]
 	}
 }
