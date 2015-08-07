@@ -29,7 +29,7 @@
         "object.assign": "^3.0.1"
     },
     "devDependencies": {
-        "tape": "^4.0.1",
+        "tape": "^4.0.2",
         "testling": "^1.7.1",
         "covert": "^1.1.0",
         "jscs": "^2.0.0",
