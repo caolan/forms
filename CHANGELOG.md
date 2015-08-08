@@ -1,3 +1,15 @@
+1.1.3 / 2015-08-08
+===================
+  * [Fix] Ensure that nested required fields, even when the nesting namespace is omitted, are still validated (#165)
+  * [Fix] Ensure `validatePastFirstError` setting propagates through to object fields
+  * [Fix] Disable `parseArrays` in `qs.parse`
+  * [Refactor] Use `string.prototype.trim` package instead of my copy-pasted code.
+  * [Deps] Update `async`, `qs`, `object.assign`
+  * [Dev Deps] Update `eslint`, `tape`; add my shared `eslint` config
+  * [Tests] Test up to `io.js` `v3.0`
+  * [Tests] Add `npm run security`
+  * [Docs] Update bootstrap example to avoid duplicate form-control classes (#163)
+
 1.1.2 / 2015-05-30
 ===================
   * Code cleanup: Avoid ES3 syntax errors, just in case.
