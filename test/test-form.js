@@ -382,6 +382,22 @@ test('handle ServerRequest POST', function (t) {
     req.emit('end');
 });
 
+test('handle ServerRequest PUT', function (t) {
+    t.plan(1);
+    var f = forms.create({ field1: forms.fields.string() }),
+        req = new http.IncomingMessage();
+    req.body = { field1: 'test' };
+    req.method = 'PUT';
+    f.handle(req, {
+        success: function (form) {
+            t.equal(form.data.field1, 'test');
+            t.end();
+        }
+    });
+    req.emit('data', 'field1=test');
+    req.emit('end');
+});
+
 test('validation stops on first error', function (t) {
     t.plan(3);
     var f = forms.create({
@@ -426,6 +442,20 @@ test('handle ServerRequest POST with bodyDecoder', function (t) {
         req = new http.IncomingMessage();
     req.body = { field1: 'test' };
     req.method = 'POST';
+    f.handle(req, {
+        success: function (form) {
+            t.equal(form.data.field1, 'test');
+            t.end();
+        }
+    });
+});
+
+test('handle ServerRequest PUT with bodyDecoder', function (t) {
+    t.plan(1);
+    var f = forms.create({ field1: forms.fields.string() }),
+        req = new http.IncomingMessage();
+    req.body = { field1: 'test' };
+    req.method = 'PUT';
     f.handle(req, {
         success: function (form) {
             t.equal(form.data.field1, 'test');
