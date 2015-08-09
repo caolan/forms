@@ -12,7 +12,8 @@
         "url": "https://github.com/caolan/forms/issues"
     },
     "scripts": {
-        "test": "npm run lint && tape test/*.js && npm run security",
+		"tests-only": "node test/*.js",
+        "test": "npm run lint && npm run tests-only && npm run security",
         "test-browser": "testling",
         "coverage": "covert test/*.js",
         "coverage-quiet": "covert --quiet test/*.js",

@@ -25,6 +25,8 @@ node_js:
   - "0.4"
 before_install:
   - '[ "${TRAVIS_NODE_VERSION}" = "0.6" ] || npm install -g npm@1.4.28 && npm install -g npm'
+script:
+  - 'if [ "${TRAVIS_NODE_VERSION}" != "iojs-v3.0" ]; then npm run tests-only ; else npm test ; fi'
 sudo: false
 matrix:
   fast_finish: true
