@@ -12,7 +12,7 @@
         "url": "https://github.com/caolan/forms/issues"
     },
     "scripts": {
-        "tests-only": "node test/*.js",
+        "tests-only": "evalmd *.md && node test/*.js",
         "test": "npm run lint && npm run tests-only && npm run security",
         "test-browser": "testling",
         "coverage": "covert test/*.js",
@@ -37,7 +37,8 @@
         "jscs": "^2.0.0",
         "eslint": "^1.1.0",
         "@ljharb/eslint-config": "^1.0.4",
-        "nsp": "^1.0.3"
+        "nsp": "^1.0.3",
+		"evalmd": "^0.0.5"
     },
     "license": "MIT",
     "licenses": [

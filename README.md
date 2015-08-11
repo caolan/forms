@@ -119,6 +119,8 @@ $ node example/simple.js
 For integrating with Twitter bootstrap 3 (horizontal form), this is what you need to do:
 
 ```javascript
+var widgets = require('forms').widgets;
+
 var my_form = forms.create({
     title: fields.string({
         required: true,
@@ -157,7 +159,7 @@ var bootstrapField = function (name, object) {
 And while rendering it:
 
 ```javascript
-form.toHTML(bootstrapField);
+reg_form.toHTML(bootstrapField);
 ```
 
 ## Available types
