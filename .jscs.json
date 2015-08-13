@@ -114,6 +114,8 @@
 		"maximum": 20
 	},
 
-	"requirePaddingNewLinesAfterUseStrict": true
+	"requirePaddingNewLinesAfterUseStrict": true,
+
+	"disallowArrowFunctions": true
 }
 

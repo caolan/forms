@@ -31,14 +31,14 @@
         "string.prototype.trim": "^1.0.0"
     },
     "devDependencies": {
-        "tape": "^4.0.3",
+        "tape": "^4.1.0",
         "testling": "^1.7.1",
         "covert": "^1.1.0",
-        "jscs": "^2.0.0",
+        "jscs": "^2.1.0",
         "eslint": "^1.1.0",
         "@ljharb/eslint-config": "^1.0.4",
         "nsp": "^1.0.3",
-		"evalmd": "^0.0.5"
+        "evalmd": "^0.0.8"
     },
     "license": "MIT",
     "licenses": [
