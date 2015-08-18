@@ -27,8 +27,8 @@
         "qs": "^4.0.0",
         "formidable": "^1.0.17",
         "is": "^3.0.1",
-        "object.assign": "^3.0.1",
-        "string.prototype.trim": "^1.0.0"
+        "object.assign": "^4.0.1",
+        "string.prototype.trim": "^1.1.1"
     },
     "devDependencies": {
         "tape": "^4.2.0",
