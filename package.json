@@ -24,7 +24,7 @@
     },
     "dependencies": {
         "async": "^1.4.2",
-        "qs": "^4.0.0",
+        "qs": "^5.0.0",
         "formidable": "^1.0.17",
         "is": "^3.0.1",
         "object.assign": "^4.0.1",
