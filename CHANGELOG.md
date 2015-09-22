@@ -1,3 +1,11 @@
+1.1.4 / 2015-09-22
+===================
+  * [Deps] update `async`, `object.assign`, `string.prototype.trim`, `qs`, `is`
+  * [Dev Deps] update `tape`, `jscs`, `evalmd`, `eslint`, `@ljharb/eslint-config`, `nsp`
+  * [Docs] Switch from vb.teelaun.ch to versionbadg.es for the npm version badge SVG.
+  * [Tests] Add `evalmd` to verify that code example blocks in the README are correct.
+  * [Tests] up to `io.js` `v3.3`, `node` `v4.1`
+
 1.1.3 / 2015-08-08
 ===================
   * [Fix] Ensure that nested required fields, even when the nesting namespace is omitted, are still validated (#165)
