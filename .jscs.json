@@ -27,6 +27,8 @@
 		"WithStatement"
 	],
 
+	"requireObjectKeysOnNewLine": false,
+
 	"requireSpacesInAnonymousFunctionExpression": { "beforeOpeningRoundBrace": true, "beforeOpeningCurlyBrace": true },
 	"requireSpacesInNamedFunctionExpression": { "beforeOpeningCurlyBrace": true },
 	"disallowSpacesInNamedFunctionExpression": { "beforeOpeningRoundBrace": true },
@@ -116,6 +118,16 @@
 
 	"requirePaddingNewLinesAfterUseStrict": true,
 
-	"disallowArrowFunctions": true
+	"disallowArrowFunctions": true,
+
+	"disallowMultiLineTernary": false,
+
+	"validateOrderInObjectKeys": false,
+
+	"disallowIdenticalDestructuringNames": true,
+
+	"disallowNestedTernaries": { "maxLevel": 1 },
+
+	"requireSpaceAfterComma": true
 }
 
