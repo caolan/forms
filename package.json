@@ -43,6 +43,7 @@
     },
     "devDependencies": {
         "tape": "^4.2.1",
+		"tape-dom": "^0.0.10",
         "testling": "^1.7.1",
         "covert": "^1.1.0",
         "jscs": "^2.3.4",

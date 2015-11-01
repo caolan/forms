@@ -1,5 +1,9 @@
 (function () {
     "use strict";
+	var tape = require('tape');
+	var tapeDOM = require('tape-dom');
+	tapeDOM.installCSS();
+	tapeDOM.stream(tape);
 
      require('./test/test-fields');
      // require('./test/test-form'); // disabled until server-specific tests are split out
