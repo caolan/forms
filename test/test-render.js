@@ -338,4 +338,3 @@ test('table bound error', function (t) {
 
     t.end();
 });
-

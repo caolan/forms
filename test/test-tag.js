@@ -50,4 +50,3 @@ test('allow empty attributes', function (t) {
 
     t.end();
 });
-

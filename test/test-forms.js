@@ -64,4 +64,3 @@ test('nested validation errors', function (t) {
 
     t.end();
 });
-

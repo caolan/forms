@@ -618,4 +618,3 @@ test('dynamic widget attributes', function (t) {
     });
     t.end();
 });
-
