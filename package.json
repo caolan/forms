@@ -42,14 +42,14 @@
         "string.prototype.trim": "^1.1.2"
     },
     "devDependencies": {
-        "tape": "^4.4.0",
+        "tape": "^4.5.1",
         "tape-dom": "^0.0.10",
         "testling": "^1.7.1",
         "covert": "^1.1.0",
-        "jscs": "^2.9.0",
-        "eslint": "^2.0.0",
-        "@ljharb/eslint-config": "^2.1.0",
-        "nsp": "^2.2.0",
+        "jscs": "^2.11.0",
+        "eslint": "^2.3.0",
+        "@ljharb/eslint-config": "^2.1.1",
+        "nsp": "^2.2.1",
         "evalmd": "^0.0.16"
     },
     "license": "MIT",
