@@ -16,6 +16,43 @@ var testWrap = function (tag) {
         t.end();
     });
 
+    test(tag + ' label after field', function (t) {
+        var f = forms.create({ fieldname: forms.fields.string({
+            labelAfterField: true
+        }) });
+        t.equal(
+            f.toHTML(forms.render[tag]),
+            '<' + tag + ' class="field">' +
+                '<input type="text" name="fieldname" id="id_fieldname" />' +
+                '<label for="id_fieldname">Fieldname</label>' +
+            '</' + tag + '>'
+        );
+        t.end();
+    });
+
+    test(tag + ' label after field and error after field', function (t) {
+        var formObject = forms.create({
+            fieldname: forms.fields.string({
+                labelAfterField: true,
+                errorAfterField: true,
+                validators: [function (form, field, callback) {
+                    callback('validation error after field');
+                }]
+            })
+        });
+        formObject.bind({ fieldname: 'val'}).validate(function (err, f) {
+            t.equal(
+                f.toHTML(forms.render[tag]),
+                '<' + tag + ' class="field error">' +
+                    '<input type="text" name="fieldname" id="id_fieldname" value="val" />' +
+                    '<label for="id_fieldname">Fieldname</label>' +
+                    '<p class="error_msg">validation error after field</p>' +
+                '</' + tag + '>'
+            );
+        });
+        t.end();
+    });
+
     test(tag + ' required', function (t) {
         var f = forms.create({
             fieldname: forms.fields.string({ required: true })

@@ -311,6 +311,7 @@ for highly customised markup.
 * ``choices`` - A list of options, used for multiple choice fields
 * ``cssClasses`` - A list of CSS classes for label and field wrapper
 * ``hideError`` - if true, errors won't be rendered automatically
+* ``labelAfterField`` - if true, the label text will be displayed after the field, rather than before
 * ``errorAfterField`` - if true, the error message will be displayed after the field, rather than before
 * ``fieldsetClasses`` - for widgets with a fieldset (multipleRadio and multipleCheckbox), set classes for the fieldset
 * ``legendClasses`` - for widgets with a fieldset (multipleRadio and multipleCheckbox), set classes for the fieldset's legend
