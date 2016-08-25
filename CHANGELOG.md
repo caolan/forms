@@ -1,3 +1,12 @@
+1.2.0 / 2016-08-25
+===================
+  * [New] Add labelAfterField option when rendering (#183)
+  * [Deps] update `qs`, `async`, `object.assign`, `string.prototype.trim`
+  * [Dev Deps] update `tape`, `jscs`, `eslint`, `@ljharb/eslint-config`, `nsp`, `evalmd`
+  * [Tests] up to `node` `v6.4`, `v5.12`, `v4.5`
+  * [Tests] use `tape-dom` for browser tests
+  * [Tests] fix npm upgrades for older nodes
+
 1.1.4 / 2015-09-22
 ===================
   * [Deps] update `async`, `object.assign`, `string.prototype.trim`, `qs`, `is`
