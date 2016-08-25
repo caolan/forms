@@ -139,9 +139,9 @@ test('textarea', function (t) {
     t.equal(
         forms.widgets.textarea({
             classes: ['one', 'two'],
-            rows: 20,
             cols: 80,
-            placeholder: 'hi!'
+            placeholder: 'hi!',
+            rows: 20
         }).toHTML('name', { id: 'someid', value: 'value' }),
         '<textarea name="name" id="someid" rows="20" cols="80" class="one two" placeholder="hi!">value</textarea>'
     );
@@ -153,7 +153,11 @@ test('multipleCheckbox', function (t) {
     var w = forms.widgets.multipleCheckbox();
     t.test('basic functionality', function (st) {
         var field = {
-            choices: { one: 'Item one', two: 'Item two', three: 'Item three' },
+            choices: {
+                one: 'Item one',
+                three: 'Item three',
+                two: 'Item two'
+            },
             value: 'two'
         };
         st.equal(
@@ -226,7 +230,7 @@ test('multipleCheckbox', function (t) {
 test('multipleCheckbox multiple selected', function (t) {
     var w = forms.widgets.multipleCheckbox(),
         field = {
-            choices: { one: 'Item one', two: 'Item two', three: 'Item three' },
+            choices: { one: 'Item one', three: 'Item three', two: 'Item two' },
             value: ['two', 'three']
         };
     t.equal(
@@ -245,7 +249,7 @@ test('multipleCheckbox multiple selected', function (t) {
 test('multipleRadio', function (t) {
     var w = forms.widgets.multipleRadio();
     var field = {
-        choices: { one: 'Item one', two: 'Item two', three: 'Item three' },
+        choices: { one: 'Item one', three: 'Item three', two: 'Item two' },
         value: 'two'
     };
     t.equal(
@@ -315,7 +319,7 @@ test('multipleRadio', function (t) {
 test('multipleRadio multiple selected', function (t) {
     var w = forms.widgets.multipleRadio();
     var field = {
-        choices: { one: 'Item one', two: 'Item two', three: 'Item three' },
+        choices: { one: 'Item one', three: 'Item three', two: 'Item two' },
         value: ['two', 'three']
     };
     t.equal(
@@ -412,17 +416,17 @@ test('multipleSelect', function (t) {
 test('optional text input', function (t) {
     t.equal(
         forms.widgets.text({
-            placeholder: 'Enter some comment',
-            'data-trigger': 'focus'
+            'data-trigger': 'focus',
+            placeholder: 'Enter some comment'
         }).toHTML('field1'),
         '<input type="text" name="field1" id="id_field1" placeholder="Enter some comment" data-trigger="focus" />'
     );
     t.equal(
         forms.widgets.text({
+            'aria-required': 'false',
             classes: ['one', 'two'],
-            placeholder: 'Enter some comment',
             'data-trigger': 'focus',
-            'aria-required': 'false'
+            placeholder: 'Enter some comment'
         }).toHTML('field1'),
         '<input type="text" name="field1" id="id_field1" class="one two" placeholder="Enter some comment" data-trigger="focus" aria-required="false" />'
     );
@@ -435,23 +439,19 @@ test('optional text input', function (t) {
     );
     t.equal(
         forms.widgets.text({
-            min: 5,
+            autocomplete: 'on',
             max: 10,
-            unknown: 'foo',
-            autocomplete: 'on'
+            min: 5,
+            unknown: 'foo'
         }).toHTML('field1'),
         '<input type="text" name="field1" id="id_field1" min="5" max="10" autocomplete="on" />'
     );
     t.equal(
-        forms.widgets.text({
-            placeholder: 'Enter "some" comment'
-        }).toHTML('field1'),
+        forms.widgets.text({ placeholder: 'Enter "some" comment' }).toHTML('field1'),
         '<input type="text" name="field1" id="id_field1" placeholder="Enter &quot;some&quot; comment" />'
     );
     t.equal(
-        forms.widgets.text({
-            tabindex: 1
-        }).toHTML('field1'),
+        forms.widgets.text({ tabindex: 1 }).toHTML('field1'),
         '<input type="text" name="field1" id="id_field1" tabindex="1" />'
     );
     t.end();
@@ -460,72 +460,52 @@ test('optional text input', function (t) {
 test('custom attributes', function (t) {
     // regex tests
     t.equal(
-        forms.widgets.text({
-            'data-': 'foo'
-        }).toHTML('fieldWithAttrs'),
+        forms.widgets.text({ 'data-': 'foo' }).toHTML('fieldWithAttrs'),
         '<input type="text" name="fieldWithAttrs" id="id_fieldWithAttrs" />'
     );
     t.equal(
-        forms.widgets.text({
-            'data-input': 'foo'
-        }).toHTML('fieldWithAttrs'),
+        forms.widgets.text({ 'data-input': 'foo' }).toHTML('fieldWithAttrs'),
         '<input type="text" name="fieldWithAttrs" id="id_fieldWithAttrs" data-input="foo" />'
     );
     t.equal(
-        forms.widgets.text({
-            'idata-input': 'foo'
-        }).toHTML('fieldWithAttrs'),
+        forms.widgets.text({ 'idata-input': 'foo' }).toHTML('fieldWithAttrs'),
         '<input type="text" name="fieldWithAttrs" id="id_fieldWithAttrs" />'
     );
     t.equal(
-        forms.widgets.text({
-            'data-input1': 'foo'
-        }).toHTML('fieldWithAttrs'),
+        forms.widgets.text({ 'data-input1': 'foo' }).toHTML('fieldWithAttrs'),
         '<input type="text" name="fieldWithAttrs" id="id_fieldWithAttrs" />'
     );
     t.equal(
-        forms.widgets.text({
-            data_input: 'foo'
-        }).toHTML('fieldWithAttrs'),
+        forms.widgets.text({ data_input: 'foo' }).toHTML('fieldWithAttrs'),
         '<input type="text" name="fieldWithAttrs" id="id_fieldWithAttrs" />'
     );
     t.equal(
-        forms.widgets.text({
-            'data--': 'foo'
-        }).toHTML('fieldWithAttrs'),
+        forms.widgets.text({ 'data--': 'foo' }).toHTML('fieldWithAttrs'),
         '<input type="text" name="fieldWithAttrs" id="id_fieldWithAttrs" />'
     );
     t.equal(
-        forms.widgets.text({
-            'data-foo-bar': 'foo'
-        }).toHTML('fieldWithAttrs'),
+        forms.widgets.text({ 'data-foo-bar': 'foo' }).toHTML('fieldWithAttrs'),
         '<input type="text" name="fieldWithAttrs" id="id_fieldWithAttrs" data-foo-bar="foo" />'
     );
 
     // widgets not based on the "input" widget should support optional attributes
     t.equal(
-        forms.widgets.textarea({
-            'data-test': 'foo'
-        }).toHTML('fieldWithAttrs'),
+        forms.widgets.textarea({ 'data-test': 'foo' }).toHTML('fieldWithAttrs'),
         '<textarea name="fieldWithAttrs" id="id_fieldWithAttrs" data-test="foo"></textarea>'
     );
     t.equal(
         forms.widgets.label({
-            'data-test': 'foo',
-            content: 'Foobar'
+            content: 'Foobar',
+            'data-test': 'foo'
         }).toHTML('fieldWithAttrs'),
         '<label for="fieldWithAttrs" data-test="foo">Foobar</label>'
     );
     t.equal(
-        forms.widgets.checkbox({
-            'data-test': 'foo'
-        }).toHTML('fieldWithAttrs'),
+        forms.widgets.checkbox({ 'data-test': 'foo' }).toHTML('fieldWithAttrs'),
         '<input type="checkbox" name="fieldWithAttrs" id="id_fieldWithAttrs" value="on" data-test="foo" />'
     );
     t.equal(
-        forms.widgets.select({
-            'data-test': 'foo'
-        }).toHTML('name', {
+        forms.widgets.select({ 'data-test': 'foo' }).toHTML('name', {
             choices: {
                 val1: 'text1',
                 val2: 'text2'
@@ -537,9 +517,7 @@ test('custom attributes', function (t) {
         '</select>'
     );
     t.equal(
-        forms.widgets.multipleSelect({
-            'data-test': 'foo'
-        }).toHTML('name', {
+        forms.widgets.multipleSelect({ 'data-test': 'foo' }).toHTML('name', {
             choices: {
                 val1: 'text1',
                 val2: 'text2'
@@ -551,11 +529,9 @@ test('custom attributes', function (t) {
         '</select>'
     );
 
-    var w = forms.widgets.multipleCheckbox({
-        'data-test': 'foo'
-    });
+    var w = forms.widgets.multipleCheckbox({ 'data-test': 'foo' });
     var field = {
-        choices: { one: 'Item one', two: 'Item two', three: 'Item three' },
+        choices: { one: 'Item one', three: 'Item three', two: 'Item two' },
         value: 'two'
     };
     t.equal(
@@ -568,11 +544,9 @@ test('custom attributes', function (t) {
         '<label for="id_name_three">Item three</label>'
     );
 
-    var w2 = forms.widgets.multipleRadio({
-        'data-test': 'foo'
-    });
+    var w2 = forms.widgets.multipleRadio({ 'data-test': 'foo' });
     var field2 = {
-        choices: { one: 'Item one', two: 'Item two', three: 'Item three' },
+        choices: { one: 'Item one', three: 'Item three', two: 'Item two' },
         value: 'two'
     };
     t.equal(

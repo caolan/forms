@@ -23,14 +23,15 @@ test('create', function (t) {
 });
 
 test('nested validation errors', function (t) {
-    var form = forms.create({
-        userDetails: {
-            username: forms.fields.string({ required: true }),
-            password: forms.fields.password({ required: true })
-        }
-    }, {
-        validatePastFirstError: true
-    });
+    var form = forms.create(
+        {
+            userDetails: {
+                username: forms.fields.string({ required: true }),
+                password: forms.fields.password({ required: true })
+            }
+        },
+        { validatePastFirstError: true }
+    );
 
     t.test('with subobject specified', function (st) {
         st.plan(3);

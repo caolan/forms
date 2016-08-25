@@ -42,15 +42,15 @@
         "string.prototype.trim": "^1.1.2"
     },
     "devDependencies": {
-        "tape": "^4.5.1",
-        "tape-dom": "^0.0.10",
+        "tape": "^4.6.0",
+        "tape-dom": "^0.0.12",
         "testling": "^1.7.1",
         "covert": "^1.1.0",
-        "jscs": "^2.11.0",
-        "eslint": "^2.3.0",
-        "@ljharb/eslint-config": "^2.1.1",
-        "nsp": "^2.2.1",
-        "evalmd": "^0.0.16"
+        "jscs": "^3.0.7",
+        "eslint": "^3.3.1",
+        "@ljharb/eslint-config": "^7.0.0",
+        "nsp": "^2.6.1",
+        "evalmd": "^0.0.17"
     },
     "license": "MIT",
     "licenses": [

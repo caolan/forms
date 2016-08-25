@@ -40,9 +40,7 @@ test('allow empty attributes', function (t) {
         '</select>'
     );
 
-    var html2 = forms.widgets.text({
-        'data-empty': ''
-    }).toHTML('field');
+    var html2 = forms.widgets.text({ 'data-empty': '' }).toHTML('field');
 
     t.equal(html2,
         '<input type="text" name="field" id="id_field" data-empty="" />'

@@ -418,13 +418,14 @@ test('validation stops on first error', function (t) {
 
 test('validates past first error with validatePastFirstError option', function (t) {
     t.plan(3);
-    var f = forms.create({
-        field1: forms.fields.string({ required: true }),
-        field2: forms.fields.string({ required: true }),
-        field3: forms.fields.string({ required: true })
-    }, {
-        validatePastFirstError: true
-    });
+    var f = forms.create(
+        {
+            field1: forms.fields.string({ required: true }),
+            field2: forms.fields.string({ required: true }),
+            field3: forms.fields.string({ required: true })
+        },
+        { validatePastFirstError: true }
+    );
 
     f.handle({ field1: 'test' }, {
         error: function (form) {
@@ -477,9 +478,7 @@ test('div', function (t) {
 });
 
 test('div required', function (t) {
-    var f = forms.create({
-        fieldname: forms.fields.string({ required: true })
-    });
+    var f = forms.create({ fieldname: forms.fields.string({ required: true }) });
     t.equal(
         f.toHTML(),
         '<div class="field required">' +

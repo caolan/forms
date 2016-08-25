@@ -23,11 +23,7 @@ test('matchField', function (t) {
 });
 
 test('matchValue', function (t) {
-    var data = {
-        fields: {
-            field1: { data: 'one' }
-        }
-    };
+    var data = { fields: { field1: { data: 'one' } } };
 
     t.test('passes when matching the value', function (st) {
         var getter = function () { return 'one'; };

@@ -24,9 +24,7 @@ var inputWithOptionalAttributes = forms.widgets.text({
 */
 
 var complexForm = forms.create({
-    name: fields.string({
-        required: validators.required('%s is required, silly!')
-    }),
+    name: fields.string({ required: validators.required('%s is required, silly!') }),
     email: fields.email({ required: true, label: 'Email Address' }),
     website: fields.url(),
     password: fields.password({ required: true }),
@@ -34,12 +32,8 @@ var complexForm = forms.create({
         required: true,
         validators: [validators.matchField('password')]
     }),
-    phone_1: fields.string({
-        validators: [validators.requiresFieldIfEmpty('phone_2')]
-    }),
-    phone_2: fields.string({
-        validators: [validators.requiresFieldIfEmpty('phone_1')]
-    }),
+    phone_1: fields.string({ validators: [validators.requiresFieldIfEmpty('phone_2')] }),
+    phone_2: fields.string({ validators: [validators.requiresFieldIfEmpty('phone_1')] }),
     options: fields.string({
         choices: {
             one: 'option one',
@@ -69,15 +63,9 @@ var complexForm = forms.create({
         choices: { one: 'item 1', two: 'item 2', three: 'item 3' },
         widget: widgets.multipleSelect()
     }),
-    notes: fields.string({
-        widget: widgets.textarea({ rows: 6 })
-    }),
+    notes: fields.string({ widget: widgets.textarea({ rows: 6 }) }),
     spam_me: fields['boolean'](),
-    nested_1: {
-        nested_2: {
-            nested: fields.string()
-        }
-    }
+    nested_1: { nested_2: { nested: fields.string() } }
 });
 
 http.createServer(function (req, res) {

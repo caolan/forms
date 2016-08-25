@@ -17,9 +17,7 @@ var testWrap = function (tag) {
     });
 
     test(tag + ' label after field', function (t) {
-        var f = forms.create({ fieldname: forms.fields.string({
-            labelAfterField: true
-        }) });
+        var f = forms.create({ fieldname: forms.fields.string({ labelAfterField: true }) });
         t.equal(
             f.toHTML(forms.render[tag]),
             '<' + tag + ' class="field">' +
@@ -40,7 +38,7 @@ var testWrap = function (tag) {
                 }]
             })
         });
-        formObject.bind({ fieldname: 'val'}).validate(function (err, f) {
+        formObject.bind({ fieldname: 'val' }).validate(function (err, f) {
             t.equal(
                 f.toHTML(forms.render[tag]),
                 '<' + tag + ' class="field error">' +
@@ -54,9 +52,7 @@ var testWrap = function (tag) {
     });
 
     test(tag + ' required', function (t) {
-        var f = forms.create({
-            fieldname: forms.fields.string({ required: true })
-        });
+        var f = forms.create({ fieldname: forms.fields.string({ required: true }) });
         t.equal(
             f.toHTML(forms.render[tag]),
             '<' + tag + ' class="field required">' +
@@ -199,11 +195,7 @@ var testWrap = function (tag) {
     });
 
     test(tag + ' label custom id', function (t) {
-        var f = forms.create({
-            fieldname: forms.fields.string({
-                id: 'custom-id'
-            })
-        });
+        var f = forms.create({ fieldname: forms.fields.string({ id: 'custom-id' }) });
         t.equal(
             f.toHTML(forms.render[tag]),
             '<' + tag + ' class="field">' +
@@ -215,11 +207,7 @@ var testWrap = function (tag) {
     });
 
     test(tag + ' label no id', function (t) {
-        var f = forms.create({
-            fieldname: forms.fields.string({
-                id: false
-            })
-        });
+        var f = forms.create({ fieldname: forms.fields.string({ id: false }) });
         t.equal(
             f.toHTML(forms.render[tag]),
             '<' + tag + ' class="field">' +
@@ -231,11 +219,7 @@ var testWrap = function (tag) {
     });
 
     test(tag + ' hidden label', function (t) {
-        var f = forms.create({
-            fieldname: forms.fields.string({
-                widget: forms.widgets.hidden()
-            })
-        });
+        var f = forms.create({ fieldname: forms.fields.string({ widget: forms.widgets.hidden() }) });
         t.equal(
             f.toHTML(forms.render[tag]),
             '<' + tag + ' class="field">' +
@@ -265,9 +249,7 @@ test('table', function (t) {
 });
 
 test('table required', function (t) {
-    var f = forms.create({
-        fieldname: forms.fields.string({ required: true })
-    });
+    var f = forms.create({ fieldname: forms.fields.string({ required: true }) });
     t.equal(
         f.toHTML(forms.render.table),
         '<tr class="field required">' +
