@@ -124,7 +124,37 @@ test('select', function (t) {
         var expectedHTML = '<select name="name" id="someid" class="one two">' +
             '<option value="1">one</option>' +
             '<option value="2" selected="selected">two</option>' +
-        '</select>';
+            '</select>';
+        st.equal(html, expectedHTML);
+        st.end();
+    });
+    t.test('provides option groups', function (st) {
+        var html = widget.toHTML('name', {
+            choices: {
+                regular: 'value',
+                group1: {
+                    1: 'one',
+                    2: 'two'
+                },
+                'Group Two': {
+                    3: 'three',
+                    4: 'four'
+                }
+            },
+            id: 'someid',
+            value: '3'
+        });
+        var expectedHTML = '<select name="name" id="someid" class="one two">' +
+            '<option value="regular">value</option>' +
+            '<optgroup label="group1">' +
+            '<option value="1">one</option>' +
+            '<option value="2">two</option>' +
+            '</optgroup>' +
+            '<optgroup label="Group Two">' +
+            '<option value="3" selected="selected">three</option>' +
+            '<option value="4">four</option>' +
+            '</optgroup>' +
+            '</select>';
         st.equal(html, expectedHTML);
         st.end();
     });
@@ -405,7 +435,37 @@ test('multipleSelect', function (t) {
 
         st.end();
     });
-
+    t.test('provides option groups', function (st) {
+        var widget = forms.widgets.multipleSelect({ classes: ['one', 'two'] });
+        var html = widget.toHTML('name', {
+            choices: {
+                'Long groupname': {
+                    1: 'one',
+                    2: 'two'
+                },
+                regular: 'value',
+                Hamster: {
+                    3: 'dance',
+                    4: 'dance!!!'
+                }
+            },
+            id: 'someid',
+            value: ['2', 'regular']
+        });
+        var expectedHTML = '<select multiple="multiple" name="name" id="someid" class="one two">' +
+            '<optgroup label="Long groupname">' +
+            '<option value="1">one</option>' +
+            '<option value="2" selected="selected">two</option>' +
+            '</optgroup>' +
+            '<option value="regular" selected="selected">value</option>' +
+            '<optgroup label="Hamster">' +
+            '<option value="3">dance</option>' +
+            '<option value="4">dance!!!</option>' +
+            '</optgroup>' +
+            '</select>';
+        st.equal(html, expectedHTML);
+        st.end();
+    });
     t.end();
 });
 
