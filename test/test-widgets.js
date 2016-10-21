@@ -155,8 +155,8 @@ test('multipleCheckbox', function (t) {
         var field = {
             choices: {
                 one: 'Item one',
-                three: 'Item three',
-                two: 'Item two'
+                two: 'Item two',
+                three: 'Item three'
             },
             value: 'two'
         };
@@ -230,7 +230,11 @@ test('multipleCheckbox', function (t) {
 test('multipleCheckbox multiple selected', function (t) {
     var w = forms.widgets.multipleCheckbox(),
         field = {
-            choices: { one: 'Item one', three: 'Item three', two: 'Item two' },
+            choices: {
+                one: 'Item one',
+                two: 'Item two',
+                three: 'Item three'
+            },
             value: ['two', 'three']
         };
     t.equal(
@@ -249,7 +253,11 @@ test('multipleCheckbox multiple selected', function (t) {
 test('multipleRadio', function (t) {
     var w = forms.widgets.multipleRadio();
     var field = {
-        choices: { one: 'Item one', three: 'Item three', two: 'Item two' },
+        choices: {
+            one: 'Item one',
+            two: 'Item two',
+            three: 'Item three'
+        },
         value: 'two'
     };
     t.equal(
@@ -319,7 +327,11 @@ test('multipleRadio', function (t) {
 test('multipleRadio multiple selected', function (t) {
     var w = forms.widgets.multipleRadio();
     var field = {
-        choices: { one: 'Item one', three: 'Item three', two: 'Item two' },
+        choices: {
+            one: 'Item one',
+            two: 'Item two',
+            three: 'Item three'
+        },
         value: ['two', 'three']
     };
     t.equal(
@@ -419,7 +431,7 @@ test('optional text input', function (t) {
             'data-trigger': 'focus',
             placeholder: 'Enter some comment'
         }).toHTML('field1'),
-        '<input type="text" name="field1" id="id_field1" placeholder="Enter some comment" data-trigger="focus" />'
+        '<input type="text" name="field1" id="id_field1" data-trigger="focus" placeholder="Enter some comment" />'
     );
     t.equal(
         forms.widgets.text({
@@ -428,7 +440,7 @@ test('optional text input', function (t) {
             'data-trigger': 'focus',
             placeholder: 'Enter some comment'
         }).toHTML('field1'),
-        '<input type="text" name="field1" id="id_field1" class="one two" placeholder="Enter some comment" data-trigger="focus" aria-required="false" />'
+        '<input type="text" name="field1" id="id_field1" class="one two" aria-required="false" data-trigger="focus" placeholder="Enter some comment" />'
     );
     t.equal(
         forms.widgets.text({
@@ -444,7 +456,7 @@ test('optional text input', function (t) {
             min: 5,
             unknown: 'foo'
         }).toHTML('field1'),
-        '<input type="text" name="field1" id="id_field1" min="5" max="10" autocomplete="on" />'
+        '<input type="text" name="field1" id="id_field1" autocomplete="on" max="10" min="5" />'
     );
     t.equal(
         forms.widgets.text({ placeholder: 'Enter "some" comment' }).toHTML('field1'),
@@ -531,7 +543,11 @@ test('custom attributes', function (t) {
 
     var w = forms.widgets.multipleCheckbox({ 'data-test': 'foo' });
     var field = {
-        choices: { one: 'Item one', three: 'Item three', two: 'Item two' },
+        choices: {
+            one: 'Item one',
+            two: 'Item two',
+            three: 'Item three'
+        },
         value: 'two'
     };
     t.equal(
@@ -546,7 +562,11 @@ test('custom attributes', function (t) {
 
     var w2 = forms.widgets.multipleRadio({ 'data-test': 'foo' });
     var field2 = {
-        choices: { one: 'Item one', three: 'Item three', two: 'Item two' },
+        choices: {
+            one: 'Item one',
+            two: 'Item two',
+            three: 'Item three'
+        },
         value: 'two'
     };
     t.equal(
