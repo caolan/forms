@@ -23,7 +23,7 @@
         "url": "https://github.com/caolan/forms/issues"
     },
     "scripts": {
-        "tests-only": "node test/*.js",
+        "tests-only": "tape test/*.js",
         "pretest": "npm run lint",
         "test": "npm run tests-only",
         "posttest": "npx aud --production",
