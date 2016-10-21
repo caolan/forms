@@ -308,13 +308,48 @@ for highly customised markup.
 * ``validators`` - An array of functions which validate the field data
 * ``widget`` - A widget object to use when rendering the field
 * ``id`` - An optional id to override the default
-* ``choices`` - A list of options, used for multiple choice fields
+* ``choices`` - A list of options, used for multiple choice fields (see the field.choices section below)
 * ``cssClasses`` - A list of CSS classes for label and field wrapper
 * ``hideError`` - if true, errors won't be rendered automatically
 * ``labelAfterField`` - if true, the label text will be displayed after the field, rather than before
 * ``errorAfterField`` - if true, the error message will be displayed after the field, rather than before
 * ``fieldsetClasses`` - for widgets with a fieldset (multipleRadio and multipleCheckbox), set classes for the fieldset
 * ``legendClasses`` - for widgets with a fieldset (multipleRadio and multipleCheckbox), set classes for the fieldset's legend
+
+#### field.choices
+
+The choices property is used for radio, checkbox, and select fields. Two
+formats are supported and in case of select fields the format can be nested once to support option groups.
+
+The first format is based on objects and is easy to write. Object keys are treated as values and object values are treated as labels. If the value is another object and nesting is supported by the widget the key will be used as label and the value as nested list.
+
+The second format is array-based and therefore ordered (object keys are unordered by definition). The array should contain arrays with two values the first being the value and the second being the label. If the label is an array and nesting is supported by the widget the value will be used as label and the label as nested list.
+
+Both formats are demonstrated below:
+
+```
+// objects
+{
+    'val-1': 'text-1',
+    'val-2': 'text-2',
+    'text-3': {
+        'nested-val-1': 'nested-text-1',
+        'nested-val-2': 'nested-text-2',
+        'nested-val-3': 'nested-text-3'
+    }
+}
+
+// arrays
+[
+    ['val-1', 'text-1'],
+    ['val-2', 'text-2'],
+    ['text-3', [
+        ['nested-val-1', 'nested-text-1'],
+        ['nested-val-2', 'nested-text-2'],
+        ['nested-val-3', 'nested-text-3'],
+    ]]
+]
+```
 
 #### field.parse(rawdata)
 

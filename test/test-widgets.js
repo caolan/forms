@@ -113,6 +113,115 @@ test('select', function (t) {
     );
     t.equal(widget.type, 'select');
 
+    t.test('throws on invalid choices', function (st) {
+        st['throws'](function () {
+            forms.widgets.select().toHTML('name', {
+                choices: [
+                    [['invalid'], 'text1']
+                ]
+            });
+        });
+
+        st['throws'](function () {
+            forms.widgets.select().toHTML('name', { choices: ['invalid'] });
+        });
+
+        st['throws'](function () {
+            forms.widgets.select().toHTML('name', {
+                choices: [
+                    [{ invalid: 'invalid' }, 'text1']
+                ]
+            });
+        });
+
+        st['throws'](function () {
+            forms.widgets.select().toHTML('name', {
+                choices: [
+                    ['val1', function () { return 'invalid'; }]
+                ]
+            });
+        });
+
+        st.end();
+    });
+
+    t.test('supports array choices', function (st) {
+        st.equal(
+            forms.widgets.select().toHTML('name', {
+                choices: [
+                    ['val1', 'text1'],
+                    ['val2', 'text2'],
+                    ['text3',
+                        [
+                            ['val3', 'text4'],
+                            ['val4', 'text5'],
+                            ['val5', 'text6']
+                        ]
+                    ],
+                    ['val6', 'text7']
+                ]
+            }),
+            '<select name="name" id="id_name">' +
+                '<option value="val1">text1</option>' +
+                '<option value="val2">text2</option>' +
+                '<optgroup label="text3">' +
+                    '<option value="val3">text4</option>' +
+                    '<option value="val4">text5</option>' +
+                    '<option value="val5">text6</option>' +
+                '</optgroup>' +
+                '<option value="val6">text7</option>' +
+            '</select>'
+        );
+        st.end();
+    });
+
+    t.test('throws on deeply nested choices', function (st) {
+        st['throws'](function () {
+            forms.widgets.select().toHTML('name', {
+                choices: [
+                    ['text1',
+                        [
+                            ['text2',
+                                [
+                                    ['val1', 'text3']
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            });
+        });
+        st.end();
+    });
+
+    t.test('throws on invalid array format', function (st) {
+        st['throws'](function () {
+            forms.widgets.select().toHTML('name', {
+                choices: [
+                    []
+                ]
+            });
+        });
+
+        st['throws'](function () {
+            forms.widgets.select().toHTML('name', {
+                choices: [
+                    ['val1']
+                ]
+            });
+        });
+
+        st['throws'](function () {
+            forms.widgets.select().toHTML('name', {
+                choices: [
+                    ['val1', 'text1', 'invalid']
+                ]
+            });
+        });
+
+        st.end();
+    });
+
     t.test('stringifies values', function (st) {
         var html = widget.toHTML('name', {
             choices: {
@@ -186,6 +295,25 @@ test('multipleCheckbox', function (t) {
             st2.end();
         });
 
+        st.end();
+    });
+
+    t.test('throws on nested choices', function (st) {
+        st['throws'](
+            function () {
+                w.toHTML('name', {
+                    choices: [
+                        ['val1', 'text1'],
+                        ['val2', 'text2'],
+                        ['text3',
+                            [
+                                ['val3', 'text4']
+                            ]
+                        ]
+                    ]
+                });
+            }
+        );
         st.end();
     });
 
@@ -272,6 +400,25 @@ test('multipleRadio', function (t) {
     );
     t.equal(forms.widgets.multipleRadio().type, 'multipleRadio');
 
+    t.test('throw on nested choices', function (st) {
+        st['throws'](
+            function () {
+                w.toHTML('name', {
+                    choices: [
+                        ['val1', 'text1'],
+                        ['val2', 'text2'],
+                        ['text3',
+                            [
+                                ['val3', 'text4']
+                            ]
+                        ]
+                    ]
+                });
+            }
+        );
+        st.end();
+    });
+
     t.test('stringifies values', function (st) {
         st.test('single bound value', function (t2) {
             var boundValueField = {
@@ -356,7 +503,7 @@ test('multipleSelect', function (t) {
                 val2: 'text2'
             }
         }),
-        '<select multiple="multiple" name="name" id="id_name">' +
+        '<select name="name" id="id_name" multiple="multiple">' +
             '<option value="val1">text1</option>' +
             '<option value="val2">text2</option>' +
         '</select>'
@@ -371,7 +518,7 @@ test('multipleSelect', function (t) {
             id: 'someid',
             value: ['val2', 'val3']
         }),
-        '<select multiple="multiple" name="name" id="someid" class="one two">' +
+        '<select name="name" id="someid" multiple="multiple" class="one two">' +
             '<option value="val1">text1</option>' +
             '<option value="val2" selected="selected">text2</option>' +
             '<option value="val3" selected="selected">text3</option>' +
@@ -392,7 +539,7 @@ test('multipleSelect', function (t) {
                 id: 'someid',
                 value: 2
             });
-            var expectedHTML = '<select multiple="multiple" name="name" id="someid" class="one two">' +
+            var expectedHTML = '<select name="name" id="someid" multiple="multiple" class="one two">' +
                 '<option value="1">text1</option>' +
                 '<option value="2" selected="selected">text2</option>' +
                 '<option value="3">text3</option>' +
@@ -411,7 +558,7 @@ test('multipleSelect', function (t) {
                 id: 'someid',
                 value: [2, 3]
             });
-            var expectedHTML = '<select multiple="multiple" name="name" id="someid" class="one two">' +
+            var expectedHTML = '<select name="name" id="someid" multiple="multiple" class="one two">' +
                 '<option value="1">text1</option>' +
                 '<option value="2" selected="selected">text2</option>' +
                 '<option value="3" selected="selected">text3</option>' +
@@ -536,7 +683,7 @@ test('custom attributes', function (t) {
                 val2: 'text2'
             }
         }),
-        '<select multiple="multiple" name="name" id="id_name" data-test="foo">' +
+        '<select name="name" id="id_name" multiple="multiple" data-test="foo">' +
             '<option value="val1">text1</option>' +
             '<option value="val2">text2</option>' +
         '</select>'
