@@ -4,6 +4,7 @@ var forms = require('../lib/forms');
 var is = require('is');
 var http = require('http');
 var test = require('tape');
+var keys = require('object-keys');
 
 test('bind', function (t) {
     t.plan(12);
@@ -272,13 +273,13 @@ test('handle sends callbacks', function (t) {
     };
     f.handle({}, {
         empty: function testing(form, callbacks) {
-            t.equal(Object.keys(callbacks).length, 1);
+            t.equal(keys(callbacks).length, 1);
             t.equal(typeof callbacks.empty, 'function');
         }
     });
     f.handle({ field1: 'test' }, {
         success: function testing(form, callbacks) {
-            t.equal(Object.keys(callbacks).length, 1);
+            t.equal(keys(callbacks).length, 1);
             t.equal(typeof callbacks.success, 'function');
         }
     });
@@ -290,7 +291,7 @@ test('handle sends callbacks', function (t) {
     f.handle({ field1: 'test' }, {
         success: function yay() {},
         error: function nay(form, callbacks) {
-            t.equal(Object.keys(callbacks).length, 2);
+            t.equal(keys(callbacks).length, 2);
             t.equal(typeof callbacks.success, 'function');
             t.equal(typeof callbacks.error, 'function');
         }
@@ -298,7 +299,7 @@ test('handle sends callbacks', function (t) {
 
     f.handle({ field1: 'test' }, {
         other: function testing(form, callbacks) {
-            t.equal(Object.keys(callbacks).length, 1);
+            t.equal(keys(callbacks).length, 1);
             t.equal(typeof callbacks.other, 'function');
         }
     });

@@ -38,6 +38,7 @@
         "formidable": "^1.2.2",
         "is": "^3.3.0",
         "object.assign": "^4.1.0",
+        "object-keys": "^1.0.11",
         "qs": "^6.9.4",
         "string.prototype.trim": "^1.2.1"
     },

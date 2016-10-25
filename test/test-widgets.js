@@ -2,6 +2,7 @@
 
 var forms = require('../lib/forms');
 var test = require('tape');
+var keys = require('object-keys');
 
 var test_input = function (type) {
     return function (t) {
@@ -601,10 +602,10 @@ test('label', function (t) {
 });
 
 test('dynamic widget attributes', function (t) {
-    var keys = Object.keys(forms.widgets);
-    t.plan(keys.length);
+    var theKeys = keys(forms.widgets);
+    t.plan(theKeys.length);
     var re = /autocomplete="no"/;
-    keys.forEach(function (name) {
+    theKeys.forEach(function (name) {
         var w = forms.widgets[name]();
         w.attrs = { autocomplete: 'no' };
         var html = w.toHTML('test', { choices: { foo: 'bar' } });
