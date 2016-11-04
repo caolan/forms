@@ -23,9 +23,9 @@
         "url": "https://github.com/caolan/forms/issues"
     },
     "scripts": {
-        "tests-only": "tape test/*.js",
         "pretest": "npm run lint",
         "test": "npm run tests-only",
+        "tests-only": "tape test/*.js",
         "posttest": "npm run security",
         "test-browser": "testling",
         "coverage": "covert test/*.js",
