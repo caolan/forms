@@ -50,7 +50,7 @@
         "testling": "^1.7.1",
         "covert": "^1.1.0",
         "jscs": "^3.0.7",
-        "eslint": "^3.8.1",
+        "eslint": "^3.9.1",
         "@ljharb/eslint-config": "^8.0.0",
         "nsp": "^2.6.2",
         "evalmd": "^0.0.17"

@@ -21,7 +21,6 @@
 		"no-magic-numbers": [0],
 		"no-negated-condition": [0],
 		"operator-linebreak": [2, "after"],
-		"sort-keys": 0,
-		"space-before-keywords": [1, "always"]
+		"sort-keys": 0
 	}
 }
