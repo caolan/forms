@@ -1,3 +1,14 @@
+1.3.0 / 2016-11-15
+===================
+  * [New] implement nested and ordered choices (#191)
+  * [New] [Fix] ensure that all content in `tag` is properly escaped
+  * [Fix] use `is.array` instead of `Array.isArray`, to continue supporting ES3
+  * [Fix] ES3: use `object-keys` instead of `Object.keys`
+  * [Deps] update `is`, `async`, `qs`
+  * [Dev Deps] update `eslint`, `@ljharb/eslint-config`, `nsp`, `tape`
+  * [Tests] up to `node` `v7.0`, `v6.9`, `v4.6`; improve test matrix
+  * [Tests] execute all tests in test directory (#190)
+
 1.2.0 / 2016-08-25
 ===================
   * [New] Add labelAfterField option when rendering (#183)
