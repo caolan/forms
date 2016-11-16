@@ -256,6 +256,16 @@ test('textarea', function (t) {
         '<textarea name="name" id="someid" rows="20" cols="80" class="one two" placeholder="hi!">value</textarea>'
     );
     t.equal(forms.widgets.textarea().type, 'textarea');
+
+    t.test('properly escapes contents', function (st) {
+        st.equal(
+            forms.widgets.textarea().toHTML('name', { value: 'Inside</textarea>Escaped the textarea!' }),
+            '<textarea name="name" id="id_name">Inside&lt;/textarea&gt;Escaped the textarea!</textarea>'
+       );
+
+        st.end();
+    });
+
     t.end();
 });
 
