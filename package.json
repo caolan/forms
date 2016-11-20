@@ -40,7 +40,8 @@
         "object.assign": "^4.1.0",
         "object-keys": "^1.0.11",
         "qs": "^6.9.4",
-        "string.prototype.trim": "^1.2.1"
+        "string.prototype.trim": "^1.2.1",
+        "reduce": "^1.0.1"
     },
     "devDependencies": {
         "@ljharb/eslint-config": "^17.1.0",
