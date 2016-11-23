@@ -34,6 +34,8 @@
         "lint": "eslint test/*.js lib/*.js example/simple.js example/complex.js"
     },
     "dependencies": {
+        "array.prototype.every": "^1.0.0",
+        "array.prototype.some": "^1.0.0",
         "async": "^2.6.3",
         "formidable": "^1.2.2",
         "is": "^3.3.0",
