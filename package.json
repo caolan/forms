@@ -36,6 +36,8 @@
         "security": "nsp check"
     },
     "dependencies": {
+        "array.prototype.every": "^1.0.0",
+        "array.prototype.some": "^1.0.0",
         "async": "^2.1.2",
         "qs": "^6.3.0",
         "formidable": "^1.0.17",
