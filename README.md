@@ -315,6 +315,7 @@ for highly customised markup.
 * ``errorAfterField`` - if true, the error message will be displayed after the field, rather than before
 * ``fieldsetClasses`` - for widgets with a fieldset (multipleRadio and multipleCheckbox), set classes for the fieldset
 * ``legendClasses`` - for widgets with a fieldset (multipleRadio and multipleCheckbox), set classes for the fieldset's legend
+* ``placeholder`` - Optional placeholder text
 
 #### field.choices
 
