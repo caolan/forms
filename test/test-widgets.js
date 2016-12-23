@@ -214,7 +214,7 @@ test('select', function (t) {
         st['throws'](function () {
             forms.widgets.select().toHTML('name', {
                 choices: [
-                    ['val1', 'text1', 'invalid']
+                    ['val1', 'text1', false, false, 'invalid']
                 ]
             });
         });
