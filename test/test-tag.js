@@ -50,3 +50,14 @@ test('allow empty attributes', function (t) {
 
     t.end();
 });
+
+test('should expose getUserAttrs()', function (t) {
+    t.equal(typeof tag.getUserAttrs, 'function');
+    t.end();
+});
+
+test('tag.getUserAttrs() should get and return an object', function (t) {
+    t['throws'](tag.getUserAttrs);
+    t.deepEqual(tag.getUserAttrs({}), {});
+    t.end();
+});
