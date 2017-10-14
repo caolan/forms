@@ -208,29 +208,41 @@ test('date', function (t) {
 });
 
 test('minlength', function (t) {
-    t.plan(2);
+    t.plan(4);
     validators.minlength(5, 'Enter at least %s characters.')('form', { data: '1234' }, function (tooShortError) {
         t.equal(tooShortError, 'Enter at least 5 characters.');
         validators.minlength(5)('form', { data: '12345' }, function (err) {
             t.equal(err, undefined);
-            t.end();
         });
     });
+    validators.minlength(5, 'Enter at least %s characters.')('form', { data: 12345 }, function (err) {
+        t.equal(err, undefined);
+    });
+    validators.minlength(5, 'Enter at least %s characters.')('form', { data: 1234 }, function (err) {
+        t.equal(err, 'Enter at least 5 characters.');
+    });
+    t.end();
 });
 
 test('maxlength', function (t) {
-    t.plan(2);
+    t.plan(4);
     validators.maxlength(5)('form', { data: '123456' }, function (tooLongError) {
         t.equal(tooLongError, 'Please enter no more than 5 characters.');
         validators.maxlength(5)('form', { data: '12345' }, function (err) {
             t.equal(err, undefined);
-            t.end();
         });
     });
+    validators.maxlength(5, 'Please enter no more than 5 characters.')('form', { data: 12345 }, function (err) {
+        t.equal(err, undefined);
+    });
+    validators.maxlength(5, 'Please enter no more than 5 characters.')('form', { data: 123456 }, function (err) {
+        t.equal(err, 'Please enter no more than 5 characters.');
+    });
+    t.end();
 });
 
 test('rangelength', function (t) {
-    t.plan(4);
+    t.plan(8);
     validators.rangelength(2, 4, 'Enter between %s and %s characters.')('form', { data: '12345' }, function (err) {
         t.equal(err, 'Enter between 2 and 4 characters.');
     });
@@ -241,6 +253,18 @@ test('rangelength', function (t) {
         t.equal(err, undefined);
     });
     validators.rangelength(2, 4)('form', { data: '1234' }, function (err) {
+        t.equal(err, undefined);
+    });
+    validators.rangelength(2, 4, 'Enter between %s and %s characters.')('form', { data: 12345 }, function (err) {
+        t.equal(err, 'Enter between 2 and 4 characters.');
+    });
+    validators.rangelength(2, 4)('form', { data: 1 }, function (err) {
+        t.equal(err, 'Please enter a value between 2 and 4 characters long.');
+    });
+    validators.rangelength(2, 4)('form', { data: 12 }, function (err) {
+        t.equal(err, undefined);
+    });
+    validators.rangelength(2, 4)('form', { data: 1234 }, function (err) {
         t.equal(err, undefined);
     });
     t.end();
