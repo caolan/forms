@@ -4,11 +4,14 @@
 	"extends": "@ljharb",
 
 	"rules": {
-		"callback-return": [0],
-		"camelcase": [0],
+		"array-bracket-newline": 0,
+		"array-element-newline": 0,
+		"callback-return": 0,
+		"camelcase": 0,
 		"complexity": [2, 11],
 		"dot-notation": [2, { "allowKeywords": false }],
 		"eqeqeq": [2, "allow-null"],
+		"func-name-matching": 0,
 		"id-length": [2, { "min": 1, "max": 30 }],
 		"indent": [2, 4],
 		"max-lines": 0,
@@ -17,10 +20,11 @@
 		"max-statements": [2, 20],
 		"max-statements-per-line": [2, { "max": 2 }],
 		"new-cap": [2, { "capIsNewExceptions": ["Template"] }],
-		"no-extra-parens": [0],
-		"no-magic-numbers": [0],
-		"no-negated-condition": [0],
-		"operator-linebreak": [2, "after"],
+		"no-extra-parens": 0,
+		"no-magic-numbers": 0,
+		"no-negated-condition": 0,
+		"object-curly-newline": 0,
+		"operator-linebreak": [2, "before"],
 		"sort-keys": 0
 	}
 }

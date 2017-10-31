@@ -33,11 +33,11 @@ test('allow empty attributes', function (t) {
         }
     });
     t.equal(html,
-        '<select name="field" id="id_field">' +
-            '<option value="">Make a choice</option>' +
-            '<option value="choice1">Choice 1</option>' +
-            '<option value="choice2">Choice 2</option>' +
-        '</select>'
+        '<select name="field" id="id_field">'
+            + '<option value="">Make a choice</option>'
+            + '<option value="choice1">Choice 1</option>'
+            + '<option value="choice2">Choice 2</option>'
+        + '</select>'
     );
 
     var html2 = forms.widgets.text({ 'data-empty': '' }).toHTML('field');

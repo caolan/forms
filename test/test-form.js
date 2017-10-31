@@ -107,18 +107,18 @@ test('validate valid data', function (t) {
         t.ok(f.isValid());
         t.equal(
             f.toHTML(),
-            '<div class="field">' +
-                '<label for="id_field1">Field1</label>' +
-                '<input type="text" name="field1" id="id_field1" value="1" />' +
-            '</div>' +
-            '<div class="field">' +
-                '<label for="id_field2">Field2</label>' +
-                '<input type="text" name="field2" id="id_field2" value="2" />' +
-            '</div>' +
-            '<div class="field">' +
-                '<label for="id_field3">Field3</label>' +
-                '<input type="text" name="field3" id="id_field3" value="0" />' +
-            '</div>'
+            '<div class="field">'
+                + '<label for="id_field1">Field1</label>'
+                + '<input type="text" name="field1" id="id_field1" value="1" />'
+            + '</div>'
+            + '<div class="field">'
+                + '<label for="id_field2">Field2</label>'
+                + '<input type="text" name="field2" id="id_field2" value="2" />'
+            + '</div>'
+            + '<div class="field">'
+                + '<label for="id_field3">Field3</label>'
+                + '<input type="text" name="field3" id="id_field3" value="0" />'
+            + '</div>'
         );
         t.end();
     });
@@ -142,16 +142,16 @@ test('validate invalid data', function (t) {
         t.equal(f.isValid(), false);
         t.equal(
             f.toHTML(),
-            '<div class="field error">' +
-                '<p class="error_msg">validation error 1</p>' +
-                '<label for="id_field1">Field1</label>' +
-                '<input type="text" name="field1" id="id_field1" value="1" />' +
-            '</div>' +
-            '<div class="field error">' +
-                '<p class="error_msg">validation error 2</p>' +
-                '<label for="id_field2">Field2</label>' +
-                '<input type="text" name="field2" id="id_field2" value="2" />' +
-            '</div>'
+            '<div class="field error">'
+                + '<p class="error_msg">validation error 1</p>'
+                + '<label for="id_field1">Field1</label>'
+                + '<input type="text" name="field1" id="id_field1" value="1" />'
+            + '</div>'
+            + '<div class="field error">'
+                + '<p class="error_msg">validation error 2</p>'
+                + '<label for="id_field2">Field2</label>'
+                + '<input type="text" name="field2" id="id_field2" value="2" />'
+            + '</div>'
         );
         t.end();
     });
@@ -470,10 +470,10 @@ test('div', function (t) {
     var f = forms.create({ fieldname: forms.fields.string() });
     t.equal(
         f.toHTML(),
-        '<div class="field">' +
-            '<label for="id_fieldname">Fieldname</label>' +
-            '<input type="text" name="fieldname" id="id_fieldname" />' +
-        '</div>'
+        '<div class="field">'
+            + '<label for="id_fieldname">Fieldname</label>'
+            + '<input type="text" name="fieldname" id="id_fieldname" />'
+        + '</div>'
     );
     t.end();
 });
@@ -482,10 +482,10 @@ test('div required', function (t) {
     var f = forms.create({ fieldname: forms.fields.string({ required: true }) });
     t.equal(
         f.toHTML(),
-        '<div class="field required">' +
-            '<label for="id_fieldname">Fieldname</label>' +
-            '<input type="text" name="fieldname" id="id_fieldname" />' +
-        '</div>'
+        '<div class="field required">'
+            + '<label for="id_fieldname">Fieldname</label>'
+            + '<input type="text" name="fieldname" id="id_fieldname" />'
+        + '</div>'
     );
     t.end();
 });
@@ -496,10 +496,10 @@ test('div bound', function (t) {
     form.bind({ name: 'val' }).validate(function (err, f) {
         t.equal(
             f.toHTML(),
-            '<div class="field">' +
-                '<label for="id_name">Name</label>' +
-                '<input type="text" name="name" id="id_name" value="val" />' +
-            '</div>'
+            '<div class="field">'
+                + '<label for="id_name">Name</label>'
+                + '<input type="text" name="name" id="id_name" value="val" />'
+            + '</div>'
         );
         t.end();
     });
@@ -517,12 +517,12 @@ test('div bound error', function (t) {
     formObject.bind({ field_name: 'val' }).validate(function (err, f) {
         t.equal(
             f.toHTML(),
-            '<div class="field error">' +
-                '<p class="error_msg">validation error</p>' +
-                '<label for="id_field_name">Field name</label>' +
-                '<input type="text" name="field_name" id="id_field_name" ' +
-                'value="val" />' +
-            '</div>'
+            '<div class="field error">'
+                + '<p class="error_msg">validation error</p>'
+                + '<label for="id_field_name">Field name</label>'
+                + '<input type="text" name="field_name" id="id_field_name" '
+                + 'value="val" />'
+            + '</div>'
         );
         t.end();
     });

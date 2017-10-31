@@ -48,15 +48,15 @@
         "reduce": "^1.0.1"
     },
     "devDependencies": {
-        "tape": "^4.6.2",
-        "tape-dom": "^0.0.12",
-        "testling": "^1.7.1",
+        "@ljharb/eslint-config": "^12.2.1",
         "covert": "^1.1.0",
+        "eslint": "^4.10.0",
+        "evalmd": "^0.0.17",
         "jscs": "^3.0.7",
-        "eslint": "^3.10.2",
-        "@ljharb/eslint-config": "^8.0.0",
-        "nsp": "^2.6.2",
-        "evalmd": "^0.0.17"
+        "nsp": "^2.8.1",
+        "tape": "^4.8.0",
+        "tape-dom": "^0.0.12",
+        "testling": "^1.7.1"
     },
     "license": "MIT",
     "licenses": [
@@ -87,4 +87,3 @@
         "node": ">= 0.4"
     }
 }
-
