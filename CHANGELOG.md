@@ -1,3 +1,14 @@
+1.3.1 / 2019-05-03
+===================
+  * [Fix] length validators should work with both strings and numbers (#204)
+  * [Fix] ES3: use `array.prototype.{some,every}` instead of `Array#{some,every}`
+  * [Fix] ES3: use `reduce` instead of `Array#reduce`
+  * [Deps] update `async`, `formidable`, `is`, `object-keys`, `object.assign`, `qs`, `reduce`
+  * [Dev Deps] update `tape`, `eslint`, `@ljharb/eslint-config`, `nsp`, `covert`
+  * [Dev Deps] remove `testling`, `jscs`
+  * [Tests] use `npx aud` instead of `nsp` or `npm audit` with hoops
+  * [Tests] up to `node` `v12.1`, `v11.14`, `v10.15`, `v9.11`, `v8.15`, `v7.10`, `v6.17`, `v4.9`; use `nvm install-latest-npm`; run coverage tests but allow failure, for now
+
 1.3.0 / 2016-11-15
 ===================
   * [New] implement nested and ordered choices (#191)
