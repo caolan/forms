@@ -29,9 +29,8 @@
         "posttest": "npx aud",
         "coverage": "covert test/*.js",
         "coverage-quiet": "covert --quiet test/*.js",
-        "lint": "npm run jscs && npm run eslint && evalmd *.md",
-        "eslint": "eslint test/*.js lib/*.js example/simple.js example/complex.js",
-        "jscs": "jscs test/*.js lib/*.js example/simple.js example/complex.js"
+        "prelint": "evalmd *.md",
+        "lint": "eslint test/*.js lib/*.js example/simple.js example/complex.js"
     },
     "dependencies": {
         "array.prototype.every": "^1.0.0",
@@ -50,7 +49,6 @@
         "covert": "^1.1.1",
         "eslint": "^4.19.1",
         "evalmd": "^0.0.17",
-        "jscs": "^3.0.7",
         "tape": "^4.10.1",
         "tape-dom": "^0.0.12"
     },
