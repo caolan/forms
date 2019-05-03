@@ -26,13 +26,12 @@
         "pretest": "npm run lint",
         "test": "npm run tests-only",
         "tests-only": "tape test/*.js",
-        "posttest": "npm run security",
+        "posttest": "npx aud",
         "coverage": "covert test/*.js",
         "coverage-quiet": "covert --quiet test/*.js",
         "lint": "npm run jscs && npm run eslint && evalmd *.md",
         "eslint": "eslint test/*.js lib/*.js example/simple.js example/complex.js",
-        "jscs": "jscs test/*.js lib/*.js example/simple.js example/complex.js",
-        "security": "nsp check"
+        "jscs": "jscs test/*.js lib/*.js example/simple.js example/complex.js"
     },
     "dependencies": {
         "array.prototype.every": "^1.0.0",
@@ -52,7 +51,6 @@
         "eslint": "^4.10.0",
         "evalmd": "^0.0.17",
         "jscs": "^3.0.7",
-        "nsp": "^2.8.1",
         "tape": "^4.8.0",
         "tape-dom": "^0.0.12"
     },
