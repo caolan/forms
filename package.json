@@ -47,11 +47,11 @@
     },
     "devDependencies": {
         "@ljharb/eslint-config": "^12.2.1",
-        "covert": "^1.1.0",
-        "eslint": "^4.10.0",
+        "covert": "^1.1.1",
+        "eslint": "^4.19.1",
         "evalmd": "^0.0.17",
         "jscs": "^3.0.7",
-        "tape": "^4.8.0",
+        "tape": "^4.10.1",
         "tape-dom": "^0.0.12"
     },
     "license": "MIT",
