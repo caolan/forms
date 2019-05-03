@@ -28,9 +28,8 @@
         "test-browser": "testling",
         "coverage": "covert test/*.js",
         "coverage-quiet": "covert --quiet test/*.js",
-        "lint": "npm run jscs && npm run eslint && evalmd *.md",
-        "eslint": "eslint test/*.js lib/*.js example/simple.js example/complex.js",
-        "jscs": "jscs test/*.js lib/*.js example/simple.js example/complex.js",
+        "prelint": "evalmd *.md",
+        "lint": "eslint test/*.js lib/*.js example/simple.js example/complex.js"
         "security": "nsp check"
     },
     "dependencies": {
@@ -46,7 +45,6 @@
         "tape-dom": "^0.0.12",
         "testling": "^1.7.1",
         "covert": "^1.1.0",
-        "jscs": "^3.0.7",
         "eslint": "^3.3.1",
         "@ljharb/eslint-config": "^7.0.0",
         "nsp": "^2.6.1",
