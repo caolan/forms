@@ -27,7 +27,6 @@
         "test": "npm run tests-only",
         "tests-only": "tape test/*.js",
         "posttest": "npm run security",
-        "test-browser": "testling",
         "coverage": "covert test/*.js",
         "coverage-quiet": "covert --quiet test/*.js",
         "lint": "npm run jscs && npm run eslint && evalmd *.md",
@@ -55,8 +54,7 @@
         "jscs": "^3.0.7",
         "nsp": "^2.8.1",
         "tape": "^4.8.0",
-        "tape-dom": "^0.0.12",
-        "testling": "^1.7.1"
+        "tape-dom": "^0.0.12"
     },
     "license": "MIT",
     "licenses": [
