@@ -8,7 +8,7 @@
 		"array-element-newline": 0,
 		"callback-return": 0,
 		"camelcase": 0,
-		"complexity": [2, 11],
+		"complexity": [2, 13],
 		"dot-notation": [2, { "allowKeywords": false }],
 		"eqeqeq": [2, "allow-null"],
 		"func-name-matching": 0,
