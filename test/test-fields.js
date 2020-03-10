@@ -5,7 +5,7 @@ var util = require('util');
 var is = require('is');
 var fields = forms.fields;
 var stringField = fields.string();
-var stringHTML = stringField.toHTML().toString();
+var stringHTML = String(stringField.toHTML());
 var fn1 = function () { return 'one'; };
 var fn2 = function () { return 'two'; };
 var test = require('tape');
@@ -271,15 +271,15 @@ testField('email');
 
 test('email parse', function (t) {
     t.equal(
-        fields.email().parse().toString(),
-        stringField.parse().toString()
+        String(fields.email().parse()),
+        String(stringField.parse())
     );
     t.end();
 });
 
 test('email toHTML', function (t) {
     t.equal(
-        fields.email().toHTML().toString(),
+        String(fields.email().toHTML()),
         stringHTML.replace(/type="text"/, 'type="email"')
     );
     t.end();
@@ -287,13 +287,13 @@ test('email toHTML', function (t) {
 
 test('email validators', function (t) {
     t.equal(
-        fields.email().validators[0].toString(),
-        forms.validators.email().toString()
+        String(fields.email().validators[0]),
+        String(forms.validators.email())
     );
     var f = fields.email({ validators: [fn1, fn2] });
     t.equal(
-        f.validators[0].toString(),
-        forms.validators.email().toString()
+        String(f.validators[0]),
+        String(forms.validators.email())
     );
     t.deepEqual(f.validators.slice(1), [fn1, fn2]);
     t.end();
@@ -303,7 +303,7 @@ testField('tel');
 
 test('tel toHTML', function (t) {
     t.equal(
-        fields.tel().toHTML().toString(),
+        String(fields.tel().toHTML()),
         stringHTML.replace(/type="text"/, 'type="tel"')
     );
     t.end();
@@ -313,15 +313,15 @@ testField('password');
 
 test('password parse', function (t) {
     t.equal(
-        fields.password().parse().toString(),
-        stringField.parse().toString()
+        String(fields.password().parse()),
+        String(stringField.parse())
     );
     t.end();
 });
 
 test('password toHTML', function (t) {
     t.equal(
-        fields.password().toHTML().toString(),
+        String(fields.password().toHTML()),
         stringHTML.replace(/type="text"/, 'type="password"')
     );
     t.end();
@@ -331,15 +331,15 @@ testField('url');
 
 test('url parse', function (t) {
     t.equal(
-        fields.url().parse().toString(),
-        stringField.parse().toString()
+        String(fields.url().parse()),
+        String(stringField.parse())
     );
     t.end();
 });
 
 test('url toHTML', function (t) {
     t.equal(
-        fields.url().toHTML().toString(),
+        String(fields.url().toHTML()),
         stringHTML
     );
     t.end();
@@ -347,13 +347,13 @@ test('url toHTML', function (t) {
 
 test('url validators', function (t) {
     t.equal(
-        fields.url().validators[0].toString(),
-        forms.validators.url().toString()
+        String(fields.url().validators[0]),
+        String(forms.validators.url())
     );
     var f = fields.url({ validators: [fn1, fn2] });
     t.equal(
-        f.validators[0].toString(),
-        forms.validators.url().toString()
+        String(f.validators[0]),
+        String(forms.validators.url())
     );
     t.deepEqual(f.validators.slice(1), [fn1, fn2]);
     t.end();
@@ -363,15 +363,15 @@ testField('date');
 
 test('date parse', function (t) {
     t.equal(
-        fields.date().parse().toString(),
-        stringField.parse().toString()
+        String(fields.date().parse()),
+        String(stringField.parse())
     );
     t.end();
 });
 
 test('date toHTML', function (t) {
     t.equal(
-        fields.date().toHTML().toString(),
+        String(fields.date().toHTML()),
         stringHTML
     );
     t.end();
@@ -379,13 +379,13 @@ test('date toHTML', function (t) {
 
 test('date validators', function (t) {
     t.equal(
-        fields.date().validators[0].toString(),
-        forms.validators.date().toString()
+        String(fields.date().validators[0]),
+        String(forms.validators.date())
     );
     var f = fields.date({ validators: [fn1, fn2] });
     t.equal(
-        f.validators[0].toString(),
-        forms.validators.date().toString()
+        String(f.validators[0]),
+        String(forms.validators.date())
     );
     t.deepEqual(f.validators.slice(1), [fn1, fn2]);
     t.end();
@@ -406,7 +406,7 @@ test('array parse', function (t) {
 
 test('array toHTML', function (t) {
     t.equal(
-        fields.array().toHTML().toString(),
+        String(fields.array().toHTML()),
         stringHTML
     );
     t.end();

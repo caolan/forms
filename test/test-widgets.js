@@ -309,21 +309,19 @@ test('multipleCheckbox', function (t) {
     });
 
     t.test('throws on nested choices', function (st) {
-        st['throws'](
-            function () {
-                w.toHTML('name', {
-                    choices: [
-                        ['val1', 'text1'],
-                        ['val2', 'text2'],
-                        ['text3',
-                            [
-                                ['val3', 'text4']
-                            ]
+        st['throws'](function () {
+            w.toHTML('name', {
+                choices: [
+                    ['val1', 'text1'],
+                    ['val2', 'text2'],
+                    ['text3',
+                        [
+                            ['val3', 'text4']
                         ]
                     ]
-                });
-            }
-        );
+                ]
+            });
+        });
         st.end();
     });
 
@@ -411,21 +409,19 @@ test('multipleRadio', function (t) {
     t.equal(forms.widgets.multipleRadio().type, 'multipleRadio');
 
     t.test('throw on nested choices', function (st) {
-        st['throws'](
-            function () {
-                w.toHTML('name', {
-                    choices: [
-                        ['val1', 'text1'],
-                        ['val2', 'text2'],
-                        ['text3',
-                            [
-                                ['val3', 'text4']
-                            ]
+        st['throws'](function () {
+            w.toHTML('name', {
+                choices: [
+                    ['val1', 'text1'],
+                    ['val2', 'text2'],
+                    ['text3',
+                        [
+                            ['val3', 'text4']
                         ]
                     ]
-                });
-            }
-        );
+                ]
+            });
+        });
         st.end();
     });
 

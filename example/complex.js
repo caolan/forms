@@ -1,20 +1,18 @@
 'use strict';
 
-var http = require('http'),
-    util = require('util'),
-    fs = require('fs'),
-    forms = require('../lib/forms'),
-    jsontemplate = require('./json-template'),
-    parse = require('url').parse;
+var http = require('http');
+var util = require('util');
+var fs = require('fs');
+var forms = require('../lib/forms');
+var jsontemplate = require('./json-template');
+var parse = require('url').parse;
 
 var fields = forms.fields,
     validators = forms.validators,
     widgets = forms.widgets;
 
 // template for the example page
-var template = jsontemplate.Template(
-    fs.readFileSync(__dirname + '/page.jsont').toString()
-);
+var template = jsontemplate.Template(String(fs.readFileSync(__dirname + '/page.jsont')));
 
 /*
 var inputWithOptionalAttributes = forms.widgets.text({
@@ -52,15 +50,27 @@ var complexForm = forms.create({
         ]
     }),
     more_options: fields.array({
-        choices: { one: 'item 1', two: 'item 2', three: 'item 3' },
+        choices: {
+            one: 'item 1',
+            two: 'item 2',
+            three: 'item 3'
+        },
         widget: widgets.multipleCheckbox()
     }),
     even_more: fields.string({
-        choices: { one: 'item 1', two: 'item 2', three: 'item 3' },
+        choices: {
+            one: 'item 1',
+            two: 'item 2',
+            three: 'item 3'
+        },
         widget: widgets.multipleRadio()
     }),
     and_more: fields.array({
-        choices: { one: 'item 1', two: 'item 2', three: 'item 3' },
+        choices: {
+            one: 'item 1',
+            two: 'item 2',
+            three: 'item 3'
+        },
         widget: widgets.multipleSelect()
     }),
     notes: fields.string({ widget: widgets.textarea({ rows: 6 }) }),

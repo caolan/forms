@@ -4,27 +4,34 @@
 	"extends": "@ljharb",
 
 	"rules": {
-		"array-bracket-newline": 0,
-		"array-element-newline": 0,
 		"callback-return": 0,
 		"camelcase": 0,
-		"complexity": [2, 13],
-		"dot-notation": [2, { "allowKeywords": false }],
 		"eqeqeq": [2, "allow-null"],
 		"func-name-matching": 0,
 		"id-length": [2, { "min": 1, "max": 30 }],
 		"indent": [2, 4],
 		"max-lines": 0,
-		"max-nested-callbacks": [2, 5],
+		"max-lines-per-function": 0,
 		"max-params": [2, 4],
-		"max-statements": [2, 20],
-		"max-statements-per-line": [2, { "max": 2 }],
-		"new-cap": [2, { "capIsNewExceptions": ["Template"] }],
-		"no-extra-parens": 0,
-		"no-magic-numbers": 0,
-		"no-negated-condition": 0,
-		"object-curly-newline": 0,
+		"multiline-comment-style": 0,
+		"no-negated-condition": 1,
 		"operator-linebreak": [2, "before"],
-		"sort-keys": 0
-	}
+		"sort-keys": 0,
+	},
+
+	"overrides": [
+		{
+			"files": "test/**",
+			"rules": {
+				"max-lines-per-function": 0,
+			},
+		},
+		{
+			"files": "example/**",
+			"rules": {
+				"new-cap": [2, { "capIsNewExceptions": ["Template"] }],
+				"no-magic-numbers": 0,
+			},
+		},
+	],
 }

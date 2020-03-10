@@ -10,9 +10,7 @@ var fields = forms.fields,
     validators = forms.validators;
 
 // template for the example page
-var template = jsontemplate.Template(
-    fs.readFileSync(__dirname + '/page.jsont').toString()
-);
+var template = jsontemplate.Template(String(fs.readFileSync(__dirname + '/page.jsont')));
 
 // our example registration form
 var reg_form = forms.create({

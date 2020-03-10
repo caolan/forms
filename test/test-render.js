@@ -138,11 +138,13 @@ var testWrap = function (tag) {
                 + '</' + tag + '>'
             );
 
-            t.equal(f.fields.field_name.errorHTML(),
+            t.equal(
+                f.fields.field_name.errorHTML(),
                 '<p class="error_msg">validation error</p>'
             );
 
-            t.equal(f.fields.field_name_error_after.errorHTML(),
+            t.equal(
+                f.fields.field_name_error_after.errorHTML(),
                 '<p class="error_msg">validation error after field</p>'
             );
         });
@@ -347,10 +349,12 @@ test('table bound error', function (t) {
             + '</tr>'
         );
 
-        t.equal(f.fields.field_name.errorHTML(),
+        t.equal(
+            f.fields.field_name.errorHTML(),
             '<p class="error_msg">validation error</p>'
         );
-        t.equal(f.fields.field_name_error_after.errorHTML(),
+        t.equal(
+            f.fields.field_name_error_after.errorHTML(),
             '<p class="error_msg">validation error after field</p>'
         );
     });
