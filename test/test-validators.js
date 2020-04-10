@@ -165,19 +165,19 @@ test('email', function (t) {
     });
     var v = validators.email();
     v('form', { data: 'asdf@asdf.com' }, function (noError) {
-        t.equal(noError, undefined);
+        t.equal(noError, undefined, 'asdf@asdf.com');
     });
     v('form', { data: 'a←+b@f.museum' }, function (err) {
-        t.equal(err, undefined);
+        t.equal(err, undefined, 'a←+b@f.museum');
     });
     v('form', { data: 'asdf(with comments)@example.com' }, function (err) {
-        t.equal(err, 'Please enter a valid email address.');
+        t.equal(err, 'Please enter a valid email address.', 'asdf(with comments)@example.com');
     });
     v('form', { data: '"quoted"@example.com' }, function (err) {
-        t.error(err);
+        t.error(err, '"quoted"@example.com');
     });
     v('form', { data: '"aaaaaaaaaaaaaaaaaaaaaaaaa' }, function (err) {
-        t.equal(err, 'Please enter a valid email address.');
+        t.equal(err, 'Please enter a valid email address.', '"aaaaaaaaaaaaaaaaaaaaaaaaa');
     });
     t.end();
 });
