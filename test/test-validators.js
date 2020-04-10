@@ -159,7 +159,7 @@ test('regexp', function (t) {
 });
 
 test('email', function (t) {
-    t.plan(6);
+    t.plan(8);
     validators.email('Email was invalid.')('form', { data: 'asdf' }, function (invalidEmailError) {
         t.equal(invalidEmailError, 'Email was invalid.');
     });
@@ -175,6 +175,12 @@ test('email', function (t) {
     });
     v('form', { data: '"quoted"@example.com' }, function (err) {
         t.error(err, '"quoted"@example.com');
+    });
+    v('form', { data: '"quoted spaced"@example.com' }, function (err) {
+        t.error(err, '"quoted spaced"@example.com');
+    });
+    v('form', { data: '"quoted@at"@example.com' }, function (err) {
+        t.error(err, '"quoted@at"@example.com');
     });
     v('form', { data: '"aaaaaaaaaaaaaaaaaaaaaaaaa' }, function (err) {
         t.equal(err, 'Please enter a valid email address.', '"aaaaaaaaaaaaaaaaaaaaaaaaa');
