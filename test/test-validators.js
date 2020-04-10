@@ -171,7 +171,7 @@ test('email', function (t) {
         t.equal(err, undefined, 'a←+b@f.museum');
     });
     v('form', { data: 'asdf(with comments)@example.com' }, function (err) {
-        t.equal(err, 'Please enter a valid email address.', 'asdf(with comments)@example.com');
+        t.error(err, 'asdf(with comments)@example.com');
     });
     v('form', { data: '"quoted"@example.com' }, function (err) {
         t.error(err, '"quoted"@example.com');
@@ -182,8 +182,8 @@ test('email', function (t) {
     v('form', { data: '"quoted@at"@example.com' }, function (err) {
         t.error(err, '"quoted@at"@example.com');
     });
-    v('form', { data: '"aaaaaaaaaaaaaaaaaaaaaaaaa' }, function (err) {
-        t.equal(err, 'Please enter a valid email address.', '"aaaaaaaaaaaaaaaaaaaaaaaaa');
+    v('form', { data: '"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' }, function (err) {
+        t.equal(err, 'Please enter a valid email address.', 'lots of a’s');
     });
     t.end();
 });

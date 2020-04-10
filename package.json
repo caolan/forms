@@ -37,6 +37,7 @@
         "array.prototype.every": "^1.0.0",
         "array.prototype.some": "^1.0.0",
         "async": "^2.6.3",
+        "email-addresses": "^3.1.0",
         "formidable": "^1.2.2",
         "is": "^3.3.0",
         "object.assign": "^4.1.0",
