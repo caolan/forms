@@ -1,3 +1,14 @@
+1.3.2 / 2020-06-08
+===================
+  * [Fix] `validators.email`: allowing comments, prevent catastrophic backtracking (#214)
+  * [Deps] update `array.prototype.every`, `array.prototype.some`, `async`, `formidable`, `qs`, `string.prototype.trim`
+  * [Dev Deps] update `eslint`, `@ljharb/eslint-config`, `evalmd`, `tape`; add `aud`, `safe-publish-latest`
+  * [Tests] add test with only boolean fields (#205)
+  * [Tests] add more bizarre but valid email tests
+  * [Tests] improve error messages
+  * [Tests] `validators.email`: refactor tests, add some passing tests
+  * [Tests] use shared travis-ci configs
+
 1.3.1 / 2019-05-03
 ===================
   * [Fix] length validators should work with both strings and numbers (#204)
