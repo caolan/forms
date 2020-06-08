@@ -44,12 +44,12 @@
     "devDependencies": {
         "@ljharb/eslint-config": "^17.1.0",
         "aud": "^1.1.2",
-        "covert": "^1.1.0",
+        "covert": "^1.1.1",
         "eslint": "^7.2.0",
         "evalmd": "^0.0.19",
-        "tape": "^4.6.0",
+        "tape": "^4.13.3",
         "tape-dom": "^0.0.12",
-        "testling": "^1.7.1"
+        "testling": "^1.7.3"
     },
     "license": "MIT",
     "licenses": [
