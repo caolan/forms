@@ -27,7 +27,7 @@
         "pretest": "npm run lint",
         "test": "npm run tests-only",
         "tests-only": "tape test/*.js",
-        "posttest": "npx aud",
+        "posttest": "npx aud --production",
         "coverage": "covert test/*.js",
         "coverage-quiet": "covert --quiet test/*.js",
         "prelint": "evalmd *.md",
@@ -47,12 +47,13 @@
         "string.prototype.trim": "^1.2.1"
     },
     "devDependencies": {
-        "@ljharb/eslint-config": "^16.0.0",
+        "@ljharb/eslint-config": "^17.1.0",
+        "aud": "^1.1.2",
         "covert": "^1.1.1",
-        "eslint": "^6.8.0",
+        "eslint": "^7.2.0",
         "evalmd": "^0.0.19",
         "safe-publish-latest": "^1.1.4",
-        "tape": "^5.0.0-next.5",
+        "tape": "^5.0.1",
         "tape-dom": "^0.0.12"
     },
     "license": "MIT",
