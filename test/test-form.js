@@ -96,6 +96,32 @@ test('validate', function (t) {
     });
 });
 
+test('validate form with only optional booleans', function (t) {
+    var form = forms.create({
+        field1: forms.fields['boolean'](),
+        field2: forms.fields['boolean'](),
+        field3: forms.fields['boolean'](),
+        field4: forms.fields['boolean']()
+    });
+
+    var data = { field1: 'truthy', field2: 0, field3: true };
+    form.bind(data).validate(function (err, f) {
+        t.equal(f.fields.field1.value, 'truthy');
+        t.equal(f.fields.field1.data, true);
+        t.equal(f.fields.field1.error, undefined);
+        t.equal(f.fields.field2.value, 0);
+        t.equal(f.fields.field2.data, false);
+        t.equal(f.fields.field3.value, true);
+        t.equal(f.fields.field3.data, true);
+
+        t.deepEqual(f.data, { field1: true, field2: false, field3: true, field4: false });
+        t.notEqual(form, f, 'bind returns new form object');
+
+        t.ok(f.isValid());
+        t.end();
+    });
+});
+
 test('validate valid data', function (t) {
     t.plan(2);
     var form = forms.create({
