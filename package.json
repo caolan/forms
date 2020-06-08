@@ -23,6 +23,7 @@
         "url": "https://github.com/caolan/forms/issues"
     },
     "scripts": {
+        "prepublish": "safe-publish-latest",
         "tests-only": "tape test/*.js",
         "pretest": "npm run lint",
         "test": "npm run tests-only",
@@ -52,6 +53,7 @@
         "covert": "^1.1.1",
         "eslint": "^7.2.0",
         "evalmd": "^0.0.19",
+        "safe-publish-latest": "^1.1.4",
         "tape": "^4.13.3",
         "tape-dom": "^0.0.12",
         "testling": "^1.7.3"
