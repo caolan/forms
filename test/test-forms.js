@@ -10,14 +10,14 @@ test('create', function (t) {
     });
     t.equals(
         f.toHTML(),
-        '<div class="field">' +
-            '<label for="id_field1">Field1</label>' +
-            '<input type="text" name="field1" id="id_field1" />' +
-        '</div>' +
-        '<div class="field">' +
-            '<label for="id_field2">Field2</label>' +
-            '<input type="text" name="field2" id="id_field2" />' +
-        '</div>'
+        '<div class="field">'
+            + '<label for="id_field1">Field1</label>'
+            + '<input type="text" name="field1" id="id_field1" />'
+        + '</div>'
+        + '<div class="field">'
+            + '<label for="id_field2">Field2</label>'
+            + '<input type="text" name="field2" id="id_field2" />'
+        + '</div>'
     );
     t.end();
 });

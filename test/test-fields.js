@@ -189,10 +189,10 @@ test('string toHTML', function (t) {
     t.plan(3);
     t.equal(
         stringField.toHTML('fieldname'),
-        '<div class="field">' +
-            '<label for="id_fieldname">Fieldname</label>' +
-            '<input type="text" name="fieldname" id="id_fieldname" />' +
-        '</div>'
+        '<div class="field">'
+            + '<label for="id_fieldname">Fieldname</label>'
+            + '<input type="text" name="fieldname" id="id_fieldname" />'
+        + '</div>'
     );
     var f = fields.string();
     f.widget.toHTML = function (name, field) {
@@ -212,10 +212,10 @@ test('string toHTML with CSS classes', function (t) {
                 label: ['custom-label-class1', 'custom-label-class2']
             }
         }).toHTML('fieldname'),
-        '<div class="field custom-field-class1 custom-field-class2">' +
-            '<label for="id_fieldname" class="custom-label-class1 custom-label-class2">Fieldname</label>' +
-            '<input type="text" name="fieldname" id="id_fieldname" />' +
-        '</div>'
+        '<div class="field custom-field-class1 custom-field-class2">'
+            + '<label for="id_fieldname" class="custom-label-class1 custom-label-class2">Fieldname</label>'
+            + '<input type="text" name="fieldname" id="id_fieldname" />'
+        + '</div>'
     );
     t.end();
 });
@@ -235,10 +235,10 @@ test('number parse', function (t) {
 test('number toHTML', function (t) {
     t.equal(
         fields.number().toHTML('fieldname'),
-        '<div class="field">' +
-            '<label for="id_fieldname">Fieldname</label>' +
-            '<input type="text" name="fieldname" id="id_fieldname" />' +
-        '</div>'
+        '<div class="field">'
+            + '<label for="id_fieldname">Fieldname</label>'
+            + '<input type="text" name="fieldname" id="id_fieldname" />'
+        + '</div>'
     );
     t.end();
 });
@@ -259,10 +259,10 @@ test('boolean parse', function (t) {
 test('boolean toHTML', function (t) {
     t.equal(
         fields['boolean']().toHTML('fieldname'),
-        '<div class="field">' +
-            '<label for="id_fieldname">Fieldname</label>' +
-            '<input type="checkbox" name="fieldname" id="id_fieldname" value="on" />' +
-        '</div>'
+        '<div class="field">'
+            + '<label for="id_fieldname">Fieldname</label>'
+            + '<input type="checkbox" name="fieldname" id="id_fieldname" value="on" />'
+        + '</div>'
     );
     t.end();
 });

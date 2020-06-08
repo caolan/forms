@@ -12,9 +12,7 @@ var fields = forms.fields,
     widgets = forms.widgets;
 
 // template for the example page
-var template = jsontemplate.Template(
-    fs.readFileSync(__dirname + '/page.jsont').toString()
-);
+var template = jsontemplate.Template(fs.readFileSync(__dirname + '/page.jsont').toString());
 
 /*
 var inputWithOptionalAttributes = forms.widgets.text({
@@ -52,15 +50,25 @@ var complexForm = forms.create({
         ]
     }),
     more_options: fields.array({
-        choices: { one: 'item 1', two: 'item 2', three: 'item 3' },
+        choices: {
+            one: 'item 1',
+            two: 'item 2',
+            three: 'item 3'
+        },
         widget: widgets.multipleCheckbox()
     }),
     even_more: fields.string({
-        choices: { one: 'item 1', two: 'item 2', three: 'item 3' },
+        choices: {
+            one: 'item 1', two: 'item 2', three: 'item 3'
+        },
         widget: widgets.multipleRadio()
     }),
     and_more: fields.array({
-        choices: { one: 'item 1', two: 'item 2', three: 'item 3' },
+        choices: {
+            one: 'item 1',
+            two: 'item 2',
+            three: 'item 3'
+        },
         widget: widgets.multipleSelect()
     }),
     notes: fields.string({ widget: widgets.textarea({ rows: 6 }) }),
