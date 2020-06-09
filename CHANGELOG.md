@@ -31,6 +31,29 @@
   * [Tests] up to `node` `v7.0`, `v6.9`, `v4.6`; improve test matrix
   * [Tests] execute all tests in test directory (#190)
 
+1.2.1 / 2020-06-08
+===================
+  * [Fix] `validators.email`: allowing comments, prevent catastrophic backtracking (#214)
+  * [Fix] length validators should work with both strings and numbers (#204)
+  * [Fix] ES3: use `array.prototype.{some,every}` instead of `Array#{some,every}`
+  * [Fix] ES3: use `reduce` instead of `Array#reduce`
+  * [Fix] ES3: use `object-keys` instead of `Object.keys`.
+  * [Fix] use `is.array` instead of `Array.isArray`, to continue supporting ES3.
+  * [Deps] update `async`, `formidable`, `is`, `object.assign`, `qs`, `string.prototype.trim`
+  * [eslint] update linting
+  * [meta] add `safe-publish-latest`
+  * [meta] Only apps should have lockfiles
+  * [Dev Deps] update `covert`, `tape`, `testling`
+  * [Tests] add test with only boolean fields
+  * [Tests] add more bizarre but valid email tests
+  * [Tests] improve error messages
+  * [Tests] `validators.email`: refactor tests, add some passing tests
+  * [Tests] add shared eslint config
+  * [Tests] fix key-order based tests (#190)
+  * [Tests] execute all tests in test directory (#190)
+  * [Tests] use `npx aud` instead of `nsp` or `npm audit` with hoops
+  * [Tests] remove `jscs`
+
 1.2.0 / 2016-08-25
 ===================
   * [New] Add labelAfterField option when rendering (#183)
