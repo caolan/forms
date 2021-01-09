@@ -286,6 +286,46 @@ test('handle empty object', function (t) {
     t.end();
 });
 
+test('promised handle empty', { skip: typeof Promise !== 'function' }, function (t) {
+    t.plan(4);
+    var f = forms.create({ field1: forms.fields.string() });
+    f.bind = function () {
+        t.fail('bind should not be called');
+    };
+    return f.handle(undefined).then(function (result) {
+        t.ok(result.empty, 'handle promise resolved to empty');
+        t.notOk(result.success, 'handle promise correctly did not resolve to success');
+        t.notOk(result.error, 'handle promise correctly did not resolve to error');
+        t.equal(result.form, f);
+    }, function () {
+        t.fail('handle promise was rejected');
+    });
+});
+
+test('promised handle success', { skip: typeof Promise !== 'function' }, function (t) {
+    t.plan(6);
+    var f = forms.create({ field1: forms.fields.string() });
+    var callOrder = [];
+    f.bind = function () {
+        callOrder.push('bind');
+        t.ok(true, 'bind called');
+        f.isValid = function () { return true; };
+        return f;
+    };
+    f.validate = function (callback) {
+        t.ok(true, 'validate called');
+        callback(null, f);
+    };
+    return f.handle({ field1: 'test' }).then(function (result) {
+        t.ok(result.success, 'handle promise resolved to success');
+        t.notOk(result.empty, 'handle promise correctly did not resolve to empty');
+        t.notOk(result.error, 'handle promise correctly did not resolve to error');
+        t.equal(result.form, f);
+    }, function () {
+        t.fail('handle promise was rejected');
+    });
+});
+
 test('handle sends callbacks', function (t) {
     t.plan(9);
     var f = forms.create({ field1: forms.fields.string() });
@@ -377,6 +417,29 @@ test('handle error', function (t) {
         }
     });
     t.end();
+});
+
+test('promised handle error', { skip: typeof Promise !== 'function' }, function (t) {
+    t.plan(6);
+    var f = forms.create({ field1: forms.fields.string() });
+    f.bind = function () {
+        t.ok(true, 'bind called');
+        f.fields.field1.error = 'some error';
+        f.isValid = function () { return false; };
+        return f;
+    };
+    f.validate = function (callback) {
+        t.ok(true, 'validate called');
+        callback(null, f);
+    };
+    return f.handle({ field1: 'test' }).then(function (result) {
+        t.ok(result.error, 'handle promise resolved to error');
+        t.notOk(result.empty, 'handle promise correctly did not resolve to empty');
+        t.notOk(result.success, 'handle promise correctly did not resolve to success');
+        t.equal(result.form, f);
+    }, function () {
+        t.fail('handle promise was rejected');
+    });
 });
 
 test('handle ServerRequest GET', function (t) {

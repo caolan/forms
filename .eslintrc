@@ -3,6 +3,10 @@
 
 	"extends": "@ljharb",
 
+	"globals": {
+		"Promise": false,
+	},
+
 	"rules": {
 		"callback-return": 0,
 		"camelcase": 0,
