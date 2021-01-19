@@ -35,7 +35,7 @@
         "array.prototype.every": "^1.1.1",
         "array.prototype.some": "^1.1.2",
         "async": "^2.6.3",
-        "email-addresses": "^3.1.0",
+        "email-addresses": "^4.0.0",
         "formidable": "^1.2.2",
         "is": "^3.3.0",
         "object-keys": "^1.1.1",
