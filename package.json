@@ -26,10 +26,8 @@
         "prepublish": "safe-publish-latest",
         "pretest": "npm run lint",
         "test": "npm run tests-only",
-        "tests-only": "tape test/*.js",
+        "tests-only": "nyc tape test/**/*.js",
         "posttest": "npx aud --production",
-        "coverage": "covert test/*.js",
-        "coverage-quiet": "covert --quiet test/*.js",
         "prelint": "evalmd *.md",
         "lint": "eslint test/*.js lib/*.js example/simple.js example/complex.js"
     },
@@ -49,9 +47,9 @@
     "devDependencies": {
         "@ljharb/eslint-config": "^17.1.0",
         "aud": "^1.1.2",
-        "covert": "^1.1.1",
         "eslint": "^7.2.0",
         "evalmd": "^0.0.19",
+        "nyc": "^10.3.2",
         "safe-publish-latest": "^1.1.4",
         "tape": "^5.0.1",
         "tape-dom": "^0.0.12"
