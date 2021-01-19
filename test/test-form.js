@@ -68,7 +68,7 @@ test('bind with missing field in data keeps field in form', function (t) {
 });
 
 test('validate', function (t) {
-    t.plan(11);
+    t.plan(2 + 9);
     var form = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string({
@@ -92,7 +92,6 @@ test('validate', function (t) {
         t.notEqual(form, f, 'bind returns new form object');
 
         t.notOk(f.isValid());
-        t.end();
     });
 });
 
@@ -163,7 +162,7 @@ test('validate invalid data', function (t) {
                 callback('validation error 2');
             }]
         })
-    });
+    }, { validatePastFirstError: true });
     formObject.bind({ field1: '1', field2: '2' }).validate(function (err, f) {
         t.equal(f.isValid(), false);
         t.equal(

@@ -92,7 +92,7 @@ var testWrap = function (tag) {
                     callback('validation error after field');
                 }]
             })
-        });
+        }, { validatePastFirstError: true });
         formObject.bind({ field_name: 'val', field_name_error_after: 'foo' }).validate(function (err, f) {
             t.equal(
                 f.toHTML(forms.render[tag]),
@@ -124,7 +124,7 @@ var testWrap = function (tag) {
                     callback('validation error after field');
                 }]
             })
-        });
+        }, { validatePastFirstError: true });
         f2.bind({ field_name: 'val', field_name_error_after: 'foo' }).validate(function (err, f) {
             t.equal(
                 f.toHTML(forms.render[tag]),
@@ -148,8 +148,6 @@ var testWrap = function (tag) {
                 '<p class="error_msg">validation error after field</p>'
             );
         });
-
-        t.end();
     });
 
     test(tag + ' multipleCheckbox', function (t) {
@@ -295,7 +293,7 @@ test('table bound error', function (t) {
                 callback('validation error after field');
             }]
         })
-    });
+    }, { validatePastFirstError: true });
     formObject.bind({ field_name: 'val', field_name_error_after: 'foo' }).validate(function (err, f) {
         t.equal(
             f.toHTML(forms.render.table),
@@ -331,7 +329,7 @@ test('table bound error', function (t) {
                 callback('validation error after field');
             }]
         })
-    });
+    }, { validatePastFirstError: true });
     f2.bind({ field_name: 'val', field_name_error_after: 'foo' }).validate(function (err, f) {
         t.equal(
             f.toHTML(forms.render.table),
@@ -358,6 +356,4 @@ test('table bound error', function (t) {
             '<p class="error_msg">validation error after field</p>'
         );
     });
-
-    t.end();
 });
