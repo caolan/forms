@@ -64,9 +64,9 @@ test('date', function (t) {
 test('datetimeLocal', function (t) {
 
     var w = forms.widgets.datetimeLocal();
-    t.equal(w.formatValue(new Date(Date.UTC(2013, 2, 1))), '2013-03-01T00:00:00.000');
-    t.equal(w.formatValue('2013-03-02'), '2013-03-02T00:00:00.000');
-    t.equal(w.formatValue('2013-03-02T01:01:00.000'), '2013-03-02T01:01:00.000');
+    t.equal(w.formatValue(new Date(Date.UTC(2013, 2, 1))), '2013-03-01T00:00:00.000', 'Date.UTC');
+    t.equal(w.formatValue('2013-03-02'), '2013-03-02T00:00:00.000', 'YMD only');
+    t.equal(w.formatValue('2013-03-02T01:01:00.000Z'), '2013-03-02T01:01:00.000', 'ISO-ish');
     t.strictEqual(w.formatValue('invalid'), null);
     t.equal(
         w.toHTML('field1'),
