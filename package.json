@@ -32,7 +32,7 @@
         "lint": "eslint test/*.js lib/*.js example/simple.js example/complex.js"
     },
     "dependencies": {
-        "array.prototype.every": "^1.1.1",
+        "array.prototype.every": "^1.1.2",
         "array.prototype.some": "^1.1.2",
         "async": "^2.6.3",
         "email-addresses": "^4.0.0",
@@ -42,7 +42,7 @@
         "object.assign": "^4.1.2",
         "qs": "^6.9.6",
         "reduce": "^1.0.2",
-        "string.prototype.trim": "^1.2.3"
+        "string.prototype.trim": "^1.2.4"
     },
     "devDependencies": {
         "@ljharb/eslint-config": "^17.5.1",
