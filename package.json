@@ -45,13 +45,13 @@
         "string.prototype.trim": "^1.2.3"
     },
     "devDependencies": {
-        "@ljharb/eslint-config": "^17.4.0",
+        "@ljharb/eslint-config": "^17.5.1",
         "aud": "^1.1.4",
-        "eslint": "^7.18.0",
+        "eslint": "^7.20.0",
         "evalmd": "^0.0.19",
         "nyc": "^10.3.2",
         "safe-publish-latest": "^1.1.4",
-        "tape": "^5.1.1",
+        "tape": "^5.2.0",
         "tape-dom": "^0.0.12"
     },
     "license": "MIT",
