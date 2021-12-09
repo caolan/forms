@@ -33,17 +33,17 @@
         "lint": "eslint test/*.js lib/*.js example/simple.js example/complex.js"
     },
     "dependencies": {
-        "array.prototype.every": "^1.1.2",
-        "array.prototype.some": "^1.1.2",
+        "array.prototype.every": "^1.1.3",
+        "array.prototype.some": "^1.1.3",
         "async": "^2.6.3",
         "email-addresses": "^4.0.0",
-        "formidable": "^1.2.2",
+        "formidable": "^1.2.6",
         "is": "^3.3.0",
         "object-keys": "^1.1.1",
         "object.assign": "^4.1.2",
-        "qs": "^6.9.6",
+        "qs": "^6.10.2",
         "reduce": "^1.0.2",
-        "string.prototype.trim": "^1.2.4"
+        "string.prototype.trim": "^1.2.5"
     },
     "devDependencies": {
         "@ljharb/eslint-config": "^20.0.0",
