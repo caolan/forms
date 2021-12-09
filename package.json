@@ -30,7 +30,7 @@
         "tests-only": "nyc tape test/**/*.js",
         "posttest": "aud --production",
         "prelint": "evalmd *.md",
-        "lint": "eslint test/*.js lib/*.js example/simple.js example/complex.js"
+        "lint": "eslint --ext=js,mjs ."
     },
     "dependencies": {
         "array.prototype.every": "^1.1.3",
