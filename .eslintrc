@@ -3,10 +3,6 @@
 
 	"extends": "@ljharb",
 
-	"globals": {
-		"Promise": false,
-	},
-
 	"rules": {
 		"callback-return": 0,
 		"camelcase": 0,
@@ -14,12 +10,10 @@
 		"func-name-matching": 0,
 		"id-length": [2, { "min": 1, "max": 30 }],
 		"indent": [2, 4],
-		"max-lines": 0,
 		"max-lines-per-function": 0,
 		"max-params": [2, 4],
 		"multiline-comment-style": 0,
 		"no-negated-condition": 1,
-		"operator-linebreak": [2, "before"],
 		"sort-keys": 0,
 	},
 
@@ -27,7 +21,7 @@
 		{
 			"files": "test/**",
 			"rules": {
-				"max-lines-per-function": 0,
+				"operator-linebreak": [2, "before"],
 			},
 		},
 		{

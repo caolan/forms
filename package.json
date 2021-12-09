@@ -23,7 +23,8 @@
         "url": "https://github.com/caolan/forms/issues"
     },
     "scripts": {
-        "prepublish": "safe-publish-latest",
+        "prepublishOnly": "safe-publish-latest",
+        "prepublish": "not-in-publish || npm run prepublishOnly",
         "pretest": "npm run lint",
         "test": "npm run tests-only",
         "tests-only": "nyc tape test/**/*.js",
@@ -45,13 +46,13 @@
         "string.prototype.trim": "^1.2.4"
     },
     "devDependencies": {
-        "@ljharb/eslint-config": "^17.5.1",
-        "aud": "^1.1.4",
-        "eslint": "^7.20.0",
+        "@ljharb/eslint-config": "^20.0.0",
+        "aud": "^1.1.5",
+        "eslint": "^8.4.1",
         "evalmd": "^0.0.19",
         "nyc": "^10.3.2",
-        "safe-publish-latest": "^1.1.4",
-        "tape": "^5.2.0",
+        "safe-publish-latest": "^2.0.0",
+        "tape": "^5.3.2",
         "tape-dom": "^0.0.12"
     },
     "license": "MIT",
