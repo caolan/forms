@@ -189,19 +189,39 @@ test('email', function (t) {
 });
 
 test('url', function (t) {
-    t.plan(4);
+    t.plan(6);
+
     validators.url(false, 'URL was invalid.')('form', { data: 'asdf.com' }, function (invalidURLError) {
-        t.equal(invalidURLError, 'URL was invalid.');
+        t.equal(invalidURLError, 'URL was invalid.', 'protocolless domain name is invalid');
         validators.url()('form', { data: 'http://asdf.com' }, function (err) {
-            t.equal(err, undefined);
+            t.equal(err, undefined, 'valid HTTP URL is valid');
         });
     });
+
     validators.url(true)('form', { data: 'localhost/test.html' }, function (invalidURLError) {
-        t.equal(invalidURLError, 'Please enter a valid URL.');
+        t.equal(invalidURLError, 'Please enter a valid URL.', 'protocolless localhost URL is invalid');
+
         validators.url(true)('form', { data: 'http://localhost/test.html' }, function (err) {
-            t.equal(err, undefined);
+            t.equal(err, undefined, 'valid localhost HTTP URL is valid');
+        });
+
+        validators.url(true)('form', { data: 'ftp://localhost/test.html' }, function (err) {
+            t.equal(err, undefined, 'valid FTP URL is valid');
         });
     });
+
+    t.test('backtracking', { timeout: 0.2e3 }, function (st) {
+        st.plan(1);
+
+        validators.url()(
+            'form',
+            { data: 'ftp://0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.' },
+            function (err) {
+                st.equal(err, 'Please enter a valid URL.');
+            }
+        );
+    });
+
     t.end();
 });
 
