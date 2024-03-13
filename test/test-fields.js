@@ -58,7 +58,7 @@ var testField = function (field) {
     });
 
     test(field + ' validate', function (t) {
-        t.plan(10);
+        t.plan(11);
 
         var f = fields[field]({ label: 'test label' });
         f.validators = [
@@ -79,12 +79,54 @@ var testField = function (field) {
             return 'some data parsed';
         };
         f.bind('some data').validate('form', function (err, bound) {
+            t.equal(err, 'Error: validation error');
+
             t.equal(bound.label, 'test label');
             t.equal(bound.value, 'some data');
             t.equal(bound.data, 'some data parsed');
             t.equal(bound.error, 'Error: validation error');
             t.notEqual(bound, f, 'bind returns a new field object');
             t.end();
+        });
+    });
+
+    test(field + ' promised validate', function (t) {
+        if (typeof Promise !== 'function') {
+            return t.end();
+        }
+
+        t.plan(13);
+
+        var f = fields[field]({ label: 'test label' });
+        f.validators = [
+            function (form, fieldObject, callback) {
+                t.equal(fieldObject.data, 'some data parsed');
+                t.equal(fieldObject.value, 'some data');
+                callback(null);
+            },
+            function (form, fieldObject, callback) {
+                t.equal(fieldObject.data, 'some data parsed');
+                t.equal(fieldObject.value, 'some data');
+                callback(new Error('validation error'));
+            }
+        ];
+
+        f.parse = function (data) {
+            t.equal(data, 'some data');
+            return 'some data parsed';
+        };
+        return f.bind('some data').validate('form').then(function (result) {
+            t.ok(result, 'gets a result');
+            t.ok(result.error, 'is an error');
+            t.equal(result.message, 'Error: validation error');
+
+            var bound = result.field;
+
+            t.equal(bound.label, 'test label');
+            t.equal(bound.value, 'some data');
+            t.equal(bound.data, 'some data parsed');
+            t.equal(bound.error, 'Error: validation error');
+            t.notEqual(bound, f, 'bind returns a new field object');
         });
     });
 
@@ -144,7 +186,6 @@ var testField = function (field) {
             t.equal(fieldObject.data, 'val');
             t.notOk(fieldObject.error);
         });
-        t.end();
     });
 
     test(field + ' validate no validators', function (t) {

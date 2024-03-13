@@ -68,7 +68,7 @@ test('bind with missing field in data keeps field in form', function (t) {
 });
 
 test('validate', function (t) {
-    t.plan(2 + 9);
+    t.plan(2 + 10);
     var form = forms.create({
         field1: forms.fields.string(),
         field2: forms.fields.string({
@@ -81,6 +81,45 @@ test('validate', function (t) {
     });
     var data = { field1: 'data one', field2: 'data two' };
     form.bind(data).validate(function (err, f) {
+        t.equal(err, 'validation error');
+
+        t.equal(f.fields.field1.value, 'data one');
+        t.equal(f.fields.field1.data, 'data one');
+        t.equal(f.fields.field1.error, undefined);
+        t.equal(f.fields.field2.value, 'data two');
+        t.equal(f.fields.field2.data, 'data two');
+        t.equal(f.fields.field2.error, 'validation error');
+
+        t.deepEqual(f.data, { field1: 'data one', field2: 'data two' });
+        t.notEqual(form, f, 'bind returns new form object');
+
+        t.notOk(f.isValid());
+    });
+});
+
+test('promised validate', function (t) {
+    if (typeof Promise !== 'function') {
+        return t.end();
+    }
+    t.plan(14);
+    var form = forms.create({
+        field1: forms.fields.string(),
+        field2: forms.fields.string({
+            validators: [function (formObject, field, callback) {
+                t.equal(field.data, 'data two');
+                t.equal(field.value, 'data two');
+                callback('validation error');
+            }]
+        })
+    });
+    var data = { field1: 'data one', field2: 'data two' };
+    return form.bind(data).validate().then(function (result) {
+        t.ok(result, 'gets a result');
+        t.ok(result.error, 'is an error');
+        t.equal(result.message, 'validation error');
+
+        var f = result.form;
+
         t.equal(f.fields.field1.value, 'data one');
         t.equal(f.fields.field1.data, 'data one');
         t.equal(f.fields.field1.error, undefined);
